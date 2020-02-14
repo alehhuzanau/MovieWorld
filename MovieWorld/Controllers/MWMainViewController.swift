@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MWMainViewController.swift
 //  MovieWorld
 //
 //  Created by Aleh Huzanau on 2/14/20.
@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import SnapKit
 
-class ViewController: UIViewController {
-
+class MWMainViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
