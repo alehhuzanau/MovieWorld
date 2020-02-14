@@ -12,4 +12,8 @@ class Constants {
     struct StoryboardID {
         static let MWMainViewControllerIdentifier: String = "MWMainViewController"
     }
+    
+    struct ImageName {
+        static let movieImage = "movieImage"
+    }
 }
