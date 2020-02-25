@@ -10,6 +10,8 @@ import UIKit
 
 class MWMainViewController: UITableViewController {
     
+    private let sections = ["New", "Movies", "Series and shows", "Animated movies"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,13 +28,13 @@ class MWMainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.sections.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWMovieTableViewCell.reuseIdentifier)as? MWMovieTableViewCell ?? MWMovieTableViewCell()
-
-        cell.textLabel?.text = "Some text"
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier) as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
+        
+        cell.set(title: self.sections[indexPath.row])
         
         return cell
     }
