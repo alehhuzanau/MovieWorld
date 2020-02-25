@@ -37,5 +37,7 @@ class MWMainTabBarController: UITabBarController {
         let controllers = [mainVC, categoryVC, searchVC]
         self.viewControllers = controllers
         self.viewControllers = controllers.map { UINavigationController(rootViewController: $0) }
+        
+        self.tabBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
     }
 }
