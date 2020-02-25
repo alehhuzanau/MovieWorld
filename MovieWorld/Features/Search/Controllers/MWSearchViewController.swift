@@ -1,5 +1,5 @@
 //
-//  MWMainViewController.swift
+//  MWSearchViewController.swift
 //  MovieWorld
 //
 //  Created by Aleh Huzanau on 2/25/20.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class MWMainViewController: UIViewController {
+class MWSearchViewController: UIViewController {
     
     override func viewDidLoad() {
-        self.title = "Main"
-        self.view.backgroundColor = .red
+        self.title = "Search"
+        self.view.backgroundColor = .yellow
     }
 }

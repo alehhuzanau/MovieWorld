@@ -1,5 +1,5 @@
 //
-//  MWMainViewController.swift
+//  MWCategoryViewController.swift
 //  MovieWorld
 //
 //  Created by Aleh Huzanau on 2/25/20.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class MWMainViewController: UIViewController {
+class MWCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
-        self.title = "Main"
-        self.view.backgroundColor = .red
+        self.title = "Category"
+        self.view.backgroundColor = .green
     }
 }

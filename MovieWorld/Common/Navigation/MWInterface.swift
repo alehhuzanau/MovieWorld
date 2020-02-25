@@ -16,7 +16,7 @@ class MWInterface {
     
     weak var window: UIWindow?
     
-    private lazy var tabBarController = UITabBarController()
+    private lazy var tabBarController = MWMainTabBarController()
     
     private init() {}
     
