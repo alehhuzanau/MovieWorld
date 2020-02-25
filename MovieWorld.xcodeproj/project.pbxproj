@@ -10,10 +10,11 @@
 		24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24146D9D23F6BB91004CFA45 /* Constants.swift */; };
 		24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC123F6A3E0009DF49A /* AppDelegate.swift */; };
 		24261BC623F6A3E0009DF49A /* MWMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC523F6A3E0009DF49A /* MWMainViewController.swift */; };
-		24261BC923F6A3E0009DF49A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24261BC723F6A3E0009DF49A /* Main.storyboard */; };
 		24261BCB23F6A3E1009DF49A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24261BCA23F6A3E1009DF49A /* Assets.xcassets */; };
 		24261BCE23F6A3E1009DF49A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24261BCC23F6A3E1009DF49A /* LaunchScreen.storyboard */; };
 		29A80035490F8BD7570DDCDA /* Pods_MovieWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */; };
+		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
+		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,11 +22,12 @@
 		24261BBE23F6A3E0009DF49A /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24261BC123F6A3E0009DF49A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24261BC523F6A3E0009DF49A /* MWMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMainViewController.swift; sourceTree = "<group>"; };
-		24261BC823F6A3E0009DF49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		24261BCA23F6A3E1009DF49A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24261BCD23F6A3E1009DF49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24261BCF23F6A3E1009DF49A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
+		CF310248240565B900AC0E1A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		D840BBF260C28B8ED11050DE /* Pods-MovieWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld.release.xcconfig"; path = "Target Support Files/Pods-MovieWorld/Pods-MovieWorld.release.xcconfig"; sourceTree = "<group>"; };
 		FF948485364ACC6335801C53 /* Pods-MovieWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld/Pods-MovieWorld.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +78,6 @@
 				CF3102362405614000AC0E1A /* Common */,
 				CF31023B240561A400AC0E1A /* Features */,
 				CF3102452405624000AC0E1A /* Utility */,
-				24261BD723F6A6B7009DF49A /* Storyboards */,
 				24261BD623F6A696009DF49A /* Resources */,
 			);
 			path = MovieWorld;
@@ -86,18 +87,11 @@
 			isa = PBXGroup;
 			children = (
 				24261BCA23F6A3E1009DF49A /* Assets.xcassets */,
+				CF310248240565B900AC0E1A /* Colors.xcassets */,
 				24146D9D23F6BB91004CFA45 /* Constants.swift */,
 				24261BCC23F6A3E1009DF49A /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		24261BD723F6A6B7009DF49A /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				24261BC723F6A3E0009DF49A /* Main.storyboard */,
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		C5A5DDA410B3A2705DAEF387 /* Pods */ = {
@@ -231,6 +225,7 @@
 		CF3102452405624000AC0E1A /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				CF3102462405636300AC0E1A /* MWInterface.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -296,8 +291,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				24261BCE23F6A3E1009DF49A /* LaunchScreen.storyboard in Resources */,
+				CF310249240565B900AC0E1A /* Colors.xcassets in Resources */,
 				24261BCB23F6A3E1009DF49A /* Assets.xcassets in Resources */,
-				24261BC923F6A3E0009DF49A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24261BC623F6A3E0009DF49A /* MWMainViewController.swift in Sources */,
+				CF3102472405636300AC0E1A /* MWInterface.swift in Sources */,
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
 				24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */,
 			);
@@ -359,14 +355,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		24261BC723F6A3E0009DF49A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				24261BC823F6A3E0009DF49A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		24261BCC23F6A3E1009DF49A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

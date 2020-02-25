@@ -16,4 +16,8 @@ class Constants {
     struct ImageName {
         static let movieImage = "movieImage"
     }
+    
+    struct ColorName {
+        static let accentColor = "accentColor"
+    }
 }
