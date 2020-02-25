@@ -73,19 +73,13 @@
 			children = (
 				24261BCF23F6A3E1009DF49A /* Info.plist */,
 				24261BC123F6A3E0009DF49A /* AppDelegate.swift */,
-				24261BD523F6A4F0009DF49A /* Controllers */,
+				CF3102362405614000AC0E1A /* Common */,
+				CF31023B240561A400AC0E1A /* Features */,
+				CF3102452405624000AC0E1A /* Utility */,
 				24261BD723F6A6B7009DF49A /* Storyboards */,
 				24261BD623F6A696009DF49A /* Resources */,
 			);
 			path = MovieWorld;
-			sourceTree = "<group>";
-		};
-		24261BD523F6A4F0009DF49A /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				24261BC523F6A3E0009DF49A /* MWMainViewController.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		24261BD623F6A696009DF49A /* Resources */ = {
@@ -113,6 +107,132 @@
 				D840BBF260C28B8ED11050DE /* Pods-MovieWorld.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CF3102362405614000AC0E1A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CF3102372405615700AC0E1A /* Navigation */,
+				CF3102382405616000AC0E1A /* Controllers */,
+				CF3102392405616800AC0E1A /* Controls */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CF3102372405615700AC0E1A /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		CF3102382405616000AC0E1A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CF3102392405616800AC0E1A /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				CF31023A2405617200AC0E1A /* Cells */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		CF31023A2405617200AC0E1A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CF31023B240561A400AC0E1A /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				CF31023C240561B600AC0E1A /* Search */,
+				CF31023D240561BC00AC0E1A /* Category */,
+				CF31023E240561C200AC0E1A /* Main */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		CF31023C240561B600AC0E1A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CF31023F240561D300AC0E1A /* Controllers */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		CF31023D240561BC00AC0E1A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				CF3102442405623400AC0E1A /* Views */,
+				CF310240240561D900AC0E1A /* Controllers */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		CF31023E240561C200AC0E1A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CF310242240561E900AC0E1A /* Models */,
+				CF310243240561EE00AC0E1A /* Views */,
+				CF310241240561DE00AC0E1A /* Controllers */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CF31023F240561D300AC0E1A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CF310240240561D900AC0E1A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CF310241240561DE00AC0E1A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				24261BC523F6A3E0009DF49A /* MWMainViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CF310242240561E900AC0E1A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CF310243240561EE00AC0E1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CF3102442405623400AC0E1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CF3102452405624000AC0E1A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
