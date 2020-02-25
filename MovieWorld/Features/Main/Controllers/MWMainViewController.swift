@@ -8,12 +8,32 @@
 
 import UIKit
 
-class MWMainViewController: UIViewController {
+class MWMainViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationItem.title = "Season"
-        self.view.backgroundColor = .red
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.tableView.isUserInteractionEnabled = true
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWMovieTableViewCell.reuseIdentifier)as? MWMovieTableViewCell ?? MWMovieTableViewCell()
+
+        cell.textLabel?.text = "Some text"
+        
+        return cell
     }
 }
