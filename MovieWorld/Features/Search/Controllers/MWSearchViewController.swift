@@ -11,7 +11,9 @@ import UIKit
 class MWSearchViewController: UIViewController {
     
     override func viewDidLoad() {
-        self.title = "Search"
+        super.viewDidLoad()
+
+        self.title = "Search"       
         self.view.backgroundColor = .yellow
     }
 }

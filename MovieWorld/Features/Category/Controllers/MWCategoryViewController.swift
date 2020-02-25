@@ -11,6 +11,8 @@ import UIKit
 class MWCategoryViewController: UIViewController {
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         self.title = "Category"
         self.view.backgroundColor = .green
     }

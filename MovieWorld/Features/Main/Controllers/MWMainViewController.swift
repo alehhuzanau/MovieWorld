@@ -11,7 +11,9 @@ import UIKit
 class MWMainViewController: UIViewController {
     
     override func viewDidLoad() {
-        self.title = "Main"
+        super.viewDidLoad()
+
+        self.navigationItem.title = "Season"
         self.view.backgroundColor = .red
     }
 }
