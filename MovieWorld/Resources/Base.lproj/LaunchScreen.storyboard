@@ -16,27 +16,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="Vs2-mL-4Z4">
-                                <rect key="frame" x="60" y="351" width="294" height="254"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="ONQ-sM-Elw">
+                                <rect key="frame" x="0.0" y="284.5" width="414" height="337"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Season" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPy-tA-5ym">
+                                        <rect key="frame" x="150" y="0.0" width="114.5" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="Vs2-mL-4Z4">
+                                        <rect key="frame" x="40" y="83" width="334" height="254"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="254" id="Yq4-vd-wh5"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="254" id="gNt-KB-abG"/>
+                                    <constraint firstItem="IPy-tA-5ym" firstAttribute="centerX" secondItem="ONQ-sM-Elw" secondAttribute="centerX" id="MLY-7T-ZBm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vs2-mL-4Z4" secondAttribute="trailing" constant="40" id="XJJ-ZM-1IH"/>
+                                    <constraint firstItem="Vs2-mL-4Z4" firstAttribute="leading" secondItem="ONQ-sM-Elw" secondAttribute="leading" constant="40" id="doQ-Pv-h84"/>
+                                    <constraint firstItem="IPy-tA-5ym" firstAttribute="top" secondItem="ONQ-sM-Elw" secondAttribute="top" id="rpk-H1-xJt"/>
                                 </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Season" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPy-tA-5ym">
-                                <rect key="frame" x="60" y="268" width="294" height="41"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Vs2-mL-4Z4" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="40" id="2Au-BL-Qui"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Vs2-mL-4Z4" secondAttribute="trailing" constant="40" id="9bk-ey-Bu7"/>
-                            <constraint firstItem="IPy-tA-5ym" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="40" id="HQE-sX-tKA"/>
-                            <constraint firstItem="Vs2-mL-4Z4" firstAttribute="top" secondItem="IPy-tA-5ym" secondAttribute="bottom" constant="42" id="PSt-G5-3JJ"/>
-                            <constraint firstItem="IPy-tA-5ym" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="224" id="aK9-36-eic"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IPy-tA-5ym" secondAttribute="trailing" constant="40" id="hM0-vX-V3f"/>
+                            <constraint firstItem="ONQ-sM-Elw" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="2AJ-eW-7Qh"/>
+                            <constraint firstItem="ONQ-sM-Elw" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Q3m-9O-tBJ"/>
+                            <constraint firstAttribute="trailing" secondItem="ONQ-sM-Elw" secondAttribute="trailing" id="RzY-KI-ofb"/>
+                            <constraint firstItem="ONQ-sM-Elw" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="y1w-Q0-22b"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

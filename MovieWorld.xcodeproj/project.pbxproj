@@ -21,6 +21,8 @@
 		CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */; };
 		CF31025424057D4F00AC0E1A /* MWMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025324057D4F00AC0E1A /* MWMovie.swift */; };
 		CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025524057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift */; };
+		CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD22406ADEC0075A10F /* MWNextButton.swift */; };
+		CFF03AD52406BA220075A10F /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD42406BA220075A10F /* MWButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSearchViewController.swift; sourceTree = "<group>"; };
 		CF31025324057D4F00AC0E1A /* MWMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovie.swift; sourceTree = "<group>"; };
 		CF31025524057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieSectionTableViewCell.swift; sourceTree = "<group>"; };
+		CFF03AD22406ADEC0075A10F /* MWNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWNextButton.swift; sourceTree = "<group>"; };
+		CFF03AD42406BA220075A10F /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
 		D840BBF260C28B8ED11050DE /* Pods-MovieWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld.release.xcconfig"; path = "Target Support Files/Pods-MovieWorld/Pods-MovieWorld.release.xcconfig"; sourceTree = "<group>"; };
 		FF948485364ACC6335801C53 /* Pods-MovieWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld.debug.xcconfig"; path = "Target Support Files/Pods-MovieWorld/Pods-MovieWorld.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +149,7 @@
 		CF3102392405616800AC0E1A /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				CFF03AD12406ADBA0075A10F /* Buttons */,
 				CF31023A2405617200AC0E1A /* Cells */,
 			);
 			path = Controls;
@@ -246,6 +251,15 @@
 			children = (
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		CFF03AD12406ADBA0075A10F /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				CFF03AD42406BA220075A10F /* MWButton.swift */,
+				CFF03AD22406ADEC0075A10F /* MWNextButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,9 +378,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */,
+				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
 				CF31024B24056A4C00AC0E1A /* MWMainTabBarController.swift in Sources */,
+				CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */,
 				CF3102472405636300AC0E1A /* MWInterface.swift in Sources */,
 				CF31025024056AB900AC0E1A /* MWCategoryViewController.swift in Sources */,
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
