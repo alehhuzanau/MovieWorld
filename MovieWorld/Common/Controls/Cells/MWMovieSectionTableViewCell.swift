@@ -111,9 +111,12 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
-        let movie = self.dataSource[indexPath.item]
-        cell.label.text = movie.title
-                                
+        cell.set(movie: self.dataSource[indexPath.item])
+
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 130, height: 237)
     }
 }
