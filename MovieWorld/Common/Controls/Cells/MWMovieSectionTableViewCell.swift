@@ -26,7 +26,6 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     }()
     
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
-    private let imageViewSize = CGSize(width: 130, height: 185)
     private let buttonSize = CGSize(width: 52, height: 24)
 
     private lazy var titleLabel: UILabel = {
@@ -45,6 +44,8 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(MWCardCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
 
         return collectionView
     }()
@@ -54,9 +55,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.collectionView.register(MWCardCollectionViewCell.self,
-                                     forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
-        
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.titleLabel)
         self.addSubview(self.collectionView)
         self.addSubview(self.allButton)
@@ -70,12 +69,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         self.titleLabel.text = title
         
         self.setNeedsUpdateConstraints()
-        
-        
     }
     
     override func updateConstraints() {
-        
         self.titleLabel.snp.updateConstraints { (make) in
             make.top.left.equalToSuperview().inset(self.edgeInsets)
         }
@@ -86,9 +82,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         }
         self.collectionView.snp.updateConstraints { (make) in
             make.top.equalTo(self.titleLabel.snp.bottom).offset(12)
-           // make.left.equalToSuperview()//.inset(self.edgeInsets)
             make.left.bottom.right.equalToSuperview()
-          //  make.height.equalTo(self.imageViewSize)
         }
 
         super.updateConstraints()
@@ -99,7 +93,6 @@ extension MWMovieSectionTableViewCell {
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        //layout.itemSize = CGSize(width: 100, height: 100)
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
@@ -119,12 +112,8 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
         cell.set(movie: self.dataSource[indexPath.item])
-        self.layoutIfNeeded()
+        cell.layoutIfNeeded()
         
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 150, height: 300)
-//    }
 }

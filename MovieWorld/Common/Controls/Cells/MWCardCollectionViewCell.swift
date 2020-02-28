@@ -12,7 +12,6 @@ import SnapKit
 class MWCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "MWCardCollectionViewCellIdentifier"
 
-    private let edgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
     private let imageViewSize = CGSize(width: 130, height: 185)
 
     private lazy var imageView: UIImageView = {
@@ -51,18 +50,15 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     }
     
     override func updateConstraints() {
-        
         self.subtitleLabel.snp.updateConstraints { make in
-          //  make.top.equalTo(self.titleLabel.snp.bottom).inset(self.edgeInsets)
-            make.left.bottom.right.equalToSuperview()//.inset(self.edgeInsets)
+            make.left.bottom.right.equalToSuperview()
         }
         self.titleLabel.snp.updateConstraints { make in
-           // make.top.equalTo(self.imageView.snp.bottom).inset(self.edgeInsets)
-            make.left.right.equalToSuperview().inset(self.edgeInsets)
+            make.left.right.equalToSuperview()
             make.bottom.equalTo(self.subtitleLabel.snp.top)
         }
         self.imageView.snp.updateConstraints { (make) in
-            make.top.left.equalToSuperview()//.inset(self.edgeInsets)
+            make.top.left.equalToSuperview()
             make.size.equalTo(self.imageViewSize)
             make.bottom.equalTo(self.titleLabel.snp.top)
         }
@@ -73,6 +69,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 
 extension MWCardCollectionViewCell {
     private func configure() {
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.subtitleLabel)
