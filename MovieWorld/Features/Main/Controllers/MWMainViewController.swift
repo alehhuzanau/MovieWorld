@@ -21,6 +21,8 @@ class MWMainViewController: UITableViewController {
         self.tableView.dataSource = self
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.tableView.isUserInteractionEnabled = true
+
+        //self.tableView.rowHeight = 305
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,7 +30,11 @@ class MWMainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sections.count
+        return 1 // self.sections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

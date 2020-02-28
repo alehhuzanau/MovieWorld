@@ -19,14 +19,16 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView
     }()
 
-
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -34,6 +36,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     private let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(13)
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -46,6 +49,26 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("not implemnted")
     }
+    
+    override func updateConstraints() {
+        
+        self.subtitleLabel.snp.updateConstraints { make in
+          //  make.top.equalTo(self.titleLabel.snp.bottom).inset(self.edgeInsets)
+            make.left.bottom.right.equalToSuperview()//.inset(self.edgeInsets)
+        }
+        self.titleLabel.snp.updateConstraints { make in
+           // make.top.equalTo(self.imageView.snp.bottom).inset(self.edgeInsets)
+            make.left.right.equalToSuperview().inset(self.edgeInsets)
+            make.bottom.equalTo(self.subtitleLabel.snp.top)
+        }
+        self.imageView.snp.updateConstraints { (make) in
+            make.top.left.equalToSuperview()//.inset(self.edgeInsets)
+            make.size.equalTo(self.imageViewSize)
+            make.bottom.equalTo(self.titleLabel.snp.top)
+        }
+        
+        super.updateConstraints()
+    }
 }
 
 extension MWCardCollectionViewCell {
@@ -53,25 +76,14 @@ extension MWCardCollectionViewCell {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.subtitleLabel)
-        
-        self.imageView.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview().inset(self.edgeInsets)
-            make.width.height.equalTo(self.imageViewSize)
-        }
-        self.titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.imageView).inset(self.edgeInsets)
-            make.left.equalToSuperview().inset(self.edgeInsets)
-        }
-        self.subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel).inset(self.edgeInsets)
-            make.left.bottom.equalToSuperview().inset(self.edgeInsets)
-        }
     }
     
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
         self.subtitleLabel.text = "\(movie.year), \(movie.genre)"
         self.imageView.image = movie.image
+        
+        self.setNeedsUpdateConstraints()
     }
 }
 
