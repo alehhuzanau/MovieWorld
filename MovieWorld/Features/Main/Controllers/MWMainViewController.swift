@@ -8,9 +8,29 @@
 
 import UIKit
 
+
+typealias MWSection = (name: String, movies: [MWMovie])
+
 class MWMainViewController: UITableViewController {
-    
-    private let sections = ["New", "Movies", "Series and shows", "Animated movies"]
+        
+    private let sections: [MWSection] = {
+        let image = UIImage(named: Constants.ImageName.movieImage)
+        let movies: [MWMovie] = [
+            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
+            MWMovie(title: "The Good Liar", image: image!, genre: "Drama", year: 2019),
+            MWMovie(title: "Terminator: D...", image: image!, genre: "Adventures", year: 2019),
+            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
+            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
+            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019)
+        ]
+        
+        return [
+            MWSection(name: "New", movies: movies),
+            MWSection(name: "Movies", movies: movies),
+            MWSection(name: "Series and shows", movies: movies),
+            MWSection(name: "Animated movies", movies: movies)
+        ]
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +59,7 @@ class MWMainViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier) as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
         
-        cell.set(title: self.sections[indexPath.row])
+        cell.set(section: self.sections[indexPath.row])
         cell.layoutIfNeeded()
         
         return cell

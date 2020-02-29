@@ -12,19 +12,8 @@ import SnapKit
 class MWMovieSectionTableViewCell: UITableViewCell {
     static let reuseIdentifier: String = "MWMovieTableViewCell"
     
-    private var dataSource: [MWMovie] = {
-        let image = UIImage(named: Constants.ImageName.movieImage)
+    private var movies: [MWMovie] = []
         
-        return [
-            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "22 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "23 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "24 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "25 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "26 Bridges", image: image!, genre: "Drama", year: 2019)
-        ]
-    }()
-    
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
 
@@ -64,8 +53,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(title: String) {
-        self.titleLabel.text = title
+    func set(section: MWSection) {
+        self.titleLabel.text = section.name
+        self.movies = section.movies
         
         self.setNeedsUpdateConstraints()
     }
@@ -104,13 +94,13 @@ extension MWMovieSectionTableViewCell {
 
 extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.dataSource.count
+        return self.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
                                                             for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
-        cell.set(movie: self.dataSource[indexPath.item])
+        cell.set(movie: self.movies[indexPath.item])
         cell.layoutIfNeeded()
         
         return cell
