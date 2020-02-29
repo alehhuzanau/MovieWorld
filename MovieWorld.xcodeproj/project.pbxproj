@@ -95,7 +95,6 @@
 				24261BC123F6A3E0009DF49A /* AppDelegate.swift */,
 				CF3102362405614000AC0E1A /* Common */,
 				CF31023B240561A400AC0E1A /* Features */,
-				CF3102452405624000AC0E1A /* Utility */,
 				24261BD623F6A696009DF49A /* Resources */,
 			);
 			path = MovieWorld;
@@ -247,13 +246,6 @@
 			children = (
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		CF3102452405624000AC0E1A /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utility;
 			sourceTree = "<group>";
 		};
 		CFF03AD12406ADBA0075A10F /* Buttons */ = {

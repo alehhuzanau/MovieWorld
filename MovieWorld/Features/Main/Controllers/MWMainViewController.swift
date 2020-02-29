@@ -21,6 +21,7 @@ class MWMainViewController: UITableViewController {
         self.tableView.dataSource = self
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.tableView.isUserInteractionEnabled = true
+        self.tableView.rowHeight = 305
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,7 +29,7 @@ class MWMainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 // self.sections.count
+        return self.sections.count
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,7 +37,7 @@ class MWMainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier) as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier) as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
         
         cell.set(title: self.sections[indexPath.row])
         cell.layoutIfNeeded()

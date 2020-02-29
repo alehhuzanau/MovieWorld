@@ -16,10 +16,11 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 5
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 5
 
         return imageView
     }()
@@ -50,17 +51,17 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     }
     
     override func updateConstraints() {
-        self.subtitleLabel.snp.updateConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-        }
-        self.titleLabel.snp.updateConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.subtitleLabel.snp.top)
-        }
-        self.imageView.snp.updateConstraints { (make) in
+        self.imageView.snp.updateConstraints { make in
             make.top.left.equalToSuperview()
             make.size.equalTo(self.imageViewSize)
-            make.bottom.equalTo(self.titleLabel.snp.top)
+        }
+        self.titleLabel.snp.updateConstraints { make in
+            make.top.equalTo(self.imageView.snp.bottom).inset(-12)
+            make.left.right.bottom.equalToSuperview()
+        }
+        self.subtitleLabel.snp.updateConstraints { make in
+            make.top.equalTo(self.titleLabel.snp.bottom)
+            make.left.right.equalToSuperview()
         }
         
         super.updateConstraints()

@@ -39,11 +39,11 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: self.createLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(MWCardCollectionViewCell.self,
                                 forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
 
@@ -55,10 +55,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.titleLabel)
-        self.addSubview(self.collectionView)
         self.addSubview(self.allButton)
+        self.addSubview(self.collectionView)
     }
     
     required init?(coder: NSCoder) {
@@ -76,12 +75,12 @@ class MWMovieSectionTableViewCell: UITableViewCell {
             make.top.left.equalToSuperview().inset(self.edgeInsets)
         }
         self.allButton.snp.updateConstraints { (make) in
-            make.top.right.equalToSuperview().inset(self.edgeInsets)
+            make.right.equalToSuperview().inset(self.edgeInsets)
             make.size.equalTo(self.buttonSize)
-            make.bottom.equalTo(self.titleLabel.snp.bottom)
+            make.centerY.equalTo(self.titleLabel.snp.centerY)
         }
         self.collectionView.snp.updateConstraints { (make) in
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(self.titleLabel.snp.bottom)
             make.left.bottom.right.equalToSuperview()
         }
 
@@ -93,11 +92,11 @@ extension MWMovieSectionTableViewCell {
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.estimatedItemSize = CGSize(width: 130, height: 237)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
-        layout.headerReferenceSize = CGSize(width: 0, height: 40)
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout.headerReferenceSize = CGSize(width: 0, height: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 7)
 
         return layout
     }
