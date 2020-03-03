@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Alamofire
 
 typealias MWNet = MWNetwork
 
 class MWNetwork {
-    static let apiKey = "79d5894567be5b76ab7434fc12879584"
-    static let baseUrl = "https://developers.themoviedb.org/3/"
+    private static let apiKey = "79d5894567be5b76ab7434fc12879584"
+    private let baseUrl = "https://api.themoviedb.org/3/"
+    private let baseParameters: [String : String] = ["api_key" : apiKey]
     
     static let sh = MWNetwork()
     
@@ -22,6 +24,12 @@ class MWNetwork {
                  parameters: [String : String],
                  successHandler: () -> Void,
                  errorHandler: () -> Void) {
+        var params = parameters
+        params.merge(other: self.baseParameters)
+        let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
         
+        AF.request(url).responseJSON { response in
+            print(response)
+        }
     }
 }

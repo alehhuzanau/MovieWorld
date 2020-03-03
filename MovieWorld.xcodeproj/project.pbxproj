@@ -27,6 +27,8 @@
 		CF7A0454240EA3D20003AD7B /* MWNetwork+ExUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A0453240EA3D20003AD7B /* MWNetwork+ExUtility.swift */; };
 		CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A0455240EA3FB0003AD7B /* String+Ex.swift */; };
 		CF942B122406CE1D00849D78 /* MWCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */; };
+		CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */; };
+		CFB983BC240EAC4200FA9ACF /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB983BB240EAC4200FA9ACF /* NetworkExtension.framework */; };
 		CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD22406ADEC0075A10F /* MWNextButton.swift */; };
 		CFF03AD52406BA220075A10F /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD42406BA220075A10F /* MWButton.swift */; };
 /* End PBXBuildFile section */
@@ -54,6 +56,8 @@
 		CF7A0453240EA3D20003AD7B /* MWNetwork+ExUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MWNetwork+ExUtility.swift"; sourceTree = "<group>"; };
 		CF7A0455240EA3FB0003AD7B /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
 		CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ex.swift"; sourceTree = "<group>"; };
+		CFB983BB240EAC4200FA9ACF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		CFF03AD22406ADEC0075A10F /* MWNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWNextButton.swift; sourceTree = "<group>"; };
 		CFF03AD42406BA220075A10F /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
 		D840BBF260C28B8ED11050DE /* Pods-MovieWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieWorld.release.xcconfig"; path = "Target Support Files/Pods-MovieWorld/Pods-MovieWorld.release.xcconfig"; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29A80035490F8BD7570DDCDA /* Pods_MovieWorld.framework in Frameworks */,
+				CFB983BC240EAC4200FA9ACF /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +80,7 @@
 		1D14FAC658BE32876533FF06 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CFB983BB240EAC4200FA9ACF /* NetworkExtension.framework */,
 				CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */,
 			);
 			name = Frameworks;
@@ -275,6 +281,7 @@
 			children = (
 				CF7A0453240EA3D20003AD7B /* MWNetwork+ExUtility.swift */,
 				CF7A0455240EA3FB0003AD7B /* String+Ex.swift */,
+				CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */,
 			);
 			path = ExUtility;
 			sourceTree = "<group>";
@@ -403,6 +410,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */,
 				CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */,
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
@@ -557,6 +565,7 @@
 			baseConfigurationReference = FF948485364ACC6335801C53 /* Pods-MovieWorld.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MovieWorld/MovieWorld.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MovieWorld/Info.plist;
@@ -578,6 +587,7 @@
 			baseConfigurationReference = D840BBF260C28B8ED11050DE /* Pods-MovieWorld.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MovieWorld/MovieWorld.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MovieWorld/Info.plist;

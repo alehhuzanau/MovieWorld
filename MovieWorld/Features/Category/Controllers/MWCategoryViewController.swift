@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MWCategoryViewController: UIViewController {
     
@@ -15,5 +16,9 @@ class MWCategoryViewController: UIViewController {
 
         self.title = "Category"
         self.view.backgroundColor = .green
+        
+        MWNet.sh.request(urlPath: MWURLPaths.popularMovies,
+                         parameters: [:], successHandler: {}, errorHandler: {})
+        
     }
 }
