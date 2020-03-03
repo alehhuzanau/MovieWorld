@@ -21,6 +21,7 @@
 		CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */; };
 		CF31025424057D4F00AC0E1A /* MWMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025324057D4F00AC0E1A /* MWMovie.swift */; };
 		CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF31025524057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift */; };
+		CF7A044D240EA0450003AD7B /* MWNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A044C240EA0450003AD7B /* MWNetwork.swift */; };
 		CF942B122406CE1D00849D78 /* MWCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */; };
 		CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD22406ADEC0075A10F /* MWNextButton.swift */; };
 		CFF03AD52406BA220075A10F /* MWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF03AD42406BA220075A10F /* MWButton.swift */; };
@@ -43,6 +44,7 @@
 		CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSearchViewController.swift; sourceTree = "<group>"; };
 		CF31025324057D4F00AC0E1A /* MWMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovie.swift; sourceTree = "<group>"; };
 		CF31025524057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieSectionTableViewCell.swift; sourceTree = "<group>"; };
+		CF7A044C240EA0450003AD7B /* MWNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWNetwork.swift; sourceTree = "<group>"; };
 		CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CFF03AD22406ADEC0075A10F /* MWNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWNextButton.swift; sourceTree = "<group>"; };
 		CFF03AD42406BA220075A10F /* MWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWButton.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		CF3102362405614000AC0E1A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CF7A044B240EA0280003AD7B /* Network */,
 				CF3102372405615700AC0E1A /* Navigation */,
 				CF3102382405616000AC0E1A /* Controllers */,
 				CF3102392405616800AC0E1A /* Controls */,
@@ -134,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				CF3102462405636300AC0E1A /* MWInterface.swift */,
+				CF7A044C240EA0450003AD7B /* MWNetwork.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -246,6 +250,13 @@
 			children = (
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CF7A044B240EA0280003AD7B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		CFF03AD12406ADBA0075A10F /* Buttons */ = {
@@ -382,6 +393,7 @@
 				CF31025024056AB900AC0E1A /* MWCategoryViewController.swift in Sources */,
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
 				24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */,
+				CF7A044D240EA0450003AD7B /* MWNetwork.swift in Sources */,
 				CF31025424057D4F00AC0E1A /* MWMovie.swift in Sources */,
 				CF942B122406CE1D00849D78 /* MWCardCollectionViewCell.swift in Sources */,
 				CF31024D24056AA000AC0E1A /* MWMainViewController.swift in Sources */,
