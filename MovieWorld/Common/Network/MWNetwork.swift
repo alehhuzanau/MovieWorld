@@ -22,14 +22,39 @@ class MWNetwork {
     
     func request(urlPath: String,
                  parameters: [String : String],
-                 successHandler: () -> Void,
-                 errorHandler: () -> Void) {
+                 successHandler: @escaping () -> Void,
+                 errorHandler: @escaping () -> Void) {
         var params = parameters
         params.merge(other: self.baseParameters)
         let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
         
-        AF.request(url).responseJSON { response in
-            print(response)
+        AF.request(url).responseJSON { responseJSON in
+            guard let statusCode = responseJSON.response?.statusCode else {
+                // - TODO: call errorHandler
+                errorHandler()
+                return
+            }
+            print("statusCode: ", statusCode)
+            switch statusCode {
+            case 200..<300:
+                //print(responseJSON)
+                
+                switch responseJSON.result {
+                case .success(let value):
+                    print(value)
+                    guard let genres = MWGenre.getArray(from: value) else { return }
+                    print(genres)
+                default:
+                    print("error")
+                }
+                // call successHandler
+                break
+            case 401:
+                break
+            case 404:
+                break
+            default: return
+            }
         }
     }
 }

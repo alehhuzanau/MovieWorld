@@ -26,6 +26,7 @@
 		CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A0450240EA3230003AD7B /* MWURLPaths.swift */; };
 		CF7A0454240EA3D20003AD7B /* MWNetwork+ExUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A0453240EA3D20003AD7B /* MWNetwork+ExUtility.swift */; };
 		CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7A0455240EA3FB0003AD7B /* String+Ex.swift */; };
+		CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF878D91240EB743008CCB3A /* MWGenre.swift */; };
 		CF942B122406CE1D00849D78 /* MWCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */; };
 		CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */; };
 		CFB983BC240EAC4200FA9ACF /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB983BB240EAC4200FA9ACF /* NetworkExtension.framework */; };
@@ -55,6 +56,7 @@
 		CF7A0450240EA3230003AD7B /* MWURLPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWURLPaths.swift; sourceTree = "<group>"; };
 		CF7A0453240EA3D20003AD7B /* MWNetwork+ExUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MWNetwork+ExUtility.swift"; sourceTree = "<group>"; };
 		CF7A0455240EA3FB0003AD7B /* String+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ex.swift"; sourceTree = "<group>"; };
+		CF878D91240EB743008CCB3A /* MWGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenre.swift; sourceTree = "<group>"; };
 		CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ex.swift"; sourceTree = "<group>"; };
 		CFB983BB240EAC4200FA9ACF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				CF31025324057D4F00AC0E1A /* MWMovie.swift */,
+				CF878D91240EB743008CCB3A /* MWGenre.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
 				CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */,
+				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
 				CF31024B24056A4C00AC0E1A /* MWMainTabBarController.swift in Sources */,

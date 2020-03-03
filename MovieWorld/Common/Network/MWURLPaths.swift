@@ -7,6 +7,8 @@
 //
 
 struct MWURLPaths {
+    static let movieGenres: String = "genre/movie/list"
+    static let tvGenres: String = "genre/tv/list"
     static let popularMovies: String = "movie/popular"
     static let topRatedMovies: String = "movie/top_rated"
 }
