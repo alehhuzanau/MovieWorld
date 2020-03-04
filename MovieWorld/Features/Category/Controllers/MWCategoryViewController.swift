@@ -20,8 +20,12 @@ class MWCategoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+                
+        let successHandler: (MWGenres) -> Void = { genres in
+            genres.genres.forEach { print($0) }
+        }
         
         MWNet.sh.request(urlPath: MWURLPaths.movieGenres,
-                         parameters: [:], successHandler: {}, errorHandler: {})
+                         parameters: [:], successHandler: successHandler, errorHandler: {})
     }
 }

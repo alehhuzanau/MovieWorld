@@ -20,31 +20,37 @@ class MWNetwork {
     
     private init() {}
     
-    func request(urlPath: String,
-                 parameters: [String : String],
-                 successHandler: @escaping () -> Void,
-                 errorHandler: @escaping () -> Void) {
+    func request<T: Decodable>(urlPath: String,
+                               parameters: [String : String],
+                               successHandler: @escaping (T) -> Void,
+                               errorHandler: @escaping () -> Void) {
         var params = parameters
         params.merge(other: self.baseParameters)
         let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
         
-        AF.request(url).responseJSON { responseJSON in
-            guard let statusCode = responseJSON.response?.statusCode else {
+        AF.request(url).responseJSON { response in
+            guard response.error == nil else {
+                print(response.error!)
+                return
+            }
+            guard let statusCode = response.response?.statusCode else {
                 // - TODO: call errorHandler
                 errorHandler()
                 return
             }
+            
             print("statusCode: ", statusCode)
             switch statusCode {
             case 200..<300:
-                //print(responseJSON)
-                
-                switch responseJSON.result {
-                case .success(let value):
-                    let genres = MWGenre.getArray(from: value)
-                    print(genres)
-                default:
-                    print("error")
+                guard let data = response.data else {
+                    print("No Data")
+                    return
+                }
+                do {
+                    let list: T = try JSONDecoder().decode(T.self, from: data)
+                    successHandler(list)
+                } catch {
+                    print("JSONSerialization error:", error)
                 }
                 break
             case 401:

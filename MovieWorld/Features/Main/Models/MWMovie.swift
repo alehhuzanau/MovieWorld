@@ -6,7 +6,7 @@
 //  Copyright © 2020 Clevertec. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 struct MWMovie: Decodable {
     var title: String

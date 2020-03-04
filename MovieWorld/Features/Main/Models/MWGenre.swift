@@ -6,23 +6,27 @@
 //  Copyright © 2020 Clevertec. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 struct MWGenre: Decodable {
     var id: Int
     var name: String
     
-    init?(json: [String: Any]) {
-        guard let id = json["id"] as? Int,
-            let name = json["name"] as? String else { return nil }
-        self.id = id
-        self.name = name
+    private enum CodingKeys: String, CodingKey {
+        case id, name
     }
     
-    static func getArray(from jsonArray: Any) -> [MWGenre]? {
-        guard let jsonArray = jsonArray as? [String: Any],
-            let genres = jsonArray["genres"] as? [[String: Any]] else { return nil }
-        
-        return genres.compactMap { MWGenre(json: $0) }
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.name, forKey: .name)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
     }
 }
+
+

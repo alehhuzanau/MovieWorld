@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D1AA6240FEE50006FF73E /* MWGenres.swift */; };
 		24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24146D9D23F6BB91004CFA45 /* Constants.swift */; };
 		24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC123F6A3E0009DF49A /* AppDelegate.swift */; };
 		24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC523F6A3E0009DF49A /* MWViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		240D1AA6240FEE50006FF73E /* MWGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenres.swift; sourceTree = "<group>"; };
 		24146D9D23F6BB91004CFA45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24261BBE23F6A3E0009DF49A /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24261BC123F6A3E0009DF49A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			children = (
 				CF31025324057D4F00AC0E1A /* MWMovie.swift */,
 				CF878D91240EB743008CCB3A /* MWGenre.swift */,
+				240D1AA6240FEE50006FF73E /* MWGenres.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
 				CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */,
+				240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */,
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
