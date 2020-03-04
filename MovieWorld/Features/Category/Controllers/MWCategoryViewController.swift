@@ -24,8 +24,13 @@ class MWCategoryViewController: UIViewController {
         let successHandler: (MWGenres) -> Void = { genres in
             genres.genres.forEach { print($0) }
         }
+        let errorHandler: (MWNetError) -> Void = { error in
+            print(error.getDescription())
+        }
         
         MWNet.sh.request(urlPath: MWURLPaths.movieGenres,
-                         parameters: [:], successHandler: successHandler, errorHandler: {})
+                         parameters: [:],
+                         successHandler: successHandler,
+                         errorHandler: errorHandler)
     }
 }

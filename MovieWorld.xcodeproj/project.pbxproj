@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D1AA6240FEE50006FF73E /* MWGenres.swift */; };
 		24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24146D9D23F6BB91004CFA45 /* Constants.swift */; };
+		24241F71241009F700E09450 /* MWError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24241F70241009F700E09450 /* MWError.swift */; };
 		24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC123F6A3E0009DF49A /* AppDelegate.swift */; };
 		24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24261BC523F6A3E0009DF49A /* MWViewController.swift */; };
 		24261BCB23F6A3E1009DF49A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24261BCA23F6A3E1009DF49A /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		240D1AA6240FEE50006FF73E /* MWGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenres.swift; sourceTree = "<group>"; };
 		24146D9D23F6BB91004CFA45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		24241F70241009F700E09450 /* MWError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWError.swift; sourceTree = "<group>"; };
 		24261BBE23F6A3E0009DF49A /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24261BC123F6A3E0009DF49A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24261BC523F6A3E0009DF49A /* MWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				CF7A044C240EA0450003AD7B /* MWNetwork.swift */,
 				CF7A044E240EA3020003AD7B /* MWNetError.swift */,
 				CF7A0450240EA3230003AD7B /* MWURLPaths.swift */,
+				24241F70241009F700E09450 /* MWError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
 				CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */,
 				240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */,
+				24241F71241009F700E09450 /* MWError.swift in Sources */,
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,

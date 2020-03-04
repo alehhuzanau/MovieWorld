@@ -23,42 +23,43 @@ class MWNetwork {
     func request<T: Decodable>(urlPath: String,
                                parameters: [String : String],
                                successHandler: @escaping (T) -> Void,
-                               errorHandler: @escaping () -> Void) {
+                               errorHandler: @escaping (MWNetError) -> Void) {
         var params = parameters
         params.merge(other: self.baseParameters)
         let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
-        
+                
         AF.request(url).responseJSON { response in
-            guard response.error == nil else {
-                print(response.error!)
-                return
-            }
-            guard let statusCode = response.response?.statusCode else {
-                // - TODO: call errorHandler
-                errorHandler()
-                return
-            }
-            
-            print("statusCode: ", statusCode)
+            guard let statusCode = response.response?.statusCode,
+                let data = response.data else { return }
             switch statusCode {
             case 200..<300:
-                guard let data = response.data else {
-                    print("No Data")
-                    return
-                }
                 do {
                     let list: T = try JSONDecoder().decode(T.self, from: data)
-                    successHandler(list)
+                    self.handleClosure(successHandler, list)
                 } catch {
-                    print("JSONSerialization error:", error)
+                    self.handleClosure(errorHandler,
+                                       .parsingError(message: error.localizedDescription))
                 }
                 break
-            case 401:
+            case 401, 404:
+                do {
+                    let err: MWError = try JSONDecoder().decode(MWError.self, from: data)
+                    self.handleClosure(errorHandler, .error4xx(error: err))
+                } catch {
+                    self.handleClosure(errorHandler,
+                                       .parsingError(message: error.localizedDescription))
+                }
                 break
-            case 404:
-                break
-            default: return
+            default:
+                self.handleClosure(errorHandler, .unknown)
+                return
             }
+        }
+    }
+    
+    private func handleClosure<T>(_ handler: @escaping (T) -> Void, _ error: T) {
+        DispatchQueue.main.async {
+            handler(error)
         }
     }
 }
