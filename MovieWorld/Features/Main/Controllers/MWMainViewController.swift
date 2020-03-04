@@ -13,16 +13,7 @@ typealias MWSection = (name: String, movies: [MWMovie])
 
 class MWMainViewController: UITableViewController {
         
-    private let sections: [MWSection] = {        
-        let movies = [MWMovie(title: "21 Bridges", posterPath: "", genres: [], releaseDate: 2019)]
-        
-        return [
-            MWSection(name: "New", movies: movies),
-            MWSection(name: "Movies", movies: movies),
-            MWSection(name: "Series and shows", movies: movies),
-            MWSection(name: "Animated movies", movies: movies)
-        ]
-    }()
+    private var sections = [MWSection]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +25,13 @@ class MWMainViewController: UITableViewController {
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.tableView.isUserInteractionEnabled = true
         self.tableView.rowHeight = 305
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.setSections()
+        self.tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -59,5 +57,27 @@ class MWMainViewController: UITableViewController {
         cell.layoutIfNeeded()
         
         return cell
+    }
+}
+
+extension MWMainViewController {
+    private func setSections() {
+        self.request(sectionName: "Now Playing", urlPath: MWURLPaths.nowPlayingMovies)
+        self.request(sectionName: "Popular Movies", urlPath: MWURLPaths.popularMovies)
+        self.request(sectionName: "Top Rated Movies", urlPath: MWURLPaths.topRatedMovies)
+        self.request(sectionName: "Upcoming Movies", urlPath: MWURLPaths.upcomingMovies)
+    }
+    
+    private func request(sectionName: String, urlPath: String) {
+        let successHandler: (MWMovieResults) -> Void = { [weak self] results in
+            self!.sections.append(MWSection(name: sectionName, movies: results.results))
+        }
+        let errorHandler: (MWNetError) -> Void = { error in
+            print(error.getDescription())
+        }
+        MWNet.sh.request(urlPath: urlPath,
+                         parameters: [:],
+                         successHandler: successHandler,
+                         errorHandler: errorHandler)
     }
 }

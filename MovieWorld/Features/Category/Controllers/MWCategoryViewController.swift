@@ -17,20 +17,4 @@ class MWCategoryViewController: UIViewController {
         self.title = "Category"
         self.view.backgroundColor = .green
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-                
-        let successHandler: (MWGenres) -> Void = { genres in
-            genres.genres.forEach { print($0) }
-        }
-        let errorHandler: (MWNetError) -> Void = { error in
-            print(error.getDescription())
-        }
-        
-        MWNet.sh.request(urlPath: MWURLPaths.movieGenres,
-                         parameters: [:],
-                         successHandler: successHandler,
-                         errorHandler: errorHandler)
-    }
 }

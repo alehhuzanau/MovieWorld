@@ -28,5 +28,3 @@ struct MWGenre: Decodable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 }
-
-
