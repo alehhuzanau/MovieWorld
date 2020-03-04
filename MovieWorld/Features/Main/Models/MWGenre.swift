@@ -33,7 +33,9 @@ struct MWGenre: Encodable {
     }
     
     static func getArray(from jsonArray: Any) -> [MWGenre]? {
-        guard let jsonArray = jsonArray as? Array<[String: Any]> else { return nil }
-        return jsonArray.compactMap { MWGenre(json: $0) }
+        guard let jsonArray = jsonArray as? [String: Any],
+            let genres = jsonArray["genres"] as? [[String: Any]] else { return nil }
+        
+        return genres.compactMap { MWGenre(json: $0) }
     }
 }

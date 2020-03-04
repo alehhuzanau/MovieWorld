@@ -41,13 +41,11 @@ class MWNetwork {
                 
                 switch responseJSON.result {
                 case .success(let value):
-                    print(value)
-                    guard let genres = MWGenre.getArray(from: value) else { return }
+                    let genres = MWGenre.getArray(from: value)
                     print(genres)
                 default:
                     print("error")
                 }
-                // call successHandler
                 break
             case 401:
                 break
