@@ -43,7 +43,15 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configure()
+        
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubviews()
+    }
+    
+    private func addSubviews() {
+        self.contentView.addSubview(self.imageView)
+        self.contentView.addSubview(self.titleLabel)
+        self.contentView.addSubview(self.subtitleLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -71,17 +79,10 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 }
 
 extension MWCardCollectionViewCell {
-    private func configure() {
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(self.imageView)
-        self.contentView.addSubview(self.titleLabel)
-        self.contentView.addSubview(self.subtitleLabel)
-    }
-    
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = "\(movie.year), \(movie.genre)"
-        self.imageView.image = movie.image
+        self.subtitleLabel.text = "\(movie.releaseDate)"
+        self.imageView.image = UIImage(named: Constants.ImageName.movieImage)
         
         self.setNeedsUpdateConstraints()
     }

@@ -13,16 +13,8 @@ typealias MWSection = (name: String, movies: [MWMovie])
 
 class MWMainViewController: UITableViewController {
         
-    private let sections: [MWSection] = {
-        let image = UIImage(named: Constants.ImageName.movieImage)
-        let movies: [MWMovie] = [
-            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "The Good Liar", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "Terminator: D...", image: image!, genre: "Adventures", year: 2019),
-            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019),
-            MWMovie(title: "21 Bridges", image: image!, genre: "Drama", year: 2019)
-        ]
+    private let sections: [MWSection] = {        
+        let movies = [MWMovie(title: "21 Bridges", posterPath: "", genres: [], releaseDate: 2019)]
         
         return [
             MWSection(name: "New", movies: movies),
@@ -52,12 +44,16 @@ class MWMainViewController: UITableViewController {
         return self.sections.count
     }
     
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView,
+                            estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier) as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
+            as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
         
         cell.set(section: self.sections[indexPath.row])
         cell.layoutIfNeeded()

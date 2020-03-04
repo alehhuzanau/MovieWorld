@@ -8,26 +8,13 @@
 
 import UIKit
 
-struct MWGenre: Encodable {
+struct MWGenre: Decodable {
     var id: Int
     var name: String
     
-    init(id: Int, name: String) {
-        self.id = id
-        self.name = name
-    }
-    
-    init(genre: MWGenre) {
-        self.id = genre.id
-        self.name = genre.name
-    }
-    
     init?(json: [String: Any]) {
         guard let id = json["id"] as? Int,
-            let name = json["name"] as? String
-        else {
-            return nil
-        }
+            let name = json["name"] as? String else { return nil }
         self.id = id
         self.name = name
     }

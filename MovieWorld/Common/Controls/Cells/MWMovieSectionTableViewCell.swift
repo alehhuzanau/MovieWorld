@@ -13,10 +13,10 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     static let reuseIdentifier: String = "MWMovieTableViewCell"
     
     private var movies: [MWMovie] = []
-        
+    
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
-
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 24.0)
@@ -33,9 +33,10 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(MWCardCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
-
+        collectionView.register(
+            MWCardCollectionViewCell.self,
+            forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
+        
         return collectionView
     }()
     
@@ -44,6 +45,10 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.addSubviews()
+    }
+    
+    private func addSubviews() {
         self.addSubview(self.titleLabel)
         self.addSubview(self.allButton)
         self.addSubview(self.collectionView)
@@ -51,13 +56,6 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func set(section: MWSection) {
-        self.titleLabel.text = section.name
-        self.movies = section.movies
-        
-        self.setNeedsUpdateConstraints()
     }
     
     override func updateConstraints() {
@@ -73,7 +71,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
             make.top.equalTo(self.titleLabel.snp.bottom)
             make.left.bottom.right.equalToSuperview()
         }
-
+        
         super.updateConstraints()
     }
 }
@@ -87,22 +85,34 @@ extension MWMovieSectionTableViewCell {
         layout.minimumLineSpacing = 8
         layout.headerReferenceSize = CGSize(width: 0, height: 0)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 7)
-
+        
         return layout
     }
 }
 
-extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return self.movies.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
-                                                            for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
         cell.set(movie: self.movies[indexPath.item])
         cell.layoutIfNeeded()
         
         return cell
+    }
+}
+
+extension MWMovieSectionTableViewCell {
+    func set(section: MWSection) {
+        self.titleLabel.text = section.name
+        self.movies = section.movies
+        
+        self.setNeedsUpdateConstraints()
     }
 }

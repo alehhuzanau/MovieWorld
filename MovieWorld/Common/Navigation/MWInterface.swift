@@ -44,12 +44,14 @@ class MWInterface {
     }
     
     func push(vc: UIViewController) {
-        guard let navigationController = self.tabBarController.selectedViewController as? UINavigationController else { return }
+        guard let navigationController = self.tabBarController.selectedViewController
+            as? UINavigationController else { return }
         navigationController.pushViewController(vc, animated: true)
     }
     
     func popVC() {
-        guard let navigationController = self.tabBarController.selectedViewController as? UINavigationController else { return }
+        guard let navigationController = self.tabBarController.selectedViewController
+            as? UINavigationController else { return }
         navigationController.popViewController(animated: true)
     }
 }

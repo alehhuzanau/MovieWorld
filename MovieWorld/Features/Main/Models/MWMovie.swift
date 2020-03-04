@@ -8,9 +8,13 @@
 
 import UIKit
 
-struct MWMovie {
+struct MWMovie: Decodable {
     var title: String
-    var image: UIImage
-    var genre: String
-    var year: Int
+    var posterPath: String
+    var genres: [Int]
+    var releaseDate: Int
+        
+    private enum CodingKeys: String, CodingKey {
+        case title, posterPath = "poster_path", genres = "genre_ids", releaseDate = "release_date"
+    }
 }
