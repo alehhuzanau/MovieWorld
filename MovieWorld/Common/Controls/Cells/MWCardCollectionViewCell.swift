@@ -89,8 +89,12 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = "\(movie.releaseDate)"
-        self.imageView.image = UIImage(named: Constants.ImageName.movieImage)
+        self.subtitleLabel.text = "\(movie.releaseDate.prefix(4)), Drama"
+        
+        let successHandler: (UIImage) -> Void = { image in
+            self.imageView.image = image
+        }
+        MWNet.sh.downloadImage(movie.posterPath, successHandler: successHandler)
         
         self.setNeedsUpdateConstraints()
     }
