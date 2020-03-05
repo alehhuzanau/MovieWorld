@@ -30,6 +30,11 @@ class MWMainViewController: UITableViewController {
         self.tableView.isUserInteractionEnabled = true
         self.tableView.rowHeight = 305
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.tableView.refreshControl = refreshControl
+
         self.initRequest()
     }
     
@@ -54,6 +59,15 @@ class MWMainViewController: UITableViewController {
                          parameters: [:],
                          successHandler: successHandler,
                          errorHandler: errorHandler)
+    }
+
+    // MARK: - RefreshControl action
+    
+    @objc func refresh(refreshControl: UIRefreshControl) {
+        self.sections.removeAll()
+        self.initRequest()
+        
+        refreshControl.endRefreshing()
     }
     
     // MARK: - TableView methods
