@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Alamofire
 
 class MWCategoryViewController: UIViewController {
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

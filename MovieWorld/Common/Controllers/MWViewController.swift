@@ -62,7 +62,7 @@ class MWViewController: UIViewController {
         return self.getSubtitleLabel()
     }()
     
-    // MARK: - Life cycle funcs
+    // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ class MWViewController: UIViewController {
         self.setMovieToViews()
     }
     
-    // MARK: - Constraint settings
+    // MARK: - Constraints
     
     private func makeConstraints() {
         self.movieView.snp.makeConstraints { (make) in

@@ -27,7 +27,7 @@ class MWNetwork {
         var params = parameters
         params.merge(other: self.baseParameters)
         let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
-                
+        
         AF.request(url).responseJSON { response in
             guard let statusCode = response.response?.statusCode,
                 let data = response.data else { return }

@@ -12,8 +12,12 @@ import SnapKit
 class MWCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "MWCardCollectionViewCellIdentifier"
 
+    // MARK: - Variables
+    
     private let imageViewSize = CGSize(width: 130, height: 185)
 
+    // MARK: - SubViews
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -41,6 +45,8 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Init methods
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -57,6 +63,8 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("not implemnted")
     }
+    
+    // MARK: - Constraints
     
     override func updateConstraints() {
         self.imageView.snp.updateConstraints { make in
@@ -76,9 +84,9 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         
         super.updateConstraints()
     }
-}
-
-extension MWCardCollectionViewCell {
+    
+    // MARK: - Data set methods
+    
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
         self.subtitleLabel.text = "\(movie.releaseDate)"
@@ -87,4 +95,3 @@ extension MWCardCollectionViewCell {
         self.setNeedsUpdateConstraints()
     }
 }
-

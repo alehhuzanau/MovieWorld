@@ -12,10 +12,14 @@ import SnapKit
 class MWMovieSectionTableViewCell: UITableViewCell {
     static let reuseIdentifier: String = "MWMovieTableViewCell"
     
+    // MARK: - Variables
+    
     private var movies: [MWMovie] = []
     
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
+    
+    // MARK: - SubViews
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -42,6 +46,8 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     private lazy var allButton: UIButton = MWNextButton(type: .system)
     
+    // MARK: - Init methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -57,6 +63,8 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Constraints
     
     override func updateConstraints() {
         self.titleLabel.snp.updateConstraints { (make) in
@@ -74,9 +82,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         
         super.updateConstraints()
     }
-}
-
-extension MWMovieSectionTableViewCell {
+    
+    // MARK: - Flow layout
+    
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -87,6 +95,15 @@ extension MWMovieSectionTableViewCell {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 7)
         
         return layout
+    }
+    
+    // MARK: - Data set methods
+    
+    func set(section: MWSection) {
+        self.titleLabel.text = section.name
+        self.movies = section.movies
+        
+        self.setNeedsUpdateConstraints()
     }
 }
 
@@ -105,14 +122,5 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
         cell.layoutIfNeeded()
         
         return cell
-    }
-}
-
-extension MWMovieSectionTableViewCell {
-    func set(section: MWSection) {
-        self.titleLabel.text = section.name
-        self.movies = section.movies
-        
-        self.setNeedsUpdateConstraints()
     }
 }

@@ -20,7 +20,7 @@ class MWButton: UIButton {
         self.setupButton()
     }
     
-    func setupButton() {
+    open func setupButton() {
         self.backgroundColor = UIColor(named: Constants.ColorName.accentColor)
         self.tintColor = .white
         self.layer.cornerRadius = 5
