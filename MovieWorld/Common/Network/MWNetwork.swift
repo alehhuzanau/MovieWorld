@@ -27,34 +27,53 @@ class MWNetwork {
                                errorHandler: @escaping (MWNetError) -> Void) {
         var params = parameters
         params.merge(other: self.baseParameters)
-        let url = self.getUrlWithParams(fullPath: "\(self.baseUrl)\(urlPath)", params: params)
+        let url = "\(self.baseUrl)\(urlPath)"
         
-        AF.request(url).responseJSON { response in
-            guard let statusCode = response.response?.statusCode,
-                let data = response.data else { return }
-            switch statusCode {
-            case 200..<300:
-                do {
-                    let list: T = try JSONDecoder().decode(T.self, from: data)
-                    self.handleClosure(successHandler, list)
-                } catch {
-                    self.handleClosure(errorHandler,
-                                       .parsingError(message: error.localizedDescription))
+        AF.request(
+            url,
+            parameters: params).responseJSON { response in
+                if let error = response.error {
+                    switch error {
+                    case .invalidURL(_):
+                        self.handleClosure(errorHandler, MWNetError.incorrectUrl(url: url))
+                        break
+                    default:
+                        self.handleClosure(
+                            errorHandler,
+                            .networkError(message: error.localizedDescription))
+                    }
+                    return
                 }
-                break
-            case 401, 404:
-                do {
-                    let err: MWError = try JSONDecoder().decode(MWError.self, from: data)
-                    self.handleClosure(errorHandler, .error4xx(error: err))
-                } catch {
-                    self.handleClosure(errorHandler,
-                                       .parsingError(message: error.localizedDescription))
+                guard let statusCode = response.response?.statusCode,
+                    let data = response.data else {
+                        self.handleClosure(errorHandler, .unknown)
+                        return
                 }
-                break
-            default:
-                self.handleClosure(errorHandler, .unknown)
-                return
-            }
+                switch statusCode {
+                case 200..<300:
+                    do {
+                        let list: T = try JSONDecoder().decode(T.self, from: data)
+                        self.handleClosure(successHandler, list)
+                    } catch {
+                        self.handleClosure(
+                            errorHandler,
+                            .parsingError(message: error.localizedDescription))
+                    }
+                    break
+                case 401, 404:
+                    do {
+                        let err: MWError = try JSONDecoder().decode(MWError.self, from: data)
+                        self.handleClosure(errorHandler, .error4xx(error: err))
+                    } catch {
+                        self.handleClosure(
+                            errorHandler,
+                            .parsingError(message: error.localizedDescription))
+                    }
+                    break
+                default:
+                    self.handleClosure(errorHandler, .unknown)
+                    return
+                }
         }
     }
     
