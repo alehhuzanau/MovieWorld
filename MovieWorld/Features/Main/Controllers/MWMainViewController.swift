@@ -48,16 +48,15 @@ class MWMainViewController: UITableViewController {
     }
     
     private func request(sectionName: String, urlPath: String) {
-        let successHandler: (MWMovieResults) -> Void = { [weak self] results in
-            self?.sections.append(MWSection(name: sectionName, movies: results.results))
-            self?.tableView.reloadData()
-        }
-        let errorHandler: (MWNetError) -> Void = { error in
-            print(error.getDescription())
-        }
-        MWNet.sh.request(urlPath: urlPath,
-                         successHandler: successHandler,
-                         errorHandler: errorHandler)
+        MWNet.sh.request(
+            urlPath: urlPath,
+            successHandler: { [weak self] (results: MWMovieResults) in
+                self?.sections.append(MWSection(name: sectionName, movies: results.results))
+                self?.tableView.reloadData()
+            },
+            errorHandler: { error in
+                print(error.getDescription())
+        })
     }
 
     // MARK: - RefreshControl action

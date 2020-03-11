@@ -14,7 +14,7 @@ class MWInterface {
     
     static let sh = MWInterface()
     
-    weak var window: UIWindow?
+    private weak var window: UIWindow?
     
     private lazy var tabBarController = MWMainTabBarController()
     
@@ -44,14 +44,10 @@ class MWInterface {
     }
     
     func push(vc: UIViewController) {
-        guard let navigationController = self.tabBarController.selectedViewController
-            as? UINavigationController else { return }
-        navigationController.pushViewController(vc, animated: true)
+        self.tabBarController.navigationController?.pushViewController(vc, animated: true)
     }
     
     func popVC() {
-        guard let navigationController = self.tabBarController.selectedViewController
-            as? UINavigationController else { return }
-        navigationController.popViewController(animated: true)
+        self.tabBarController.navigationController?.popViewController(animated: true)
     }
 }

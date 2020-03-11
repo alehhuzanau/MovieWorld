@@ -19,7 +19,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
     
-    // MARK: - SubViews
+    // MARK: - GUI variables
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -53,6 +53,10 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         
         self.addSubviews()
     }
+        
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private func addSubviews() {
         self.addSubview(self.titleLabel)
@@ -60,15 +64,12 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         self.addSubview(self.collectionView)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Constraints
     
     override func updateConstraints() {
         self.titleLabel.snp.updateConstraints { (make) in
             make.top.left.equalToSuperview().inset(self.edgeInsets)
+            make.right.equalTo(self.allButton.snp.left)
         }
         self.allButton.snp.updateConstraints { (make) in
             make.right.equalToSuperview().inset(self.edgeInsets)

@@ -16,7 +16,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     private let imageViewSize = CGSize(width: 130, height: 185)
 
-    // MARK: - SubViews
+    // MARK: - GUI variables
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,7 +29,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(13)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,14 +54,14 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         self.addSubviews()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("not implemnted")
+    }
+    
     private func addSubviews() {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.subtitleLabel)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("not implemnted")
     }
     
     // MARK: - Constraints
@@ -78,7 +78,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         }
         self.subtitleLabel.snp.updateConstraints { make in
             make.top.equalTo(self.titleLabel.snp.bottom)
-            make.left.right.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
             make.width.lessThanOrEqualTo(self.imageViewSize.width)
         }
         
@@ -91,10 +91,11 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         self.titleLabel.text = movie.title
         self.subtitleLabel.text = "\(movie.releaseDate.prefix(4)), Drama"
         
-        let successHandler: (UIImage) -> Void = { image in
-            self.imageView.image = image
-        }
-        MWNet.sh.downloadImage(movie.posterPath, successHandler: successHandler)
+        MWNet.sh.downloadImage(
+            movie.posterPath,
+            successHandler: { [weak self] image in
+                self?.imageView.image = image
+        })
         
         self.setNeedsUpdateConstraints()
     }
