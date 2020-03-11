@@ -56,7 +56,6 @@ class MWMainViewController: UITableViewController {
             print(error.getDescription())
         }
         MWNet.sh.request(urlPath: urlPath,
-                         parameters: [:],
                          successHandler: successHandler,
                          errorHandler: errorHandler)
     }
@@ -85,10 +84,14 @@ class MWMainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
             as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
-        
+        cell.selectionStyle = .none
         cell.set(section: self.sections[indexPath.row])
         cell.layoutIfNeeded()
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

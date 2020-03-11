@@ -22,7 +22,7 @@ class MWNetwork {
     private init() {}
     
     func request<T: Decodable>(urlPath: String,
-                               parameters: [String : String],
+                               parameters: [String : String] = [:],
                                successHandler: @escaping (T) -> Void,
                                errorHandler: @escaping (MWNetError) -> Void) {
         var params = parameters
