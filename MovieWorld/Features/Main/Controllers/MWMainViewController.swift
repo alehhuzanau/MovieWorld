@@ -22,7 +22,7 @@ class MWMainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "Season"
+        self.navigationItem.title = "Season".localized
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -41,10 +41,10 @@ class MWMainViewController: UITableViewController {
     // MARK: - Request methods
     
     private func initRequest() {
-        self.request(sectionName: "Now Playing", urlPath: MWURLPaths.nowPlayingMovies)
-        self.request(sectionName: "Popular Movies", urlPath: MWURLPaths.popularMovies)
-        self.request(sectionName: "Top Rated Movies", urlPath: MWURLPaths.topRatedMovies)
-        self.request(sectionName: "Upcoming Movies", urlPath: MWURLPaths.upcomingMovies)
+        self.request(sectionName: "Now Playing".localized, urlPath: MWURLPaths.nowPlayingMovies)
+        self.request(sectionName: "Popular Movies".localized, urlPath: MWURLPaths.popularMovies)
+        self.request(sectionName: "Top Rated Movies".localized, urlPath: MWURLPaths.topRatedMovies)
+        self.request(sectionName: "Upcoming Movies".localized, urlPath: MWURLPaths.upcomingMovies)
     }
     
     private func request(sectionName: String, urlPath: String) {

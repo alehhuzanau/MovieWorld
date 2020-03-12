@@ -15,7 +15,7 @@ class MWCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Category"
+        self.title = "Category".localized
         self.view.backgroundColor = .green
     }
 }

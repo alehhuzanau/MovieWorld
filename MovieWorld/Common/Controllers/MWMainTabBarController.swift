@@ -13,17 +13,17 @@ class MWMainTabBarController: UITabBarController {
     // MARK: - Bar items
     
     private lazy var mainTabBarItem = UITabBarItem(
-        title: "Main",
+        title: "Main".localized,
         image: UIImage(named: Constants.ImageName.mainIcon),
         tag: 0)
     
     private lazy var categoryTabBarItem = UITabBarItem(
-        title: "Category",
+        title: "Category".localized,
         image: UIImage(named: Constants.ImageName.categoryIcon),
         tag: 1)
     
     private lazy var searchTabBarItem = UITabBarItem(
-        title: "Search",
+        title: "Search".localized,
         image: UIImage(named: Constants.ImageName.searchIcon),
         tag: 2)
     

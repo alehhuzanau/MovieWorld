@@ -15,9 +15,21 @@ extension String {
         let range = start..<end
         return String(self[range])
     }
-
+    
     subscript(integerIndex: Int) -> Character {
         let index = self.index(startIndex, offsetBy: integerIndex)
         return self[index]
+    }
+}
+
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    func localized(_ args: CVarArg...) -> String {
+        return withVaList(args) {
+            return NSString(format: localized, arguments: $0) as String
+        }
     }
 }
