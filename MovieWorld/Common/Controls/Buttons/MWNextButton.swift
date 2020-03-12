@@ -15,7 +15,7 @@ class MWNextButton: MWButton {
         
         let nextIcon = UIImage(named: Constants.ImageName.nextIcon)
         
-        self.setTitle("All", for: .normal)
+        self.setTitle("All".localized, for: .normal)
         self.setImage(nextIcon, for: .normal)
     }
 

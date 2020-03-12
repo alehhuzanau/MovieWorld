@@ -25,7 +25,7 @@ class MWInterface {
         
         self.setUpNavigationBarStyle()
         
-        window.rootViewController = self.tabBarController
+        window.rootViewController = MWInitController()
         window.makeKeyAndVisible()
     }
     
@@ -49,5 +49,9 @@ class MWInterface {
     
     func popVC() {
         self.tabBarController.navigationController?.popViewController(animated: true)
+    }
+    
+    func setRootVC() {
+        self.window?.rootViewController = self.tabBarController
     }
 }
