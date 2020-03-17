@@ -11,6 +11,12 @@ import SnapKit
 
 class MWInitController: UIViewController {
     
+    // MARK: - Variables
+    
+    private let dispatchGroup = DispatchGroup()
+    
+    private var genres = MWGenres(genres: [])
+    
     // MARK: - GUI Variables
     
     private lazy var contentView: UIView = {
@@ -65,12 +71,20 @@ class MWInitController: UIViewController {
         self.makeConstraints()
         
         self.indicator.startAnimating()
+        
+        self.fetchGenres(urlPath: MWURLPaths.movieGenres)
+        self.fetchGenres(urlPath: MWURLPaths.tvGenres)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        MWI.sh.setRootVC()
+        self.dispatchGroup.notify(queue: .main) {
+            self.genres.genres = Array(Set(self.genres.genres))
+            print(self.genres.genres)
+            
+            MWI.sh.setRootVC()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,5 +120,20 @@ class MWInitController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-76)
         }
+    }
+    
+    // MARK: - Requests
+    
+    private func fetchGenres(urlPath: String) {
+        self.dispatchGroup.enter()
+        MWNet.sh.request(
+            urlPath: urlPath,
+            successHandler: { [weak self] (genres: MWGenres) in
+                self?.genres.genres += genres.genres
+                self?.dispatchGroup.leave()
+            },
+            errorHandler: { error in
+                print(error.getDescription())
+        })
     }
 }

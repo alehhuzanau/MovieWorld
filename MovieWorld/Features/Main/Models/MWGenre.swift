@@ -12,3 +12,7 @@ struct MWGenre: Decodable {
     var id: Int
     var name: String
 }
+
+extension MWGenre: Hashable {
+    
+}
