@@ -14,7 +14,11 @@ class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
     
+    private let dispatchGroup = DispatchGroup()
+    
     private var sections = [MWSection]()
+        
+    private var movies = [MWMovie]()
     
     // MARK: - Life cycle
     
@@ -34,13 +38,18 @@ class MWMainViewController: UITableViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         
-        if let genres = MWCoreDataManager.s.fetchGenres() {
-            for genre in genres {
-                print("\(genre.id) \(genre.name!)")
-            }
-        }
-        
         self.initRequest()
+        
+        self.dispatchGroup.notify(queue: .main) {
+            for movie in self.movies {
+                MWCoreDataManager.s.saveMovie(
+                    title: movie.title,
+                    releaseDate: movie.releaseDate,
+                    posterPath: movie.posterPath,
+                    genreIds: [28])
+            }
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Request methods
@@ -53,14 +62,17 @@ class MWMainViewController: UITableViewController {
     }
     
     private func request(sectionName: String, urlPath: String) {
+        self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: urlPath,
             successHandler: { [weak self] (results: MWMovieResults) in
                 self?.sections.append(MWSection(name: sectionName, movies: results.results))
-                self?.tableView.reloadData()
+                self?.movies += results.results
+                self?.dispatchGroup.leave()
             },
-            errorHandler: { error in
+            errorHandler: { [weak self] error in
                 print(error.getDescription())
+                self?.dispatchGroup.leave()
         })
     }
     
