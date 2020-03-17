@@ -15,7 +15,7 @@ class MWInitController: UIViewController {
     
     private let dispatchGroup = DispatchGroup()
     
-    private var genres = MWGenres(genres: [])
+    private var genres = [MWGenre]()
     
     // MARK: - GUI Variables
     
@@ -80,8 +80,12 @@ class MWInitController: UIViewController {
         super.viewDidAppear(animated)
         
         self.dispatchGroup.notify(queue: .main) {
-            self.genres.genres = Array(Set(self.genres.genres))
-            print(self.genres.genres)
+            self.genres = Array(Set(self.genres))
+            
+            MWCoreDataManager.s.deleteAllGenres()
+            for genre in self.genres {
+                MWCoreDataManager.s.saveGenre(id: Int64(genre.id), name: genre.name)
+            }
             
             MWI.sh.setRootVC()
         }
@@ -129,7 +133,7 @@ class MWInitController: UIViewController {
         MWNet.sh.request(
             urlPath: urlPath,
             successHandler: { [weak self] (genres: MWGenres) in
-                self?.genres.genres += genres.genres
+                self?.genres += genres.genres
                 self?.dispatchGroup.leave()
             },
             errorHandler: { error in

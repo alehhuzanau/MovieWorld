@@ -8,11 +8,10 @@
 
 import UIKit
 
-
 typealias MWSection = (name: String, movies: [MWMovie])
 
 class MWMainViewController: UITableViewController {
-        
+    
     // MARK: - Variables
     
     private var sections = [MWSection]()
@@ -21,7 +20,7 @@ class MWMainViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.title = "Season".localized
         
         self.tableView.delegate = self
@@ -34,7 +33,13 @@ class MWMainViewController: UITableViewController {
         refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
-
+        
+        if let genres = MWCoreDataManager.s.fetchGenres() {
+            for genre in genres {
+                print("\(genre.id) \(genre.name!)")
+            }
+        }
+        
         self.initRequest()
     }
     
@@ -58,7 +63,7 @@ class MWMainViewController: UITableViewController {
                 print(error.getDescription())
         })
     }
-
+    
     // MARK: - RefreshControl action
     
     @objc func refresh(refreshControl: UIRefreshControl) {
