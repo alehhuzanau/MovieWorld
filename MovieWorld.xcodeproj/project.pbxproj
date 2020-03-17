@@ -21,6 +21,8 @@
 		2452F060242102DD00A950EC /* Genre+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F05E242102DD00A950EC /* Genre+CoreDataClass.swift */; };
 		2452F061242102DD00A950EC /* Genre+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F05F242102DD00A950EC /* Genre+CoreDataProperties.swift */; };
 		2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06424210E9100A950EC /* MWCoreDataManager.swift */; };
+		2452F06C24211DD700A950EC /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */; };
+		2452F06D24211DD700A950EC /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */; };
 		29A80035490F8BD7570DDCDA /* Pods_MovieWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
 		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
@@ -60,6 +62,8 @@
 		2452F05E242102DD00A950EC /* Genre+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Genre+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		2452F05F242102DD00A950EC /* Genre+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Genre+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		2452F06424210E9100A950EC /* MWCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCoreDataManager.swift; sourceTree = "<group>"; };
+		2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
 		CF310248240565B900AC0E1A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 		2452F05D2421022F00A950EC /* DataClasses */ = {
 			isa = PBXGroup;
 			children = (
+				2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */,
+				2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */,
 				2452F05E242102DD00A950EC /* Genre+CoreDataClass.swift */,
 				2452F05F242102DD00A950EC /* Genre+CoreDataProperties.swift */,
 			);
@@ -456,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2452F06C24211DD700A950EC /* Movie+CoreDataClass.swift in Sources */,
 				CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */,
 				CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */,
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
@@ -466,6 +473,7 @@
 				24241F71241009F700E09450 /* MWError.swift in Sources */,
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
+				2452F06D24211DD700A950EC /* Movie+CoreDataProperties.swift in Sources */,
 				2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
 				CF31024B24056A4C00AC0E1A /* MWMainTabBarController.swift in Sources */,

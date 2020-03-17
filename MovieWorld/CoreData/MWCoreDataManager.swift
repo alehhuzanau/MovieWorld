@@ -48,7 +48,7 @@ class MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    private func save(context: NSManagedObjectContext) {
+    func save(context: NSManagedObjectContext) {
         do {
             try context.save()
         } catch {
@@ -57,7 +57,7 @@ extension MWCoreDataManager {
     }
     
     private func deleteAllData(entity: String) {
-        let managedContext = MWCoreDataManager.s.persistentContainer.viewContext
+        let managedContext = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         do
@@ -72,13 +72,26 @@ extension MWCoreDataManager {
             print("Delete all data in \(entity) error : \(error) \(error.userInfo)")
         }
     }
+    
+    private func fetchData<T: NSManagedObject>(sortDescriptors: [NSSortDescriptor]? = nil) -> [T]? {
+        let managedContext = self.persistentContainer.viewContext
+        let fetch: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
+        fetch.sortDescriptors = sortDescriptors
+        do {
+            let genres = try managedContext.fetch(fetch)
+            return genres
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
 }
 
 extension MWCoreDataManager {
     func saveGenre(id: Int64, name: String) {
-        let managedContext = MWCoreDataManager.s.persistentContainer.viewContext
+        let managedContext = self.persistentContainer.viewContext
         let newGenre = Genre(context: managedContext)
-        newGenre.id = Int64(id)
+        newGenre.id = id
         newGenre.name = name
         self.save(context: managedContext)
     }
@@ -88,16 +101,30 @@ extension MWCoreDataManager {
     }
     
     func fetchGenres() -> [Genre]? {
-        let managedContext = MWCoreDataManager.s.persistentContainer.viewContext
-        let fetch: NSFetchRequest<Genre> = Genre.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-        fetch.sortDescriptors = [sortDescriptor]
-        do {
-            let genres = try managedContext.fetch(fetch)
-            return genres
-        } catch {
-            print(error.localizedDescription)
+        self.fetchData(sortDescriptors: [NSSortDescriptor(key: "id", ascending: true)])
+    }
+}
+
+extension MWCoreDataManager {
+    func saveMovie(title: String, releaseDate: String?, posterPath: String?, genreIds: [Int64]) {
+        let managedContext = self.persistentContainer.viewContext
+        let newMovie = Movie(context: managedContext)
+        newMovie.title = title
+        newMovie.releaseDate = releaseDate
+        newMovie.posterPath = posterPath
+        if let genres = self.fetchGenres() {
+            genres
+                .filter { genreIds.contains($0.id) }
+                .forEach { newMovie.addToGenres($0) }
         }
-        return nil
+        self.save(context: managedContext)
+    }
+    
+    func deleteAllMovies() {
+        self.deleteAllData(entity: "Movie")
+    }
+    
+    func fetchMovies() -> [Movie]? {
+        self.fetchData()
     }
 }

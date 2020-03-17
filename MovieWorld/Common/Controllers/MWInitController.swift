@@ -136,8 +136,9 @@ class MWInitController: UIViewController {
                 self?.genres += genres.genres
                 self?.dispatchGroup.leave()
             },
-            errorHandler: { error in
+            errorHandler: { [weak self]  error in
                 print(error.getDescription())
+                self?.dispatchGroup.leave()
         })
     }
 }
