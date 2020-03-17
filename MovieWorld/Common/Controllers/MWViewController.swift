@@ -9,13 +9,13 @@
 import UIKit
 import SnapKit
 
-typealias Movie = (title: String, image: UIImage, year: Int, country: String, genres: [String], rates: [String : String])
+//typealias Movie = (title: String, image: UIImage, year: Int, country: String, genres: [String], rates: [String : String])
 
 class MWViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var movie: Movie?
+//    private var movie: Movie?
     private let movieViewSize = CGSize(width: 200, height: 150)
     private let movieViewEdgeInsets = UIEdgeInsets(top: 100, left: 20, bottom: 100, right: 20)
     private let imageViewSize = CGSize(width: 90, height: 150)
@@ -71,8 +71,8 @@ class MWViewController: UIViewController {
         self.makeConstraints()
         //self.makeConstraintsByAnchors()
         
-        self.setMovie()
-        self.setMovieToViews()
+//        self.setMovie()
+//        self.setMovieToViews()
     }
     
     // MARK: - Constraints
@@ -155,20 +155,20 @@ class MWViewController: UIViewController {
         self.movieView.addSubview(self.ratesLabel)
     }
     
-    private func setMovie() {
-        self.movie = (title: "Green Book",
-                      image: UIImage(named: Constants.ImageName.movieImage),
-                      year: 2018,
-                      country: "USA",
-                      genres: ["Comedy", "Drama", "Foreign"],
-                      rates: ["IMDB" : "8.2", "KP" : "8.3"]) as? Movie
-    }
-    
-    private func setMovieToViews() {
-        self.imageView.image = self.movie?.image
-        self.titleLabel.text = self.movie?.title
-        self.subtitleLabel.text = "\(self.movie?.year ?? 0), \(self.movie?.country ?? "")"
-        self.genresLabel.text = self.movie?.genres.joined(separator:",")
-        self.ratesLabel.text = self.movie?.rates.map { $0.0 + " " + $0.1 }.joined(separator: ", ")
-    }
+//    private func setMovie() {
+//        self.movie = (title: "Green Book",
+//                      image: UIImage(named: Constants.ImageName.movieImage),
+//                      year: 2018,
+//                      country: "USA",
+//                      genres: ["Comedy", "Drama", "Foreign"],
+//                      rates: ["IMDB" : "8.2", "KP" : "8.3"]) as? Movie
+//    }
+//
+//    private func setMovieToViews() {
+//        self.imageView.image = self.movie?.image
+//        self.titleLabel.text = self.movie?.title
+//        self.subtitleLabel.text = "\(self.movie?.year ?? 0), \(self.movie?.country ?? "")"
+//        self.genresLabel.text = self.movie?.genres.joined(separator:",")
+//        self.ratesLabel.text = self.movie?.rates.map { $0.0 + " " + $0.1 }.joined(separator: ", ")
+//    }
 }
