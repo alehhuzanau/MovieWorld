@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D1AA6240FEE50006FF73E /* MWGenres.swift */; };
+		240D1AA7240FEE50006FF73E /* MWGenreResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D1AA6240FEE50006FF73E /* MWGenreResults.swift */; };
 		24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24146D9D23F6BB91004CFA45 /* Constants.swift */; };
 		24241F71241009F700E09450 /* MWError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24241F70241009F700E09450 /* MWError.swift */; };
 		24241F732410149800E09450 /* MWMovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24241F722410149800E09450 /* MWMovieResults.swift */; };
@@ -23,6 +23,10 @@
 		2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06424210E9100A950EC /* MWCoreDataManager.swift */; };
 		2452F06C24211DD700A950EC /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */; };
 		2452F06D24211DD700A950EC /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */; };
+		24F276A82422457800A1FBB5 /* MWImageSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276A72422457800A1FBB5 /* MWImageSizes.swift */; };
+		24F276AA2422465200A1FBB5 /* MWSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276A92422465200A1FBB5 /* MWSystem.swift */; };
+		24F276AC24224B7900A1FBB5 /* MWImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276AB24224B7900A1FBB5 /* MWImages.swift */; };
+		24F276AE24224EB500A1FBB5 /* MWConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276AD24224EB500A1FBB5 /* MWConfiguration.swift */; };
 		29A80035490F8BD7570DDCDA /* Pods_MovieWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
 		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
@@ -45,7 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		240D1AA6240FEE50006FF73E /* MWGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenres.swift; sourceTree = "<group>"; };
+		240D1AA6240FEE50006FF73E /* MWGenreResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenreResults.swift; sourceTree = "<group>"; };
 		24146D9D23F6BB91004CFA45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		24241F70241009F700E09450 /* MWError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWError.swift; sourceTree = "<group>"; };
 		24241F722410149800E09450 /* MWMovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieResults.swift; sourceTree = "<group>"; };
@@ -64,6 +68,10 @@
 		2452F06424210E9100A950EC /* MWCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCoreDataManager.swift; sourceTree = "<group>"; };
 		2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		24F276A72422457800A1FBB5 /* MWImageSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWImageSizes.swift; sourceTree = "<group>"; };
+		24F276A92422465200A1FBB5 /* MWSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSystem.swift; sourceTree = "<group>"; };
+		24F276AB24224B7900A1FBB5 /* MWImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWImages.swift; sourceTree = "<group>"; };
+		24F276AD24224EB500A1FBB5 /* MWConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWConfiguration.swift; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
 		CF310248240565B900AC0E1A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -198,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				CF3102462405636300AC0E1A /* MWInterface.swift */,
+				24F276A92422465200A1FBB5 /* MWSystem.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -294,9 +303,11 @@
 		CF310242240561E900AC0E1A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CF31025324057D4F00AC0E1A /* MWMovie.swift */,
+				24F276AB24224B7900A1FBB5 /* MWImages.swift */,
+				24F276AD24224EB500A1FBB5 /* MWConfiguration.swift */,
 				CF878D91240EB743008CCB3A /* MWGenre.swift */,
-				240D1AA6240FEE50006FF73E /* MWGenres.swift */,
+				240D1AA6240FEE50006FF73E /* MWGenreResults.swift */,
+				CF31025324057D4F00AC0E1A /* MWMovie.swift */,
 				24241F722410149800E09450 /* MWMovieResults.swift */,
 			);
 			path = Models;
@@ -323,6 +334,7 @@
 				CF7A044E240EA3020003AD7B /* MWNetError.swift */,
 				CF7A0450240EA3230003AD7B /* MWURLPaths.swift */,
 				24241F70241009F700E09450 /* MWError.swift */,
+				24F276A72422457800A1FBB5 /* MWImageSizes.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -468,11 +480,13 @@
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
 				CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */,
-				240D1AA7240FEE50006FF73E /* MWGenres.swift in Sources */,
+				24F276AA2422465200A1FBB5 /* MWSystem.swift in Sources */,
+				240D1AA7240FEE50006FF73E /* MWGenreResults.swift in Sources */,
 				242FD46A241A799B00CD28C0 /* MWInitController.swift in Sources */,
 				24241F71241009F700E09450 /* MWError.swift in Sources */,
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24261BC623F6A3E0009DF49A /* MWViewController.swift in Sources */,
+				24F276AC24224B7900A1FBB5 /* MWImages.swift in Sources */,
 				2452F06D24211DD700A950EC /* Movie+CoreDataProperties.swift in Sources */,
 				2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
@@ -480,6 +494,7 @@
 				CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */,
 				CF3102472405636300AC0E1A /* MWInterface.swift in Sources */,
 				CF31025024056AB900AC0E1A /* MWCategoryViewController.swift in Sources */,
+				24F276A82422457800A1FBB5 /* MWImageSizes.swift in Sources */,
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
 				24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */,
 				2452F060242102DD00A950EC /* Genre+CoreDataClass.swift in Sources */,
@@ -491,6 +506,7 @@
 				CF7A044F240EA3020003AD7B /* MWNetError.swift in Sources */,
 				CF942B122406CE1D00849D78 /* MWCardCollectionViewCell.swift in Sources */,
 				CF31024D24056AA000AC0E1A /* MWMainViewController.swift in Sources */,
+				24F276AE24224EB500A1FBB5 /* MWConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

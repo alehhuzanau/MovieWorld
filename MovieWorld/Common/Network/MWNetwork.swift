@@ -14,7 +14,6 @@ typealias MWNet = MWNetwork
 class MWNetwork {
     private static let apiKey = "79d5894567be5b76ab7434fc12879584"
     private let baseUrl = "https://api.themoviedb.org/3/"
-    private let imagebaseUrl = "http://image.tmdb.org/t/p/w185/"
     private let baseParameters: [String : String] = ["api_key" : apiKey]
     
     static let sh = MWNetwork()
@@ -84,7 +83,9 @@ class MWNetwork {
     }
     
     func downloadImage(_ url: String, successHandler: @escaping (UIImage) -> Void) {
-        AF.request("\(imagebaseUrl)\(url)").responseData { response in
+        guard let imagebaseUrl = MWSystem.sh.configuration?.images.baseUrl else { return }
+        let imageSize = MWImageSizes.w185
+        AF.request("\(imagebaseUrl)\(imageSize)\(url)").responseData { response in
             guard let data = response.data else { return }
             self.handleClosure(successHandler, UIImage(data: data) ?? UIImage())
         }

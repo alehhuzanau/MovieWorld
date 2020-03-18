@@ -72,6 +72,8 @@ class MWInitController: UIViewController {
         
         self.indicator.startAnimating()
         
+        self.setConfiguration()
+        
         self.fetchGenres(urlPath: MWURLPaths.movieGenres)
         self.fetchGenres(urlPath: MWURLPaths.tvGenres)
     }
@@ -128,11 +130,25 @@ class MWInitController: UIViewController {
     
     // MARK: - Requests
     
+    private func setConfiguration() {
+        self.dispatchGroup.enter()
+        MWNet.sh.request(
+            urlPath: "configuration",
+            successHandler: { [weak self] (configuration: MWConfiguration) in
+                MWSystem.sh.configuration = configuration
+                self?.dispatchGroup.leave()
+            },
+            errorHandler: { [weak self]  error in
+                print(error.getDescription())
+                self?.dispatchGroup.leave()
+        })
+    }
+    
     private func fetchGenres(urlPath: String) {
         self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: urlPath,
-            successHandler: { [weak self] (genres: MWGenres) in
+            successHandler: { [weak self] (genres: MWGenreResults) in
                 self?.genres += genres.genres
                 self?.dispatchGroup.leave()
             },

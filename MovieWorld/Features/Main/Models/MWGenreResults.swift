@@ -1,5 +1,5 @@
 //
-//  MWGenres.swift
+//  MWGenreResults.swift
 //  MovieWorld
 //
 //  Created by Aleh Huzanau on 3/4/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct MWGenres: Decodable {
+struct MWGenreResults: Decodable {
     var genres: [MWGenre]
 }
