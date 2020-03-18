@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 class MWCoreDataManager {
-    static let s: MWCoreDataManager = MWCoreDataManager()
+    static let sh: MWCoreDataManager = MWCoreDataManager()
     
     private let documentsDirectory: URL
     

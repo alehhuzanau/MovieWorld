@@ -59,11 +59,11 @@
 		242FD468241A6D5C00CD28C0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		242FD469241A799B00CD28C0 /* MWInitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInitController.swift; sourceTree = "<group>"; };
 		2452F05B2420FF8600A950EC /* MovieWorldCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieWorldCoreData.xcdatamodel; sourceTree = "<group>"; };
-		2452F05E242102DD00A950EC /* Genre+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Genre+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		2452F05F242102DD00A950EC /* Genre+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Genre+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		2452F05E242102DD00A950EC /* Genre+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Genre+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Genre+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		2452F05F242102DD00A950EC /* Genre+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Genre+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Genre+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		2452F06424210E9100A950EC /* MWCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCoreDataManager.swift; sourceTree = "<group>"; };
-		2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		2452F06A24211DD700A950EC /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		2452F06B24211DD700A950EC /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
 		CF310248240565B900AC0E1A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };

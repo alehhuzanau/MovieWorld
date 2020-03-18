@@ -41,8 +41,9 @@ class MWMainViewController: UITableViewController {
         self.initRequest()
         
         self.dispatchGroup.notify(queue: .main) {
+            MWCoreDataManager.sh.deleteAllMovies()
             for movie in self.movies {
-                MWCoreDataManager.s.saveMovie(
+                MWCoreDataManager.sh.saveMovie(
                     title: movie.title,
                     releaseDate: movie.releaseDate,
                     posterPath: movie.posterPath,
