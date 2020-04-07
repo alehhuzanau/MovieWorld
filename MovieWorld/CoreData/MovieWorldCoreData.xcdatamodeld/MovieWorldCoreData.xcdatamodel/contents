@@ -10,9 +10,15 @@
         <attribute name="releaseDate" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="movies" inverseEntity="Section"/>
+    </entity>
+    <entity name="Section" representedClassName="Section" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="section" inverseEntity="Movie"/>
     </entity>
     <elements>
         <element name="Genre" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Movie" positionX="-54" positionY="9" width="128" height="103"/>
+        <element name="Movie" positionX="-54" positionY="9" width="128" height="118"/>
+        <element name="Section" positionX="-63" positionY="36" width="128" height="73"/>
     </elements>
 </model>

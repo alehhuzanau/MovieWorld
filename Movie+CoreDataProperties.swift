@@ -21,6 +21,7 @@ extension Movie {
     @NSManaged public var releaseDate: String?
     @NSManaged public var title: String?
     @NSManaged public var genres: NSSet?
+    @NSManaged public var section: Section?
 
 }
 
