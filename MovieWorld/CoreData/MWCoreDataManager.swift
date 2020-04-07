@@ -106,9 +106,10 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveMovie(title: String, releaseDate: String?, posterPath: String?, genreIds: [Int64]) {
+    func saveMovie(id: Int64, title: String, releaseDate: String?, posterPath: String?, genreIds: [Int64]) {
         let managedContext = self.persistentContainer.viewContext
         let newMovie = Movie(context: managedContext)
+        newMovie.id = id
         newMovie.title = title
         newMovie.releaseDate = releaseDate
         newMovie.posterPath = posterPath
@@ -125,6 +126,32 @@ extension MWCoreDataManager {
     }
     
     func fetchMovies() -> [Movie]? {
+        self.fetchData()
+    }
+}
+
+extension MWCoreDataManager {
+    func saveSection(name: String, movies: [MWMovie]) {
+        let managedContext = self.persistentContainer.viewContext
+        let newSection = Section(context: managedContext)
+        newSection.name = name
+        var movieIds: [Int64] = []
+        for movie in movies {
+            movieIds.append(movie.id)
+        }
+        if let sectionMovies = self.fetchMovies() {
+            sectionMovies
+                .filter { movieIds.contains($0.id) }
+                .forEach { newSection.addToMovies($0) }
+        }
+        self.save(context: managedContext)
+    }
+    
+    func deleteAllSections() {
+        self.deleteAllData(entity: "Section")
+    }
+    
+    func fetchSections() -> [Section]? {
         self.fetchData()
     }
 }

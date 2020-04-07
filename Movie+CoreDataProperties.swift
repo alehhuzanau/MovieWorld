@@ -20,8 +20,9 @@ extension Movie {
     @NSManaged public var posterPath: String?
     @NSManaged public var releaseDate: String?
     @NSManaged public var title: String?
+    @NSManaged public var id: Int64
     @NSManaged public var genres: NSSet?
-    @NSManaged public var section: Section?
+    @NSManaged public var section: NSSet?
 
 }
 
@@ -39,5 +40,22 @@ extension Movie {
 
     @objc(removeGenres:)
     @NSManaged public func removeFromGenres(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for section
+extension Movie {
+
+    @objc(addSectionObject:)
+    @NSManaged public func addToSection(_ value: Section)
+
+    @objc(removeSectionObject:)
+    @NSManaged public func removeFromSection(_ value: Section)
+
+    @objc(addSection:)
+    @NSManaged public func addToSection(_ values: NSSet)
+
+    @objc(removeSection:)
+    @NSManaged public func removeFromSection(_ values: NSSet)
 
 }

@@ -14,10 +14,8 @@ class MWMainViewController: UITableViewController {
     
     private let dispatchGroup = DispatchGroup()
     
-    private var sections = [MWSection]()
+    private var sections: [Section] = []
         
-    private var movies = [MWMovie]()
-    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -36,16 +34,14 @@ class MWMainViewController: UITableViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         
+        MWCoreDataManager.sh.deleteAllSections()
+        MWCoreDataManager.sh.deleteAllMovies()
+        
         self.initRequest()
         
         self.dispatchGroup.notify(queue: .main) {
-            MWCoreDataManager.sh.deleteAllMovies()
-            for movie in self.movies {
-                MWCoreDataManager.sh.saveMovie(
-                    title: movie.title,
-                    releaseDate: movie.releaseDate,
-                    posterPath: movie.posterPath,
-                    genreIds: [28])
+            for section in MWCoreDataManager.sh.fetchSections() ?? [] {
+                self.sections.append(section)
             }
             self.tableView.reloadData()
         }
@@ -54,10 +50,10 @@ class MWMainViewController: UITableViewController {
     // MARK: - Request methods
     
     private func initRequest() {
-        self.request(sectionName: "Now Playing".localized, urlPath: MWURLPaths.nowPlayingMovies)
-        self.request(sectionName: "Popular Movies".localized, urlPath: MWURLPaths.popularMovies)
-        self.request(sectionName: "Top Rated Movies".localized, urlPath: MWURLPaths.topRatedMovies)
-        self.request(sectionName: "Upcoming Movies".localized, urlPath: MWURLPaths.upcomingMovies)
+        self.request(sectionName: "Now Playing", urlPath: MWURLPaths.nowPlayingMovies)
+        self.request(sectionName: "Popular Movies", urlPath: MWURLPaths.popularMovies)
+        self.request(sectionName: "Top Rated Movies", urlPath: MWURLPaths.topRatedMovies)
+        self.request(sectionName: "Upcoming Movies", urlPath: MWURLPaths.upcomingMovies)
     }
     
     private func request(sectionName: String, urlPath: String) {
@@ -65,8 +61,16 @@ class MWMainViewController: UITableViewController {
         MWNet.sh.request(
             urlPath: urlPath,
             successHandler: { [weak self] (results: MWMovieResults) in
-                self?.sections.append(MWSection(name: sectionName, movies: results.results))
-                self?.movies += results.results
+                let movies = results.results
+                for movie in movies {
+                    MWCoreDataManager.sh.saveMovie(
+                        id: movie.id,
+                        title: movie.title,
+                        releaseDate: movie.releaseDate,
+                        posterPath: movie.posterPath,
+                        genreIds: [28])
+                }
+                MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in

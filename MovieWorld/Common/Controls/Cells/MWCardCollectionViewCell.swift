@@ -87,12 +87,12 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Data set methods
     
-    func set(movie: MWMovie) {
+    func set(movie: Movie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = "\(movie.releaseDate.prefix(4)), Drama"
+        self.subtitleLabel.text = "\(movie.releaseDate?.prefix(4) ?? ""), Drama"
         
         MWNet.sh.downloadImage(
-            movie.posterPath,
+            movie.posterPath ?? "",
             successHandler: { [weak self] image in
                 self?.imageView.image = image
         })

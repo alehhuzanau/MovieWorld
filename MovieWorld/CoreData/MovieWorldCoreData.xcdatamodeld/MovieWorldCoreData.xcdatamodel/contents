@@ -6,11 +6,12 @@
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="genres" inverseEntity="Movie"/>
     </entity>
     <entity name="Movie" representedClassName="Movie" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="posterPath" attributeType="String"/>
         <attribute name="releaseDate" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre"/>
-        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="movies" inverseEntity="Section"/>
+        <relationship name="section" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Section" inverseName="movies" inverseEntity="Section"/>
     </entity>
     <entity name="Section" representedClassName="Section" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -18,7 +19,7 @@
     </entity>
     <elements>
         <element name="Genre" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Movie" positionX="-54" positionY="9" width="128" height="118"/>
+        <element name="Movie" positionX="-54" positionY="9" width="128" height="133"/>
         <element name="Section" positionX="-63" positionY="36" width="128" height="73"/>
     </elements>
 </model>

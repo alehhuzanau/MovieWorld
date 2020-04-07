@@ -10,9 +10,10 @@ import Foundation
 
 struct MWMovie: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case title, posterPath = "poster_path", genres = "genre_ids", releaseDate = "release_date"
+        case id, title, posterPath = "poster_path", genres = "genre_ids", releaseDate = "release_date"
     }
 
+    var id: Int64
     var title: String
     var posterPath: String
     var genres: [Int]
@@ -20,6 +21,7 @@ struct MWMovie: Decodable {
             
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int64.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.posterPath = try container.decode(String.self, forKey: .posterPath)
         self.genres = try container.decode([Int].self, forKey: .genres)

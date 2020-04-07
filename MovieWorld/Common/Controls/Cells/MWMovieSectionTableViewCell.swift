@@ -14,7 +14,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     
-    private var movies: [MWMovie] = []
+    private var movies: [Movie] = []
     
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
@@ -100,9 +100,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     // MARK: - Data set methods
     
-    func set(section: MWSection) {
-        self.titleLabel.text = section.name
-        self.movies = section.movies
+    func set(section: Section) {
+        self.titleLabel.text = section.name?.localized
+        self.movies = section.movies?.allObjects as? [Movie] ?? []
         
         self.setNeedsUpdateConstraints()
     }
