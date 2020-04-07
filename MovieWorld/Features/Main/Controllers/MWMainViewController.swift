@@ -8,8 +8,6 @@
 
 import UIKit
 
-typealias MWSection = (name: String, movies: [MWMovie])
-
 class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
