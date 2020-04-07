@@ -31,6 +31,13 @@ class MWNetwork {
         AF.request(
             url,
             parameters: params).responseJSON { response in
+                let isConnectedToInternet: Bool = NetworkReachabilityManager()?.isReachable ?? false
+                if !isConnectedToInternet {
+                    self.handleClosure(
+                        errorHandler,
+                        .networkError(message: "No Internet Connection"))
+                    return
+                }
                 if let error = response.error {
                     switch error {
                     case .invalidURL(_):
