@@ -34,9 +34,6 @@ class MWMainViewController: UITableViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         
-        MWCoreDataManager.sh.deleteAllSections()
-        MWCoreDataManager.sh.deleteAllMovies()
-        
         self.initRequest()
         
         self.dispatchGroup.notify(queue: .main) {
@@ -61,6 +58,7 @@ class MWMainViewController: UITableViewController {
         MWNet.sh.request(
             urlPath: urlPath,
             successHandler: { [weak self] (results: MWMovieResults) in
+                MWCoreDataManager.sh.deleteSection(name: sectionName)
                 let movies = results.results
                 for movie in movies {
                     MWCoreDataManager.sh.saveMovie(
@@ -83,9 +81,15 @@ class MWMainViewController: UITableViewController {
     
     @objc func refresh(refreshControl: UIRefreshControl) {
         self.sections.removeAll()
-        self.initRequest()
         
-        refreshControl.endRefreshing()
+        self.initRequest()
+        self.dispatchGroup.notify(queue: .main) {
+            for section in MWCoreDataManager.sh.fetchSections() ?? [] {
+                self.sections.append(section)
+                self.tableView.reloadData()
+            }
+            refreshControl.endRefreshing()
+        }
     }
     
     // MARK: - TableView methods

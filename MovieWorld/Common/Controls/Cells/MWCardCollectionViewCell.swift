@@ -68,11 +68,11 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     override func updateConstraints() {
         self.imageView.snp.updateConstraints { make in
-            make.top.left.equalToSuperview()
-            make.size.equalTo(self.imageViewSize)
+            make.top.centerX.width.equalToSuperview()
+            make.height.equalTo(self.imageViewSize.height)
         }
         self.titleLabel.snp.updateConstraints { make in
-            make.top.equalTo(self.imageView.snp.bottom).inset(-12)
+            make.top.equalTo(self.imageView.snp.bottom).offset(12)
             make.left.right.equalToSuperview()
             make.width.lessThanOrEqualTo(self.imageViewSize.width)
         }

@@ -120,7 +120,6 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
             withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
             for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
         cell.set(movie: self.movies[indexPath.item])
-        cell.layoutIfNeeded()
         
         return cell
     }
