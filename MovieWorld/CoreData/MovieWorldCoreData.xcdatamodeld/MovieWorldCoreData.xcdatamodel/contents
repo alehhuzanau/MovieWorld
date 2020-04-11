@@ -15,7 +15,7 @@
     </entity>
     <entity name="Section" representedClassName="Section" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="section" inverseEntity="Movie"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Movie" inverseName="section" inverseEntity="Movie"/>
     </entity>
     <elements>
         <element name="Genre" positionX="-63" positionY="-18" width="128" height="88"/>
