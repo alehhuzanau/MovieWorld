@@ -56,10 +56,14 @@ extension MWCoreDataManager {
         }
     }
     
-    private func deleteAllData(entity: String) {
+    private func deleteAllData(entity: String, predicateFormat: String? = nil) {
         let managedContext = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
+        if let format = predicateFormat {
+            let predicate = NSPredicate(format: format)
+            fetchRequest.predicate = predicate
+        }
         do
         {
             let results = try managedContext.fetch(fetchRequest)
@@ -78,8 +82,8 @@ extension MWCoreDataManager {
         let fetch: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
         fetch.sortDescriptors = sortDescriptors
         do {
-            let genres = try managedContext.fetch(fetch)
-            return genres
+            let results = try managedContext.fetch(fetch)
+            return results
         } catch {
             print(error.localizedDescription)
         }
@@ -149,6 +153,10 @@ extension MWCoreDataManager {
     
     func deleteAllSections() {
         self.deleteAllData(entity: "Section")
+    }
+    
+    func deleteSection(name: String) {
+        self.deleteAllData(entity: "Section", predicateFormat: "name == '\(name)'")
     }
     
     func fetchSections() -> [Section]? {
