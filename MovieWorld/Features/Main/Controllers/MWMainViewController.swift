@@ -15,7 +15,7 @@ class MWMainViewController: UITableViewController {
     private let dispatchGroup = DispatchGroup()
     
     private var sections: [Section] = []
-        
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -60,16 +60,27 @@ class MWMainViewController: UITableViewController {
             successHandler: { [weak self] (results: MWMovieResults) in
                 MWCoreDataManager.sh.deleteSection(name: sectionName)
                 let movies = results.results
+                let dispatchGroup = DispatchGroup()
                 for movie in movies {
-                    MWCoreDataManager.sh.saveMovie(
-                        id: movie.id,
-                        title: movie.title,
-                        releaseDate: movie.releaseDate,
-                        posterPath: movie.posterPath,
-                        genreIds: movie.genres)
+                    dispatchGroup.enter()
+                    MWNet.sh.downloadImage(
+                        movie.posterPath,
+                        successHandler: { data in
+                            let movieImageData = data
+                            MWCoreDataManager.sh.saveMovie(
+                                id: movie.id,
+                                title: movie.title,
+                                releaseDate: movie.releaseDate,
+                                posterPath: movie.posterPath,
+                                image: movieImageData,
+                                genreIds: movie.genres)
+                            dispatchGroup.leave()
+                    })
                 }
-                MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
-                self?.dispatchGroup.leave()
+                dispatchGroup.notify(queue: .main) {
+                    MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
+                    self?.dispatchGroup.leave()
+                }
             },
             errorHandler: { [weak self] error in
                 print(error.getDescription())
@@ -79,15 +90,14 @@ class MWMainViewController: UITableViewController {
     
     // MARK: - RefreshControl action
     
-    @objc func refresh(refreshControl: UIRefreshControl) {
-        self.sections.removeAll()
-        
+    @objc func refresh(refreshControl: UIRefreshControl) {        
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
+            self.sections.removeAll()
             for section in MWCoreDataManager.sh.fetchSections() ?? [] {
                 self.sections.append(section)
-                self.tableView.reloadData()
             }
+            self.tableView.reloadData()
             refreshControl.endRefreshing()
         }
     }

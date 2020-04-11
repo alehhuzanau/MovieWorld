@@ -83,18 +83,18 @@ class MWNetwork {
         }
     }
     
-    private func handleClosure<T>(_ handler: @escaping (T) -> Void, _ error: T) {
+    private func handleClosure<T>(_ handler: @escaping (T) -> Void, _ result: T) {
         DispatchQueue.main.async {
-            handler(error)
+            handler(result)
         }
     }
     
-    func downloadImage(_ url: String, successHandler: @escaping (UIImage) -> Void) {
+    func downloadImage(_ url: String, successHandler: @escaping (Data) -> Void) {
         guard let imagebaseUrl = MWSystem.sh.configuration?.images.baseUrl else { return }
         let imageSize = MWImageSizes.w185
         AF.request("\(imagebaseUrl)\(imageSize)\(url)").responseData { response in
             guard let data = response.data else { return }
-            self.handleClosure(successHandler, UIImage(data: data) ?? UIImage())
+            self.handleClosure(successHandler, data)
         }
     }
 }

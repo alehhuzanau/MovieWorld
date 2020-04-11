@@ -89,7 +89,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = CGSize(width: 130, height: 237)
+        layout.itemSize = CGSize(width: 130, height: 237)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
         layout.headerReferenceSize = CGSize(width: 0, height: 0)

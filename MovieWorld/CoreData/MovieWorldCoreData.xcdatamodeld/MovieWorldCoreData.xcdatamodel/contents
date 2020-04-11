@@ -7,6 +7,7 @@
     </entity>
     <entity name="Movie" representedClassName="Movie" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="posterPath" attributeType="String"/>
         <attribute name="releaseDate" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
@@ -19,7 +20,7 @@
     </entity>
     <elements>
         <element name="Genre" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Movie" positionX="-54" positionY="9" width="128" height="133"/>
+        <element name="Movie" positionX="-54" positionY="9" width="128" height="148"/>
         <element name="Section" positionX="-63" positionY="36" width="128" height="73"/>
     </elements>
 </model>

@@ -110,13 +110,15 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveMovie(id: Int64, title: String, releaseDate: String?, posterPath: String?, genreIds: [Int64]) {
+    func saveMovie(id: Int64, title: String, releaseDate: String?, posterPath: String?,
+                   image: Data?, genreIds: [Int64]) {
         let managedContext = self.persistentContainer.viewContext
         let newMovie = Movie(context: managedContext)
         newMovie.id = id
         newMovie.title = title
         newMovie.releaseDate = releaseDate
         newMovie.posterPath = posterPath
+        newMovie.image = image
         if let genres = self.fetchGenres() {
             genres
                 .filter { genreIds.contains($0.id) }

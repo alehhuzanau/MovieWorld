@@ -96,12 +96,9 @@ class MWCardCollectionViewCell: UICollectionViewCell {
             let firstGenre = movieGenres[0].name {
             self.subtitleLabel.text! += ", \(firstGenre)"
         }
-        
-        MWNet.sh.downloadImage(
-            movie.posterPath ?? "",
-            successHandler: { [weak self] image in
-                self?.imageView.image = image
-        })
+        if let data = movie.image {
+            self.imageView.image = UIImage(data: data)
+        }
         
         self.setNeedsUpdateConstraints()
     }
