@@ -61,21 +61,7 @@ class MWMainViewController: UITableViewController {
                 MWCoreDataManager.sh.deleteSection(name: sectionName)
                 let movies = results.results
                 let dispatchGroup = DispatchGroup()
-                for movie in movies {
-                    dispatchGroup.enter()
-                    MWNet.sh.downloadImage(
-                        movie.posterPath,
-                        successHandler: { image in
-                            MWCoreDataManager.sh.saveMovie(
-                                id: movie.id,
-                                title: movie.title,
-                                releaseDate: movie.releaseDate,
-                                posterPath: movie.posterPath,
-                                image: image,
-                                genreIds: movie.genres)
-                            dispatchGroup.leave()
-                    })
-                }
+                self?.saveMoviesToCoreData(movies: movies, dispatchGroup: dispatchGroup)
                 dispatchGroup.notify(queue: .main) {
                     MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
                     self?.dispatchGroup.leave()
@@ -85,6 +71,24 @@ class MWMainViewController: UITableViewController {
                 print(error.getDescription())
                 self?.dispatchGroup.leave()
         })
+    }
+    
+    private func saveMoviesToCoreData(movies: [MWMovie], dispatchGroup: DispatchGroup) {
+        for movie in movies {
+            dispatchGroup.enter()
+            MWNet.sh.downloadImage(
+                movie.posterPath,
+                successHandler: { image in
+                    MWCoreDataManager.sh.saveMovie(
+                        id: movie.id,
+                        title: movie.title,
+                        releaseDate: movie.releaseDate,
+                        posterPath: movie.posterPath,
+                        image: image,
+                        genreIds: movie.genres)
+                    dispatchGroup.leave()
+            })
+        }
     }
     
     // MARK: - RefreshControl action
