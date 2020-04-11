@@ -84,7 +84,9 @@ class MWInitController: UIViewController {
         self.dispatchGroup.notify(queue: .main) {
             self.genres = Array(Set(self.genres))
             
-            MWCoreDataManager.sh.deleteAllGenres()
+            if self.genres.count != 0 {
+                MWCoreDataManager.sh.deleteAllGenres()
+            }
             for genre in self.genres {
                 MWCoreDataManager.sh.saveGenre(id: Int64(genre.id), name: genre.name)
             }
@@ -133,7 +135,7 @@ class MWInitController: UIViewController {
     private func setConfiguration() {
         self.dispatchGroup.enter()
         MWNet.sh.request(
-            urlPath: "configuration",
+            urlPath: MWURLPaths.configuration,
             successHandler: { [weak self] (configuration: MWConfiguration) in
                 MWSystem.sh.configuration = configuration
                 self?.dispatchGroup.leave()
