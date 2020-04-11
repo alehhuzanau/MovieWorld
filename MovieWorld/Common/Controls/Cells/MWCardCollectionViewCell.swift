@@ -89,7 +89,13 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     func set(movie: Movie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = "\(movie.releaseDate?.prefix(4) ?? ""), Drama"
+        self.subtitleLabel.text = "\(movie.releaseDate?.prefix(4) ?? "")"
+        
+        if let movieGenres = movie.genres?.allObjects as? [Genre],
+            movieGenres.count > 0,
+            let firstGenre = movieGenres[0].name {
+            self.subtitleLabel.text! += ", \(firstGenre)"
+        }
         
         MWNet.sh.downloadImage(
             movie.posterPath ?? "",

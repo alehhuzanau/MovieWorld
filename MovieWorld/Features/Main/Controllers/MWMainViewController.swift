@@ -68,7 +68,7 @@ class MWMainViewController: UITableViewController {
                         title: movie.title,
                         releaseDate: movie.releaseDate,
                         posterPath: movie.posterPath,
-                        genreIds: [28])
+                        genreIds: movie.genres)
                 }
                 MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
                 self?.dispatchGroup.leave()

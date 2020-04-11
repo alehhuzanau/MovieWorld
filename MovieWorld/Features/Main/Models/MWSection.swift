@@ -8,9 +8,9 @@
 
 import Foundation
 
-class MWSection {
-    var name: String = ""
-    var movies: [MWMovie] = []
+struct MWSection {
+    var name: String
+    var movies: [MWMovie]
     
     init(name: String, movies: [MWMovie]) {
         self.name = name

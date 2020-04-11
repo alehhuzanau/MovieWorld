@@ -16,7 +16,7 @@ struct MWMovie: Decodable {
     var id: Int64
     var title: String
     var posterPath: String
-    var genres: [Int]
+    var genres: [Int64]
     var releaseDate: String
             
     init(from decoder: Decoder) throws {
@@ -24,7 +24,7 @@ struct MWMovie: Decodable {
         self.id = try container.decode(Int64.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.posterPath = try container.decode(String.self, forKey: .posterPath)
-        self.genres = try container.decode([Int].self, forKey: .genres)
+        self.genres = try container.decode([Int64].self, forKey: .genres)
         self.releaseDate = try container.decode(String.self, forKey: .releaseDate)
     }
 }
