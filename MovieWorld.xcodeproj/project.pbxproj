@@ -54,13 +54,13 @@
 /* Begin PBXFileReference section */
 		240D1AA6240FEE50006FF73E /* MWGenreResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenreResults.swift; sourceTree = "<group>"; };
 		24146D9D23F6BB91004CFA45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2414BE8C244207E10011A5A2 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		2414BE8D244207E10011A5A2 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		2414BE8C244207E10011A5A2 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		2414BE8D244207E10011A5A2 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		24241F70241009F700E09450 /* MWError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWError.swift; sourceTree = "<group>"; };
 		24241F722410149800E09450 /* MWMovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieResults.swift; sourceTree = "<group>"; };
 		24250EC3243CC5FF007D02AB /* MWSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSection.swift; sourceTree = "<group>"; };
-		24250ED3243CC926007D02AB /* Section+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Section+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		24250ED4243CC926007D02AB /* Section+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Section+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		24250ED3243CC926007D02AB /* Section+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Section+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Section+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		24250ED4243CC926007D02AB /* Section+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Section+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Section+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		24261BBE23F6A3E0009DF49A /* MovieWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24261BC123F6A3E0009DF49A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24261BC523F6A3E0009DF49A /* MWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWViewController.swift; sourceTree = "<group>"; };
