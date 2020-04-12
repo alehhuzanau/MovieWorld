@@ -109,7 +109,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     func set(section: Section) {
         self.titleLabel.text = section.name?.localized
-        self.movies = section.movies?.allObjects as? [Movie] ?? []
+        self.movies = section.getMovies()
         
         self.setNeedsUpdateConstraints()
     }

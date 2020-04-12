@@ -18,10 +18,14 @@ class MWMainViewController: UITableViewController {
     
     // MARK: - Life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.navigationItem.title = "Season".localized
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -128,8 +132,10 @@ class MWMainViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.set(section: self.sections[indexPath.row])
         cell.pushVC = {
-            MWI.sh.push(vc: MWMainMoviesViewController())
-        }        
+            let vc = MWMainMoviesViewController()
+            vc.movies = self.sections[indexPath.row].getMovies()
+            MWI.sh.push(vc: vc)
+        }
         
         return cell
     }

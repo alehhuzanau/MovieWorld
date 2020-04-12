@@ -112,6 +112,8 @@ extension MWCoreDataManager {
 extension MWCoreDataManager {
     func saveMovie(id: Int64, title: String, releaseDate: String?, posterPath: String?,
                    image: Data?, genreIds: [Int64]) {
+        if let ids = self.fetchMovies()?.map({ $0.id }),
+            ids.contains(id) { return }
         let managedContext = self.persistentContainer.viewContext
         let newMovie = Movie(context: managedContext)
         newMovie.id = id
@@ -141,10 +143,7 @@ extension MWCoreDataManager {
         let managedContext = self.persistentContainer.viewContext
         let newSection = Section(context: managedContext)
         newSection.name = name
-        var movieIds: [Int64] = []
-        for movie in movies {
-            movieIds.append(movie.id)
-        }
+        let movieIds: [Int64] = movies.map { $0.id }
         if let sectionMovies = self.fetchMovies() {
             sectionMovies
                 .filter { movieIds.contains($0.id) }

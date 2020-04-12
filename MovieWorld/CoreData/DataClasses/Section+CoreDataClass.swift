@@ -12,5 +12,8 @@ import CoreData
 
 @objc(Section)
 public class Section: NSManagedObject {
-
+    
+    func getMovies() -> [Movie] {
+        return self.movies?.allObjects as? [Movie] ?? []
+    }
 }

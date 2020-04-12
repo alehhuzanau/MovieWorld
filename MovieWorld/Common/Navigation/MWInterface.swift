@@ -45,6 +45,7 @@ class MWInterface {
     
     func push(vc: UIViewController) {
         let navigationVC = self.tabBarController.selectedViewController as? UINavigationController
+        navigationVC?.navigationBar.topItem?.title = ""
         navigationVC?.pushViewController(vc, animated: true)
     }
     
