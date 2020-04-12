@@ -9,7 +9,7 @@
 import Foundation
 
 struct MWGenre: Decodable {
-    var id: Int
+    var id: Int64
     var name: String
 }
 

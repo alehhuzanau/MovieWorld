@@ -34,13 +34,12 @@ class MWMainViewController: UITableViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         
-        self.initRequest()
+        self.setSections()
         
+        self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
-            for section in MWCoreDataManager.sh.fetchSections() ?? [] {
-                self.sections.append(section)
-            }
-            self.tableView.reloadData()
+            self.sections.removeAll()
+            self.setSections()
         }
     }
     
@@ -97,11 +96,17 @@ class MWMainViewController: UITableViewController {
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
             self.sections.removeAll()
-            for section in MWCoreDataManager.sh.fetchSections() ?? [] {
-                self.sections.append(section)
-            }
-            self.tableView.reloadData()
+            self.setSections()
             refreshControl.endRefreshing()
+        }
+    }
+    
+    // MARK: - Sections set method
+
+    private func setSections() {
+        for section in MWCoreDataManager.sh.fetchSections() ?? [] {
+            self.sections.append(section)
+            self.tableView.reloadData()
         }
     }
     

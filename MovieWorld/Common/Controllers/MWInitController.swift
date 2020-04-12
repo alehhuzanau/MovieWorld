@@ -88,7 +88,7 @@ class MWInitController: UIViewController {
                 MWCoreDataManager.sh.deleteAllGenres()
             }
             for genre in self.genres {
-                MWCoreDataManager.sh.saveGenre(id: Int64(genre.id), name: genre.name)
+                MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
             }
             
             MWI.sh.setRootVC()
