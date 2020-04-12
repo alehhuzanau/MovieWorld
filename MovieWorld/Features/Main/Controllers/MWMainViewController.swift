@@ -127,7 +127,9 @@ class MWMainViewController: UITableViewController {
             as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
         cell.selectionStyle = .none
         cell.set(section: self.sections[indexPath.row])
-        cell.layoutIfNeeded()
+        cell.pushVC = {
+            MWI.sh.push(vc: MWMainMoviesViewController())
+        }        
         
         return cell
     }

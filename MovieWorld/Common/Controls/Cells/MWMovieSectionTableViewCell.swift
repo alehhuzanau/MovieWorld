@@ -14,10 +14,12 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     
-    private var movies: [Movie] = []
-    
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
+    
+    private var movies: [Movie] = []
+    
+    @objc var pushVC: (() -> Void)? = nil
     
     // MARK: - GUI variables
     
@@ -44,7 +46,12 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         return collectionView
     }()
     
-    private lazy var allButton: UIButton = MWNextButton(type: .system)
+    private lazy var allButton: UIButton = {
+        let button = MWNextButton(type: .system)
+        button.addTarget(self, action: #selector(self.allButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
     
     // MARK: - Init methods
     
@@ -53,7 +60,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         
         self.addSubviews()
     }
-        
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -105,6 +112,10 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         self.movies = section.movies?.allObjects as? [Movie] ?? []
         
         self.setNeedsUpdateConstraints()
+    }
+    
+    @objc func allButtonTapped(_ button: UIButton) {
+        self.pushVC?()
     }
 }
 

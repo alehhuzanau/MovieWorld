@@ -44,11 +44,13 @@ class MWInterface {
     }
     
     func push(vc: UIViewController) {
-        self.tabBarController.navigationController?.pushViewController(vc, animated: true)
+        let navigationVC = self.tabBarController.selectedViewController as? UINavigationController
+        navigationVC?.pushViewController(vc, animated: true)
     }
     
     func popVC() {
-        self.tabBarController.navigationController?.popViewController(animated: true)
+        let navigationVC = self.tabBarController.selectedViewController as? UINavigationController
+        navigationVC?.popViewController(animated: true)
     }
     
     func setRootVC() {

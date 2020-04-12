@@ -83,14 +83,12 @@ class MWInitController: UIViewController {
         
         self.dispatchGroup.notify(queue: .main) {
             self.genres = Array(Set(self.genres))
-            
             if self.genres.count != 0 {
                 MWCoreDataManager.sh.deleteAllGenres()
             }
             for genre in self.genres {
                 MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
             }
-            
             MWI.sh.setRootVC()
         }
     }
