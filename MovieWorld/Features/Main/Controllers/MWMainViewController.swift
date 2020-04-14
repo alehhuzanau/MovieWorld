@@ -116,10 +116,6 @@ class MWMainViewController: UITableViewController {
     
     // MARK: - TableView methods
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.sections.count
     }
@@ -129,7 +125,6 @@ class MWMainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
             as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
-        cell.selectionStyle = .none
         cell.set(section: self.sections[indexPath.row])
         cell.pushVC = {
             let vc = MWMainMoviesViewController()
@@ -138,9 +133,5 @@ class MWMainViewController: UITableViewController {
         }
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

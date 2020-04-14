@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class MWCardCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "MWCardCollectionViewCellIdentifier"
+    static let reuseIdentifier = "MWCardCollectionViewCell"
 
     // MARK: - Variables
     
@@ -89,16 +89,13 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     
     func set(movie: Movie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = "\(movie.releaseDate?.prefix(4) ?? "")"
+        self.subtitleLabel.text = movie.getReleaseDateYear()
         
-        if let movieGenres = movie.genres?.allObjects as? [Genre],
-            movieGenres.count > 0,
-            let firstGenre = movieGenres[0].name {
+        let movieGenres = movie.getGenres()
+        if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
             self.subtitleLabel.text! += ", \(firstGenre)"
         }
-        if let data = movie.image {
-            self.imageView.image = UIImage(data: data)
-        }
+        self.imageView.image = movie.getImage()
         
         self.setNeedsUpdateConstraints()
     }

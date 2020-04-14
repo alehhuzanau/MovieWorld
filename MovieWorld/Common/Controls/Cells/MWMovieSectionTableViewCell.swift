@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class MWMovieSectionTableViewCell: UITableViewCell {
-    static let reuseIdentifier: String = "MWMovieTableViewCell"
+    static let reuseIdentifier: String = "MWMovieSectionTableViewCell"
     
     // MARK: - Variables
     
@@ -58,6 +58,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .none
         self.addSubviews()
     }
     

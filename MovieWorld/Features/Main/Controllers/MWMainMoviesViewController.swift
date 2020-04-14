@@ -24,13 +24,15 @@ class MWMainMoviesViewController: UITableViewController {
         self.navigationItem.title = "Movies".localized
         
         self.tableView.contentInset = self.edgeInsets
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.tableView.isUserInteractionEnabled = true
+        self.tableView.estimatedRowHeight = 120
+        self.tableView.rowHeight = UITableView.automaticDimension
     }
     
     // MARK: - TableView methods
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movies.count
@@ -38,8 +40,10 @@ class MWMainMoviesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = self.movies[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
+            as? MWMovieCardTableViewCell ?? MWMovieCardTableViewCell()
+        cell.set(movie: self.movies[indexPath.row])
         
         return cell
     }
