@@ -8,11 +8,23 @@
 
 import UIKit
 
-class MWMainMoviesViewController: UITableViewController {
+class MWMainMoviesViewController: UIViewController {
     
     // MARK: - Variables
     
-    private let edgeInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .white
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.isUserInteractionEnabled = true
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = UITableView.automaticDimension
+        
+        return tableView
+    }()
     
     var movies: [Movie] = []
     
@@ -22,24 +34,27 @@ class MWMainMoviesViewController: UITableViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Movies".localized
-        
-        self.tableView.contentInset = self.edgeInsets
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        self.tableView.isUserInteractionEnabled = true
-        self.tableView.estimatedRowHeight = 120
-        self.tableView.rowHeight = UITableView.automaticDimension
     }
     
-    // MARK: - TableView methods
+    private func addSubviews() {
+        self.view.addSubview(self.tableView)
+    }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // MARK: - Constraints
+    
+    private func makeConstraints() {
+        self.tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
+extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movies.count
     }
     
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
             as? MWMovieCardTableViewCell ?? MWMovieCardTableViewCell()

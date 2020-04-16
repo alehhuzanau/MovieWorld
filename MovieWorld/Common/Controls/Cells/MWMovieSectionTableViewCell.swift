@@ -128,9 +128,9 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
+        let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? MWCardCollectionViewCell else { fatalError("Wrong cell") }
+            for: indexPath) as? MWCardCollectionViewCell ?? MWCardCollectionViewCell()
         cell.set(movie: self.movies[indexPath.item])
         
         return cell
