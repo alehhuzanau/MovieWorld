@@ -11,6 +11,7 @@
 		24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24146D9D23F6BB91004CFA45 /* Constants.swift */; };
 		2414BE8E244207E10011A5A2 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BE8C244207E10011A5A2 /* Movie+CoreDataClass.swift */; };
 		2414BE8F244207E10011A5A2 /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BE8D244207E10011A5A2 /* Movie+CoreDataProperties.swift */; };
+		24152EB2244A171F00BFD8B7 /* MWGenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24152EB1244A171F00BFD8B7 /* MWGenreCollectionViewCell.swift */; };
 		24241F71241009F700E09450 /* MWError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24241F70241009F700E09450 /* MWError.swift */; };
 		24241F732410149800E09450 /* MWMovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24241F722410149800E09450 /* MWMovieResults.swift */; };
 		24250EC4243CC5FF007D02AB /* MWSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24250EC3243CC5FF007D02AB /* MWSection.swift */; };
@@ -58,6 +59,7 @@
 		24146D9D23F6BB91004CFA45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2414BE8C244207E10011A5A2 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		2414BE8D244207E10011A5A2 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieWorld/CoreData/DataClasses/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		24152EB1244A171F00BFD8B7 /* MWGenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		24241F70241009F700E09450 /* MWError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWError.swift; sourceTree = "<group>"; };
 		24241F722410149800E09450 /* MWMovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieResults.swift; sourceTree = "<group>"; };
 		24250EC3243CC5FF007D02AB /* MWSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSection.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				CF31025524057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift */,
 				CF942B112406CE1D00849D78 /* MWCardCollectionViewCell.swift */,
 				24A837082445CC7700A2F3A0 /* MWMovieCardTableViewCell.swift */,
+				24152EB1244A171F00BFD8B7 /* MWGenreCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				24A837092445CC7700A2F3A0 /* MWMovieCardTableViewCell.swift in Sources */,
 				CF31025024056AB900AC0E1A /* MWCategoryViewController.swift in Sources */,
 				24F276A82422457800A1FBB5 /* MWImageSizes.swift in Sources */,
+				24152EB2244A171F00BFD8B7 /* MWGenreCollectionViewCell.swift in Sources */,
 				24250EC4243CC5FF007D02AB /* MWSection.swift in Sources */,
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
 				24E94FC524434155001F0504 /* MWMainMoviesViewController.swift in Sources */,

@@ -12,6 +12,10 @@ class MWMainMoviesViewController: UIViewController {
     
     // MARK: - Variables
     
+    var movies: [Movie] = []
+
+    // MARK: - GUI variables
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: self.createLayout())
@@ -21,8 +25,8 @@ class MWMainMoviesViewController: UIViewController {
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
-            MWCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
+            MWGenreCollectionViewCell.self,
+            forCellWithReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier)
         
         return collectionView
     }()
@@ -41,7 +45,6 @@ class MWMainMoviesViewController: UIViewController {
         return tableView
     }()
     
-    var movies: [Movie] = []
     
     // MARK: - Life cycle
     
@@ -87,6 +90,24 @@ class MWMainMoviesViewController: UIViewController {
     }
 }
 
+extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return self.movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? MWGenreCollectionViewCell ?? MWGenreCollectionViewCell()
+        cell.set(movie: self.movies[indexPath.item])
+
+        return cell
+    }
+}
+
+
 extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movies.count
@@ -98,23 +119,6 @@ extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource
             as? MWMovieCardTableViewCell ?? MWMovieCardTableViewCell()
         cell.set(movie: self.movies[indexPath.row])
         
-        return cell
-    }
-}
-
-extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return self.movies.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? MWCardCollectionViewCell ?? MWCardCollectionViewCell()
-        cell.set(movie: self.movies[indexPath.item])
-
         return cell
     }
 }

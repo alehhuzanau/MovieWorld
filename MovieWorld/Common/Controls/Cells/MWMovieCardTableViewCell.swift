@@ -18,6 +18,8 @@ class MWMovieCardTableViewCell: UITableViewCell {
     private let subviewsEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     private let imageViewSize = CGSize(width: 70, height: 100)
     
+    // MARK: - GUI variables
+    
     private lazy var movieView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
