@@ -15,6 +15,20 @@ class MWMainMoviesViewController: UIViewController {
     private let minimumSpacing: CGFloat = 8
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     
+    private lazy var genres: [Genre] = {
+        return MWCoreDataManager.sh.fetchGenres() ?? []
+    }()
+    
+    private lazy var collectionViewHeight: CGFloat = {
+        guard self.genres.count != 0 else { return 0 }
+        
+        let cellHeight = self.sizeForCollectionViewCell().height
+        let heigth = self.collectionViewInsets.top + cellHeight + self.minimumSpacing
+            + cellHeight + self.collectionViewInsets.bottom
+        
+        return heigth
+    }()
+    
     var movies: [Movie] = []
     
     // MARK: - GUI variables
@@ -61,7 +75,6 @@ class MWMainMoviesViewController: UIViewController {
         return tableView
     }()
     
-    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -83,10 +96,7 @@ class MWMainMoviesViewController: UIViewController {
     private func makeConstraints() {
         self.collectionView.snp.makeConstraints { (make) in
             make.top.left.right.equalTo(self.view.safeAreaLayoutGuide)
-            let cellHeight = self.sizeForCollectionViewCell().height
-            let heigth = self.collectionViewInsets.top + cellHeight + self.minimumSpacing
-                + cellHeight + self.collectionViewInsets.bottom
-            make.height.equalTo(heigth)
+            make.height.equalTo(self.collectionViewHeight)
         }
         self.tableView.snp.makeConstraints { (make) in
             make.top.equalTo(self.collectionView.snp.bottom)
@@ -98,7 +108,7 @@ class MWMainMoviesViewController: UIViewController {
 extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return self.movies.count
+        return self.genres.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -106,14 +116,14 @@ extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionView
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier,
             for: indexPath) as? MWGenreCollectionViewCell ?? MWGenreCollectionViewCell()
-        cell.set(movie: self.movies[indexPath.item])
+        cell.set(genre: self.genres[indexPath.item])
         
         return cell
     }
 }
 
 extension MWMainMoviesViewController: UICollectionViewDelegateFlowLayout {
-    private func sizeForCollectionViewCell(labelText: String? = "Text") -> CGSize {
+    private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {
         let label = UILabel(frame: CGRect(
             x: 0,
             y: 0,
@@ -125,15 +135,15 @@ extension MWMainMoviesViewController: UICollectionViewDelegateFlowLayout {
         
         let insets = MWGenreCollectionViewCell.viewInsets
         let width = insets.left + label.frame.width + insets.right
-        let heigth = insets.top + label.frame.height + insets.bottom
+        let height = insets.top + label.frame.height + insets.bottom
         
-        return CGSize(width: width, height: heigth)
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.sizeForCollectionViewCell(labelText: self.movies[indexPath.item].title)
+        return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
     }
 }
 

@@ -70,8 +70,8 @@ class MWGenreCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Data set methods
     
-    func set(movie: Movie) {
-        self.genreLabel.text = movie.title
+    func set(genre: Genre) {
+        self.genreLabel.text = genre.name ?? ""
         
         self.setNeedsUpdateConstraints()
     }
