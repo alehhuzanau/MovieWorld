@@ -21,17 +21,30 @@ class MWMainMoviesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: self.createLayout())
+                                              collectionViewLayout: self.flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(
             MWGenreCollectionViewCell.self,
             forCellWithReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier)
         
         return collectionView
+    }()
+    
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = self.minimumSpacing
+        layout.minimumLineSpacing = self.minimumSpacing
+        layout.sectionInset = self.collectionViewInsets
+        
+        return layout
     }()
     
     private lazy var tableView: UITableView = {
@@ -79,19 +92,6 @@ class MWMainMoviesViewController: UIViewController {
             make.top.equalTo(self.collectionView.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
-    }
-    
-    // MARK: - Flow layout
-    
-    private func createLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = self.minimumSpacing
-        layout.minimumLineSpacing = self.minimumSpacing
-        layout.sectionInset = self.collectionViewInsets
-        
-        return layout
     }
 }
 

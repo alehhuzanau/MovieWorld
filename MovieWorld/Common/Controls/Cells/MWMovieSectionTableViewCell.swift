@@ -33,7 +33,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: self.createLayout())
+                                              collectionViewLayout: self.flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
@@ -44,6 +44,18 @@ class MWMovieSectionTableViewCell: UITableViewCell {
             forCellWithReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier)
         
         return collectionView
+    }()
+    
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 130, height: 237)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.headerReferenceSize = CGSize(width: 0, height: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 7)
+        
+        return layout
     }()
     
     private lazy var allButton: UIButton = {
@@ -90,20 +102,6 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         }
         
         super.updateConstraints()
-    }
-    
-    // MARK: - Flow layout
-    
-    private func createLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 130, height: 237)
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.headerReferenceSize = CGSize(width: 0, height: 0)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 7)
-        
-        return layout
     }
     
     // MARK: - Data set methods
