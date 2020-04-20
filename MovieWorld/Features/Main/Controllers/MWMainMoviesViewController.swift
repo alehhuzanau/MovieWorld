@@ -23,8 +23,8 @@ class MWMainMoviesViewController: UIViewController {
         guard self.genres.count != 0 else { return 0 }
         
         let cellHeight = self.sizeForCollectionViewCell().height
-        let heigth = self.collectionViewInsets.top + cellHeight + self.minimumSpacing
-            + cellHeight + self.collectionViewInsets.bottom
+        let heigth = self.collectionViewInsets.top + cellHeight * 2 + self.minimumSpacing
+            + self.collectionViewInsets.bottom
         
         return heigth
     }()
@@ -43,6 +43,7 @@ class MWMainMoviesViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.contentInset = self.collectionViewInsets
         collectionView.register(
             MWGenreCollectionViewCell.self,
             forCellWithReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier)
@@ -54,9 +55,7 @@ class MWMainMoviesViewController: UIViewController {
         let layout = MWLeftAlignedViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = self.minimumSpacing
-        layout.minimumLineSpacing = self.minimumSpacing
-        layout.sectionInset = self.collectionViewInsets
+        layout.delegate = self
         
         return layout
     }()
