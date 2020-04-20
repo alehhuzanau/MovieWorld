@@ -51,7 +51,7 @@ class MWMainMoviesViewController: UIViewController {
     }()
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = MWLeftAlignedViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumInteritemSpacing = self.minimumSpacing
