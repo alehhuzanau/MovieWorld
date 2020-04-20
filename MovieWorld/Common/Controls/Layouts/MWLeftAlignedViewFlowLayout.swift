@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol MWLeftAlignedDelegateViewFlowLayout: AnyObject {
+    var numberOfRows: Int { get }
+    var cellPadding: CGFloat { get }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize
+}
+
 class MWLeftAlignedViewFlowLayout: UICollectionViewFlowLayout {
     
-    weak var delegate: UICollectionViewDelegateFlowLayout?
-    
-    private let numberOfRows = 2
-    private let cellPadding: CGFloat = 8
-    
+    weak var delegate: MWLeftAlignedDelegateViewFlowLayout?
+        
     private var cache: [UICollectionViewLayoutAttributes] = []
     
     private var contentWidth: CGFloat = 0
@@ -31,23 +36,25 @@ class MWLeftAlignedViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func prepare() {
-        guard cache.isEmpty == true, let collectionView = collectionView else { return }
+        guard cache.isEmpty == true, let collectionView = collectionView,
+            let numberOfRows = self.delegate?.numberOfRows,
+            let cellPadding = self.delegate?.cellPadding else { return }
         
-        let paddingHeight = CGFloat(self.numberOfRows - 1) * self.cellPadding
-        let rowHeight = (self.contentHeight - paddingHeight) / CGFloat(self.numberOfRows)
+        let paddingHeight = CGFloat(numberOfRows - 1) * cellPadding
+        let rowHeight = (self.contentHeight - paddingHeight) / CGFloat(numberOfRows)
         var yOffset: [CGFloat] = []
-        for row in 0..<self.numberOfRows {
-            let topMargin = row == 0 ? 0 : self.cellPadding
+        for row in 0..<numberOfRows {
+            let topMargin = row == 0 ? 0 : CGFloat(row) * cellPadding
             yOffset.append(CGFloat(row) * rowHeight + topMargin)
         }
-        var xOffset: [CGFloat] = .init(repeating: 0, count: self.numberOfRows)
+        var xOffset: [CGFloat] = .init(repeating: 0, count: numberOfRows)
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             
             guard let min = xOffset.min(), let row = xOffset.firstIndex(of: min),
-                let size: CGSize = self.delegate?.collectionView?(
-                    collectionView, layout: self, sizeForItemAt: indexPath) else { return }
+                let size: CGSize = self.delegate?.collectionView(
+                    collectionView, sizeForItemAt: indexPath) else { return }
             
             let frame = CGRect(x: xOffset[row],
                                y: yOffset[row],
@@ -59,7 +66,7 @@ class MWLeftAlignedViewFlowLayout: UICollectionViewFlowLayout {
             self.cache.append(attributes)
             
             self.contentWidth = max(self.contentWidth, frame.maxX)
-            xOffset[row] = xOffset[row] + size.width + self.cellPadding
+            xOffset[row] = xOffset[row] + size.width + cellPadding
         }
     }
     

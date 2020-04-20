@@ -12,7 +12,6 @@ class MWMainMoviesViewController: UIViewController {
     
     // MARK: - Variables
     
-    private let minimumSpacing: CGFloat = 8
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     
     private lazy var genres: [Genre] = {
@@ -21,13 +20,15 @@ class MWMainMoviesViewController: UIViewController {
     
     private lazy var collectionViewHeight: CGFloat = {
         guard self.genres.count != 0 else { return 0 }
-        
         let cellHeight = self.sizeForCollectionViewCell().height
-        let heigth = self.collectionViewInsets.top + cellHeight * 2 + self.minimumSpacing
-            + self.collectionViewInsets.bottom
+        let insetsHeight = self.collectionViewInsets.top + self.collectionViewInsets.bottom
+        let rows = CGFloat(self.numberOfRows)
         
-        return heigth
+        return cellHeight * rows + self.cellPadding * (rows - 1) + insetsHeight
     }()
+    
+    var numberOfRows: Int = 2
+    var cellPadding: CGFloat = 8
     
     var movies: [Movie] = []
     
@@ -121,7 +122,7 @@ extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionView
     }
 }
 
-extension MWMainMoviesViewController: UICollectionViewDelegateFlowLayout {
+extension MWMainMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
     private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {
         let label = UILabel(frame: CGRect(
             x: 0,
@@ -140,7 +141,6 @@ extension MWMainMoviesViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
     }
