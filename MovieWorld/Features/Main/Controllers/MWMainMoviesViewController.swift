@@ -30,7 +30,13 @@ class MWMainMoviesViewController: UIViewController {
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
     
-    var movies: [Movie] = []
+    var movies: [Movie] = [] {
+        didSet {
+            self.filteredMovies = self.movies
+        }
+    }
+    
+    private var filteredMovies: [Movie] = []
     
     // MARK: - GUI variables
     
@@ -45,6 +51,7 @@ class MWMainMoviesViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.contentInset = self.collectionViewInsets
+        collectionView.allowsMultipleSelection = true
         collectionView.register(
             MWGenreCollectionViewCell.self,
             forCellWithReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier)
@@ -103,6 +110,28 @@ class MWMainMoviesViewController: UIViewController {
             make.left.right.bottom.equalToSuperview()
         }
     }
+    
+    // MARK: - Data filtering method
+    
+    private func filterMovies() {
+        guard let indexPaths = collectionView.indexPathsForSelectedItems,
+            indexPaths.count != 0 else {
+            self.filteredMovies = self.movies
+            self.tableView.reloadData()
+                
+            return
+        }
+        let filteredGenres = indexPaths.map { self.genres[$0.row] }
+        
+        self.filteredMovies = []
+        for movie in self.movies {
+            if filteredGenres.allSatisfy(movie.getGenres().contains) {
+                self.filteredMovies.append(movie)
+            }
+        }
+        
+        self.tableView.reloadData()
+    }
 }
 
 extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -119,6 +148,14 @@ extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionView
         cell.set(genre: self.genres[indexPath.item])
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.filterMovies()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        self.filterMovies()
     }
 }
 
@@ -148,14 +185,14 @@ extension MWMainMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
 
 extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.movies.count
+        return self.filteredMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
             as? MWMovieCardTableViewCell ?? MWMovieCardTableViewCell()
-        cell.set(movie: self.movies[indexPath.row])
+        cell.set(movie: self.filteredMovies[indexPath.row])
         
         return cell
     }

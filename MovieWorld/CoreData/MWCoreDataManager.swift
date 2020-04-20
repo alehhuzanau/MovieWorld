@@ -105,7 +105,7 @@ extension MWCoreDataManager {
     }
     
     func fetchGenres() -> [Genre]? {
-        self.fetchData(sortDescriptors: [NSSortDescriptor(key: "id", ascending: true)])
+        self.fetchData(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     }
 }
 

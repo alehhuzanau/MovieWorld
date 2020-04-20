@@ -16,6 +16,16 @@ class MWGenreCollectionViewCell: UICollectionViewCell {
     
     static let viewInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
     
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                self.genreView.alpha = 1
+            } else {
+                self.genreView.alpha = 0.5
+            }
+        }
+    }
+    
     // MARK: - GUI variables
     
     private lazy var genreView: UIView = {
