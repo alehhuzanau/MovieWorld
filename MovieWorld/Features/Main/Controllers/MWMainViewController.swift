@@ -16,6 +16,16 @@ class MWMainViewController: UITableViewController {
     
     private var sections: [Section] = []
     
+    // MARK: - GUI variables
+    
+    private lazy var _refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+
+        return refreshControl
+    }()
+    
     // MARK: - Life cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,11 +42,7 @@ class MWMainViewController: UITableViewController {
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.tableView.isUserInteractionEnabled = true
         self.tableView.rowHeight = 305
-        
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        self.tableView.refreshControl = refreshControl
+        self.tableView.refreshControl = self._refreshControl
         
         self.setSections()
         

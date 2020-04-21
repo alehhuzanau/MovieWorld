@@ -78,8 +78,17 @@ class MWMainMoviesViewController: UIViewController {
         tableView.isUserInteractionEnabled = true
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.refreshControl = self._refreshControl
         
         return tableView
+    }()
+    
+    private lazy var _refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+
+        return refreshControl
     }()
     
     // MARK: - Life cycle
@@ -131,6 +140,12 @@ class MWMainMoviesViewController: UIViewController {
         }
         
         self.tableView.reloadData()
+    }
+    
+    // MARK: - RefreshControl action
+    
+    @objc func refresh(refreshControl: UIRefreshControl) {
+        refreshControl.endRefreshing()
     }
 }
 
