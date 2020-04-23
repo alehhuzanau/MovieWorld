@@ -14,6 +14,8 @@ class MWMainMoviesViewController: UIViewController {
     
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     
+    private let spinnerInsets = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+
     private lazy var genres: [Genre] = {
         return MWCoreDataManager.sh.fetchGenres() ?? []
     }()
@@ -78,17 +80,32 @@ class MWMainMoviesViewController: UIViewController {
         tableView.isUserInteractionEnabled = true
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.refreshControl = self._refreshControl
+        tableView.refreshControl = self.refreshControl
         
         return tableView
     }()
     
-    private lazy var _refreshControl: UIRefreshControl = {
+    private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
 
         return refreshControl
+    }()
+    
+    private lazy var bottomSpinner: UIActivityIndicatorView = {
+        var style: UIActivityIndicatorView.Style = .gray
+        if #available(iOS 13.0, *) {
+            style = .large
+        }
+        let indicator = UIActivityIndicatorView(style: style)
+        indicator.frame.size.height = indicator.frame.height + self.spinnerInsets.top
+            + self.spinnerInsets.bottom
+        indicator.color = UIColor(named: Constants.ColorName.accentColor)
+        indicator.hidesWhenStopped = true
+        indicator.startAnimating()
+
+        return indicator
     }()
     
     // MARK: - Life cycle
@@ -210,5 +227,14 @@ extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource
         cell.set(movie: self.filteredMovies[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if indexPath.row == lastRowIndex {
+            self.tableView.tableFooterView = self.bottomSpinner
+        }
     }
 }
