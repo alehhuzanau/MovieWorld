@@ -18,6 +18,7 @@ extension Section {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var urlPath: String?
     @NSManaged public var movies: NSSet?
 
 }

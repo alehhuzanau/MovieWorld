@@ -8,9 +8,17 @@
 
 import UIKit
 
+typealias SectionUrl = (name: String, url: String)
+
 class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
+        
+    private let sectionUrls: [SectionUrl] = [
+        (name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
+        (name: "Popular Movies", url: MWURLPaths.popularMovies),
+        (name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
+        (name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
     
     private let dispatchGroup = DispatchGroup()
     
@@ -56,23 +64,20 @@ class MWMainViewController: UITableViewController {
     // MARK: - Request methods
     
     private func initRequest() {
-        self.request(sectionName: "Now Playing", urlPath: MWURLPaths.nowPlayingMovies)
-        self.request(sectionName: "Popular Movies", urlPath: MWURLPaths.popularMovies)
-        self.request(sectionName: "Top Rated Movies", urlPath: MWURLPaths.topRatedMovies)
-        self.request(sectionName: "Upcoming Movies", urlPath: MWURLPaths.upcomingMovies)
+        self.sectionUrls.forEach { self.request(section: $0) }
     }
     
-    private func request(sectionName: String, urlPath: String) {
+    private func request(section: SectionUrl) {
         self.dispatchGroup.enter()
         MWNet.sh.request(
-            urlPath: urlPath,
+            urlPath: section.url,
             successHandler: { [weak self] (results: MWMovieResults) in
-                MWCoreDataManager.sh.deleteSection(name: sectionName)
+                MWCoreDataManager.sh.deleteSection(name: section.name)
                 let movies = results.results
                 let dispatchGroup = DispatchGroup()
                 self?.saveMoviesToCoreData(movies: movies, dispatchGroup: dispatchGroup)
                 dispatchGroup.notify(queue: .main) {
-                    MWCoreDataManager.sh.saveSection(name: sectionName, movies: movies)
+                    MWCoreDataManager.sh.saveSection(name: section.name, urlPath: section.url, movies: movies)
                     self?.dispatchGroup.leave()
                 }
             },
@@ -134,6 +139,7 @@ class MWMainViewController: UITableViewController {
         cell.set(section: self.sections[indexPath.row])
         cell.pushVC = {
             let vc = MWMainMoviesViewController()
+            vc.movies = self.sections[indexPath.row].getMovies()
             vc.movies = self.sections[indexPath.row].getMovies()
             MWI.sh.push(vc: vc)
         }

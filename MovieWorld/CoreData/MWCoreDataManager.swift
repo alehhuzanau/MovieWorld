@@ -139,10 +139,11 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveSection(name: String, movies: [MWMovie]) {
+    func saveSection(name: String, urlPath: String, movies: [MWMovie]) {
         let managedContext = self.persistentContainer.viewContext
         let newSection = Section(context: managedContext)
         newSection.name = name
+        newSection.urlPath = urlPath
         let movieIds: [Int64] = movies.map { $0.id }
         if let sectionMovies = self.fetchMovies() {
             sectionMovies
