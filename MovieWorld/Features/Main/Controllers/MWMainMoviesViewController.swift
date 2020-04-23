@@ -16,6 +16,14 @@ class MWMainMoviesViewController: UIViewController {
     
     private let spinnerInsets = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
 
+    private var movies: [Movie] = [] {
+        didSet {
+            self.filteredMovies = self.movies
+        }
+    }
+    
+    private var filteredMovies: [Movie] = []
+    
     private lazy var genres: [Genre] = {
         return MWCoreDataManager.sh.fetchGenres() ?? []
     }()
@@ -32,13 +40,11 @@ class MWMainMoviesViewController: UIViewController {
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
     
-    var movies: [Movie] = [] {
+    var section: Section? {
         didSet {
-            self.filteredMovies = self.movies
+            self.movies = self.section?.getMovies() ?? []
         }
     }
-    
-    private var filteredMovies: [Movie] = []
     
     // MARK: - GUI variables
     

@@ -139,8 +139,7 @@ class MWMainViewController: UITableViewController {
         cell.set(section: self.sections[indexPath.row])
         cell.pushVC = {
             let vc = MWMainMoviesViewController()
-            vc.movies = self.sections[indexPath.row].getMovies()
-            vc.movies = self.sections[indexPath.row].getMovies()
+            vc.section = self.sections[indexPath.row]
             MWI.sh.push(vc: vc)
         }
         
