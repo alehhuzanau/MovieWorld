@@ -8,17 +8,15 @@
 
 import UIKit
 
-typealias SectionUrl = (name: String, url: String)
-
 class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
         
-    private let sectionUrls: [SectionUrl] = [
-        (name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
-        (name: "Popular Movies", url: MWURLPaths.popularMovies),
-        (name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
-        (name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
+    private let sectionUrls: [MWSectionUrl] = [
+        MWSectionUrl(name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
+        MWSectionUrl(name: "Popular Movies", url: MWURLPaths.popularMovies),
+        MWSectionUrl(name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
+        MWSectionUrl(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
     
     private let dispatchGroup = DispatchGroup()
     
@@ -67,7 +65,7 @@ class MWMainViewController: UITableViewController {
         self.sectionUrls.forEach { self.request(section: $0) }
     }
     
-    private func request(section: SectionUrl) {
+    private func request(section: MWSectionUrl) {
         self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: section.url,

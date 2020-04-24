@@ -14,7 +14,7 @@ class Constants {
     }
     
     struct ImageName {
-        static let movieImage = "movieImage"
+        static let arrowIcon = "arrowIcon"
         static let mainIcon = "iconTabBarMain"
         static let categoryIcon = "iconTabBarCategory"
         static let searchIcon = "iconTabBarSearch"
