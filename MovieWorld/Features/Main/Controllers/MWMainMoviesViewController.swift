@@ -15,7 +15,9 @@ class MWMainMoviesViewController: UIViewController {
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     
     private let spinnerInsets = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
-
+    
+    private let dispatchGroup = DispatchGroup()
+    
     private var movies: [Movie] = [] {
         didSet {
             self.filteredMovies = self.movies
@@ -95,7 +97,7 @@ class MWMainMoviesViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-
+        
         return refreshControl
     }()
     
@@ -110,7 +112,7 @@ class MWMainMoviesViewController: UIViewController {
         indicator.color = UIColor(named: Constants.ColorName.accentColor)
         indicator.hidesWhenStopped = true
         indicator.startAnimating()
-
+        
         return indicator
     }()
     
@@ -148,10 +150,10 @@ class MWMainMoviesViewController: UIViewController {
     private func filterMovies() {
         guard let indexPaths = collectionView.indexPathsForSelectedItems,
             indexPaths.count != 0 else {
-            self.filteredMovies = self.movies
-            self.tableView.reloadData()
+                self.filteredMovies = self.movies
+                self.tableView.reloadData()
                 
-            return
+                return
         }
         let filteredGenres = indexPaths.map { self.genres[$0.row] }
         
@@ -168,7 +170,59 @@ class MWMainMoviesViewController: UIViewController {
     // MARK: - RefreshControl action
     
     @objc func refresh(refreshControl: UIRefreshControl) {
-        refreshControl.endRefreshing()
+        self.request()
+        self.dispatchGroup.notify(queue: .main) {
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+        }
+    }
+    
+    // MARK: - Request methods
+    
+    private func request(page: Int = 1) {
+        guard let section = self.section, let url = section.urlPath else { return }
+        if (page == 1) {
+            self.movies.removeAll()
+        }
+        self.dispatchGroup.enter()
+        MWNet.sh.request(
+            urlPath: url,
+            parameters: ["page" : String(page)],
+            successHandler: { [weak self] (results: MWMovieResults) in
+                let dispatchGroup = DispatchGroup()
+                self?.saveToMovies(movies: results.results, dispatchGroup: dispatchGroup)
+                dispatchGroup.notify(queue: .main) {
+                    self?.dispatchGroup.leave()
+                }
+            },
+            errorHandler: { [weak self] error in
+                print(error.getDescription())
+                self?.dispatchGroup.leave()
+        })
+    }
+    
+    private func saveToMovies(movies: [MWMovie], dispatchGroup: DispatchGroup) {
+        for movie in movies {
+            dispatchGroup.enter()
+            MWNet.sh.downloadImage(
+                movie.posterPath,
+                successHandler: { image in
+                    let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
+                    let newMovie = Movie(context: managedContext)
+                    newMovie.id = movie.id
+                    newMovie.title = movie.title
+                    newMovie.releaseDate = movie.releaseDate
+                    newMovie.posterPath = movie.posterPath
+                    newMovie.image = image
+                    if let genres = MWCoreDataManager.sh.fetchGenres() {
+                        genres
+                            .filter { movie.genres.contains($0.id) }
+                            .forEach { newMovie.addToGenres($0) }
+                    }
+                    self.movies.append(newMovie)
+                    dispatchGroup.leave()
+            })
+        }
     }
 }
 
