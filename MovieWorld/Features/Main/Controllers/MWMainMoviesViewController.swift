@@ -18,6 +18,12 @@ class MWMainMoviesViewController: UIViewController {
     
     private let dispatchGroup = DispatchGroup()
     
+    private var isFiltered: Bool = false
+    
+    private var isLoading: Bool = false
+    
+    private var currentPage: Int = 1
+    
     private var movies: [Movie] = [] {
         didSet {
             self.filteredMovies = self.movies
@@ -148,9 +154,10 @@ class MWMainMoviesViewController: UIViewController {
     // MARK: - Data filtering method
     
     private func filterMovies() {
-        guard let indexPaths = collectionView.indexPathsForSelectedItems,
+        guard let indexPaths = self.collectionView.indexPathsForSelectedItems,
             indexPaths.count != 0 else {
                 self.filteredMovies = self.movies
+                self.isFiltered = false
                 self.tableView.reloadData()
                 
                 return
@@ -163,14 +170,18 @@ class MWMainMoviesViewController: UIViewController {
                 self.filteredMovies.append(movie)
             }
         }
-        
+        self.isFiltered = true
         self.tableView.reloadData()
     }
     
     // MARK: - RefreshControl action
     
     @objc func refresh(refreshControl: UIRefreshControl) {
-        self.request()
+        guard !self.isFiltered, !self.isLoading else {
+            refreshControl.endRefreshing()
+            return
+        }
+        self.request(isFirstPage: true)
         self.dispatchGroup.notify(queue: .main) {
             self.tableView.reloadData()
             refreshControl.endRefreshing()
@@ -179,15 +190,19 @@ class MWMainMoviesViewController: UIViewController {
     
     // MARK: - Request methods
     
-    private func request(page: Int = 1) {
+    private func request(isFirstPage: Bool = false) {
         guard let section = self.section, let url = section.urlPath else { return }
-        if (page == 1) {
+        if (isFirstPage) {
             self.movies.removeAll()
+            self.tableView.reloadData()
+            self.currentPage = 1
+        } else {
+            self.currentPage += 1
         }
         self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: url,
-            parameters: ["page" : String(page)],
+            parameters: ["page" : String(self.currentPage)],
             successHandler: { [weak self] (results: MWMovieResults) in
                 let dispatchGroup = DispatchGroup()
                 self?.saveToMovies(movies: results.results, dispatchGroup: dispatchGroup)
@@ -283,8 +298,15 @@ extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if indexPath.row == lastRowIndex {
+        if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
+            self.isLoading = true
             self.tableView.tableFooterView = self.bottomSpinner
+            self.request()
+            self.dispatchGroup.notify(queue: .main) {
+                self.isLoading = false
+                self.tableView.tableFooterView = nil
+                self.tableView.reloadData()
+            }
         }
     }
 }
