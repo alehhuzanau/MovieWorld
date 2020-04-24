@@ -25,6 +25,8 @@ class MWCoreDataManager {
         return container
     }()
     
+    lazy var context = { self.persistentContainer.viewContext }()
+    
     private init() {
         let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         if docUrls.count > 0 {
@@ -35,10 +37,9 @@ class MWCoreDataManager {
     }
     
     func saveContext() {
-        let context = self.persistentContainer.viewContext
-        if context.hasChanges {
+        if self.context.hasChanges {
             do {
-                try context.save()
+                try self.context.save()
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
@@ -48,16 +49,7 @@ class MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func save(context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
     private func deleteAllData(entity: String, predicateFormat: String? = nil) {
-        let managedContext = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         if let format = predicateFormat {
@@ -66,11 +58,11 @@ extension MWCoreDataManager {
         }
         do
         {
-            let results = try managedContext.fetch(fetchRequest)
+            let results = try self.context.fetch(fetchRequest)
             for managedObject in results
             {
                 let managedObjectData: NSManagedObject = managedObject as! NSManagedObject
-                managedContext.delete(managedObjectData)
+                self.context.delete(managedObjectData)
             }
         } catch let error as NSError {
             print("Delete all data in \(entity) error : \(error) \(error.userInfo)")
@@ -78,11 +70,10 @@ extension MWCoreDataManager {
     }
     
     private func fetchData<T: NSManagedObject>(sortDescriptors: [NSSortDescriptor]? = nil) -> [T]? {
-        let managedContext = self.persistentContainer.viewContext
         let fetch: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
         fetch.sortDescriptors = sortDescriptors
         do {
-            let results = try managedContext.fetch(fetch)
+            let results = try self.context.fetch(fetch)
             return results
         } catch {
             print(error.localizedDescription)
@@ -93,11 +84,10 @@ extension MWCoreDataManager {
 
 extension MWCoreDataManager {
     func saveGenre(id: Int64, name: String) {
-        let managedContext = self.persistentContainer.viewContext
-        let newGenre = Genre(context: managedContext)
+        let newGenre = Genre(context: self.context)
         newGenre.id = id
         newGenre.name = name
-        self.save(context: managedContext)
+        self.saveContext()
     }
     
     func deleteAllGenres() {
@@ -110,23 +100,11 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveMovie(id: Int64, title: String, releaseDate: String?, posterPath: String?,
-                   image: Data?, genreIds: [Int64]) {
-        if let ids = self.fetchMovies()?.map({ $0.id }),
-            ids.contains(id) { return }
-        let managedContext = self.persistentContainer.viewContext
-        let newMovie = Movie(context: managedContext)
-        newMovie.id = id
-        newMovie.title = title
-        newMovie.releaseDate = releaseDate
-        newMovie.posterPath = posterPath
+    func saveMovie(from movie: MWMovie, imageData image: Data?) {
+        if let ids = self.fetchMovies()?.map({ $0.id }), ids.contains(movie.id) { return }
+        let newMovie = Movie.getMovie(from: movie)
         newMovie.image = image
-        if let genres = self.fetchGenres() {
-            genres
-                .filter { genreIds.contains($0.id) }
-                .forEach { newMovie.addToGenres($0) }
-        }
-        self.save(context: managedContext)
+        self.saveContext()
     }
     
     func deleteAllMovies() {
@@ -140,8 +118,7 @@ extension MWCoreDataManager {
 
 extension MWCoreDataManager {
     func saveSection(name: String, urlPath: String, movies: [MWMovie]) {
-        let managedContext = self.persistentContainer.viewContext
-        let newSection = Section(context: managedContext)
+        let newSection = Section(context: self.context)
         newSection.name = name
         newSection.urlPath = urlPath
         let movieIds: [Int64] = movies.map { $0.id }
@@ -150,7 +127,7 @@ extension MWCoreDataManager {
                 .filter { movieIds.contains($0.id) }
                 .forEach { newSection.addToMovies($0) }
         }
-        self.save(context: managedContext)
+        self.saveContext()
     }
     
     func deleteAllSections() {

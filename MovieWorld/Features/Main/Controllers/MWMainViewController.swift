@@ -93,13 +93,7 @@ class MWMainViewController: UITableViewController {
             MWNet.sh.downloadImage(
                 movie.posterPath,
                 successHandler: { image in
-                    MWCoreDataManager.sh.saveMovie(
-                        id: movie.id,
-                        title: movie.title,
-                        releaseDate: movie.releaseDate,
-                        posterPath: movie.posterPath,
-                        image: image,
-                        genreIds: movie.genres)
+                    MWCoreDataManager.sh.saveMovie(from: movie, imageData: image)
                     dispatchGroup.leave()
             })
         }

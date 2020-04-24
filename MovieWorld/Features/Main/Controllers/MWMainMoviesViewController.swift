@@ -207,18 +207,8 @@ class MWMainMoviesViewController: UIViewController {
             MWNet.sh.downloadImage(
                 movie.posterPath,
                 successHandler: { image in
-                    let managedContext = MWCoreDataManager.sh.persistentContainer.viewContext
-                    let newMovie = Movie(context: managedContext)
-                    newMovie.id = movie.id
-                    newMovie.title = movie.title
-                    newMovie.releaseDate = movie.releaseDate
-                    newMovie.posterPath = movie.posterPath
+                    let newMovie = Movie.getMovie(from: movie)
                     newMovie.image = image
-                    if let genres = MWCoreDataManager.sh.fetchGenres() {
-                        genres
-                            .filter { movie.genres.contains($0.id) }
-                            .forEach { newMovie.addToGenres($0) }
-                    }
                     self.movies.append(newMovie)
                     dispatchGroup.leave()
             })
