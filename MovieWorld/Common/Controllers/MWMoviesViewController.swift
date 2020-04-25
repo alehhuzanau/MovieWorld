@@ -124,10 +124,14 @@ class MWMoviesViewController: UIViewController {
     
     // MARK: - Life cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = self.section?.name ?? "Movies".localized
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.title = "Movies".localized
         
         self.addSubviews()
         self.makeConstraints()

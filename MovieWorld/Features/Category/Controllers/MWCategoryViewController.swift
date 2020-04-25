@@ -11,7 +11,7 @@ import UIKit
 class MWCategoryViewController: UITableViewController {
     
     // MARK: - Variables
-        
+    
     private let sectionUrls: [MWSectionUrl] = [
         MWSectionUrl(name: "Top 250", url: MWURLPaths.nowPlayingMovies),
         MWSectionUrl(name: "Paramount Movies", url: MWURLPaths.popularMovies),
@@ -31,8 +31,25 @@ class MWCategoryViewController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        self.tableView.isUserInteractionEnabled = true
+        self.tableView.separatorStyle = .none
+        
+        self.setSections()
+    }
+    
+    // MARK: - DataCore methods
+    
+    private func setSections() {
+        self.sectionUrls.forEach {
+            MWCoreDataManager.sh.saveSection(name: $0.name, urlPath: $0.url, movies: [])
+        }
+    }
+    
+    private func getSection(index: Int) -> Section? {
+        guard let sections = MWCoreDataManager.sh.fetchSections(),
+            let section = sections.first(where: { $0.name == self.sectionUrls[index].name })
+            else { return nil }
+        
+        return section
     }
     
     // MARK: - TableView methods
@@ -46,13 +63,14 @@ class MWCategoryViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWCategoryTableViewCell.reuseIdentifier)
             as? MWCategoryTableViewCell ?? MWCategoryTableViewCell()
-        cell.section = self.sectionUrls[indexPath.row]
+        cell.set(titleText: self.sectionUrls[indexPath.row].name)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MWMoviesViewController()
+        vc.section = self.getSection(index: indexPath.row)
         MWI.sh.push(vc: vc)
     }
 }

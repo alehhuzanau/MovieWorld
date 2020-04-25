@@ -18,12 +18,6 @@ class MWCategoryTableViewCell: UITableViewCell {
     private let subviewsEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 15)
     private let imageSize = CGSize(width: 22, height: 22)
     
-    var section: MWSectionUrl? {
-        didSet {
-            self.titleLabel.text = self.section?.name
-        }
-    }
-    
     // MARK: - GUI variables
     
     private lazy var containerView: UIView = {
@@ -90,7 +84,15 @@ class MWCategoryTableViewCell: UITableViewCell {
             make.height.equalTo(self.imageSize)
         }
     }
+        
+    // MARK: - Set method
+
+    func set(titleText: String) {
+        self.titleLabel.text = titleText
+    }
     
+    // MARK: - setSelected method
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         

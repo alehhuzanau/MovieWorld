@@ -45,8 +45,7 @@ class MWMainViewController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        self.tableView.isUserInteractionEnabled = true
+        self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 305
         self.tableView.refreshControl = self._refreshControl
         
