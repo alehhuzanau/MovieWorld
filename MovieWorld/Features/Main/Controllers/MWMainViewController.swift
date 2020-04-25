@@ -111,9 +111,12 @@ class MWMainViewController: UITableViewController {
     // MARK: - Sections set method
 
     private func setSections() {
-        for section in MWCoreDataManager.sh.fetchSections() ?? [] {
-            self.sections.append(section)
-            self.tableView.reloadData()
+        guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
+        for sectionUrl in self.sectionUrls {
+            if let section = sections.first(where: { $0.name == sectionUrl.name }) {
+                self.sections.append(section)
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -130,7 +133,7 @@ class MWMainViewController: UITableViewController {
             as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
         cell.set(section: self.sections[indexPath.row])
         cell.pushVC = {
-            let vc = MWMainMoviesViewController()
+            let vc = MWMoviesViewController()
             vc.section = self.sections[indexPath.row]
             MWI.sh.push(vc: vc)
         }

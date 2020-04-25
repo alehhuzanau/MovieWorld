@@ -23,7 +23,7 @@ class MWCategoryViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.title = "Category".localized
+        self.navigationItem.title = "Category".localized
     }
     
     override func viewDidLoad() {
@@ -52,6 +52,7 @@ class MWCategoryViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = MWMoviesViewController()
+        MWI.sh.push(vc: vc)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MWMainMoviesViewController.swift
+//  MWMoviesViewController.swift
 //  MovieWorld
 //
 //  Created by Aleh Huzanau on 4/12/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MWMainMoviesViewController: UIViewController {
+class MWMoviesViewController: UIViewController {
     
     // MARK: - Variables
     
@@ -231,7 +231,7 @@ class MWMainMoviesViewController: UIViewController {
     }
 }
 
-extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MWMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return self.genres.count
@@ -256,7 +256,7 @@ extension MWMainMoviesViewController: UICollectionViewDelegate, UICollectionView
     }
 }
 
-extension MWMainMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
+extension MWMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
     private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {
         let label = UILabel(frame: CGRect(
             x: 0,
@@ -280,7 +280,7 @@ extension MWMainMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
     }
 }
 
-extension MWMainMoviesViewController: UITableViewDelegate, UITableViewDataSource {
+extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredMovies.count
     }
