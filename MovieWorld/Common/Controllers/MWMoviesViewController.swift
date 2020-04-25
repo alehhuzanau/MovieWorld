@@ -50,7 +50,14 @@ class MWMoviesViewController: UIViewController {
     
     var section: Section? {
         didSet {
-            self.movies = self.section?.getMovies() ?? []
+            if let movies = self.section?.getMovies(), movies.count != 0 {
+                self.movies = movies
+            } else {
+                self.request(isFirstPage: true)
+                self.dispatchGroup.notify(queue: .main) {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
     
