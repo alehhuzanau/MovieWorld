@@ -117,10 +117,16 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveSection(name: String, urlPath: String, movies: [MWMovie]) {
+    func saveSection(sectionUrl: MWSectionUrl, movies: [MWMovie] = []) {
         let newSection = Section(context: self.context)
-        newSection.name = name
-        newSection.urlPath = urlPath
+        newSection.name = sectionUrl.name
+        newSection.urlPath = sectionUrl.url
+        sectionUrl.parameters.forEach { parameter in
+            let newParameter = Parameter(context: self.context)
+            newParameter.key = parameter.key
+            newParameter.value = parameter.value
+            newSection.addToParameters(newParameter)
+        }
         let movieIds: [Int64] = movies.map { $0.id }
         if let sectionMovies = self.fetchMovies() {
             sectionMovies

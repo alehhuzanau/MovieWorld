@@ -74,7 +74,7 @@ class MWMainViewController: UITableViewController {
                 let dispatchGroup = DispatchGroup()
                 self?.saveMoviesToCoreData(movies: movies, dispatchGroup: dispatchGroup)
                 dispatchGroup.notify(queue: .main) {
-                    MWCoreDataManager.sh.saveSection(name: section.name, urlPath: section.url, movies: movies)
+                    MWCoreDataManager.sh.saveSection(sectionUrl: section, movies: movies)
                     self?.dispatchGroup.leave()
                 }
             },

@@ -210,10 +210,12 @@ class MWMoviesViewController: UIViewController {
         } else {
             self.currentPage += 1
         }
+        var parameters = ["page" : String(self.currentPage)]
+        parameters.merge(other: section.getParameters())
         self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: url,
-            parameters: ["page" : String(self.currentPage)],
+            parameters: parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
                 let dispatchGroup = DispatchGroup()
                 self?.saveToMovies(movies: results.results, dispatchGroup: dispatchGroup)

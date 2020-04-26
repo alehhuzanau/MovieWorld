@@ -14,7 +14,9 @@ class MWCategoryViewController: UITableViewController {
     
     private let sectionUrls: [MWSectionUrl] = [
         MWSectionUrl(name: "Top 250", url: MWURLPaths.nowPlayingMovies),
-        MWSectionUrl(name: "Paramount Movies", url: MWURLPaths.popularMovies),
+        MWSectionUrl(name: "Paramount Movies",
+                     url: MWURLPaths.popularMovies,
+                     parameters: ["with_companies": "4"]),
         MWSectionUrl(name: "MyFrenchFilmFestival", url: MWURLPaths.topRatedMovies),
         MWSectionUrl(name: "Post-apocalyptic movies", url: MWURLPaths.upcomingMovies)]
     
@@ -40,7 +42,8 @@ class MWCategoryViewController: UITableViewController {
     
     private func setSections() {
         self.sectionUrls.forEach {
-            MWCoreDataManager.sh.saveSection(name: $0.name, urlPath: $0.url, movies: [])
+            MWCoreDataManager.sh.deleteSection(name: $0.name)
+            MWCoreDataManager.sh.saveSection(sectionUrl: $0)
         }
     }
     

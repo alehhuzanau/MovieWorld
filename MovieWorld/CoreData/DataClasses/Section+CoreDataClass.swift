@@ -16,4 +16,16 @@ public class Section: NSManagedObject {
     func getMovies() -> [Movie] {
         return self.movies?.allObjects as? [Movie] ?? []
     }
+    
+    func getParameters() -> [String : String] {
+        var result: [String : String] = [:]
+        if let allObjects = self.parameters?.allObjects as? [Parameter] {
+            allObjects.forEach { parameter in
+                guard let key = parameter.key, let value = parameter.value else { return }
+                result[key] = value
+            }
+        }
+        
+        return result
+    }
 }
