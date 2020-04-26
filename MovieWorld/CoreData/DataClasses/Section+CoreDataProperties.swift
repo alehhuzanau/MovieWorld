@@ -20,6 +20,7 @@ extension Section {
     @NSManaged public var name: String?
     @NSManaged public var urlPath: String?
     @NSManaged public var movies: NSSet?
+    @NSManaged public var parameters: NSSet?
 
 }
 
@@ -37,5 +38,22 @@ extension Section {
 
     @objc(removeMovies:)
     @NSManaged public func removeFromMovies(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for parameters
+extension Section {
+
+    @objc(addParametersObject:)
+    @NSManaged public func addToParameters(_ value: Parameter)
+
+    @objc(removeParametersObject:)
+    @NSManaged public func removeFromParameters(_ value: Parameter)
+
+    @objc(addParameters:)
+    @NSManaged public func addToParameters(_ values: NSSet)
+
+    @objc(removeParameters:)
+    @NSManaged public func removeFromParameters(_ values: NSSet)
 
 }
