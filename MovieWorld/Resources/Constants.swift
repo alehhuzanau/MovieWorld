@@ -20,6 +20,7 @@ class Constants {
         static let searchIcon = "iconTabBarSearch"
         static let nextIcon = "iconNext"
         static let launchImage = "LaunchImage"
+        static let noPosterIcon = "noPosterIcon"
     }
     
     struct ColorName {

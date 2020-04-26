@@ -69,7 +69,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     override func updateConstraints() {
         self.imageView.snp.updateConstraints { make in
             make.top.centerX.width.equalToSuperview()
-            make.height.equalTo(self.imageViewSize.height)
+            make.size.equalTo(self.imageViewSize)
         }
         self.titleLabel.snp.updateConstraints { make in
             make.top.equalTo(self.imageView.snp.bottom).offset(12)
@@ -95,7 +95,13 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
             self.subtitleLabel.text! += ", \(firstGenre)"
         }
-        self.imageView.image = movie.getImage()
+        if let image = movie.getImage() {
+            self.imageView.image = image
+        } else {
+            self.imageView.image = UIImage(named: Constants.ImageName.noPosterIcon)
+            self.imageView.contentMode = .center
+            self.imageView.backgroundColor = UIColor.withAlphaComponent(.lightGray)(0.5)
+        }
         
         self.setNeedsUpdateConstraints()
     }

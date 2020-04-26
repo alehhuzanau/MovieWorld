@@ -124,7 +124,13 @@ class MWMovieCardTableViewCell: UITableViewCell {
     // MARK: - Data set methods
     
     func set(movie: Movie) {
-        self.movieImageView.image = movie.getImage()
+        if let image = movie.getImage() {
+            self.movieImageView.image = image
+        } else {
+            self.movieImageView.image = UIImage(named: Constants.ImageName.noPosterIcon)
+            self.movieImageView.contentMode = .center
+            self.movieImageView.backgroundColor = UIColor.withAlphaComponent(.lightGray)(0.5)
+        }
         self.titleLabel.text = movie.title
         self.releaseDateLabel.text = movie.getReleaseDateYear()
         self.genresLabel.text = movie.getGenres()
