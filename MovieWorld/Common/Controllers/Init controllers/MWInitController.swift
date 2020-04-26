@@ -75,7 +75,6 @@ class MWInitController: UIViewController {
         self.setConfiguration()
         
         self.fetchGenres(urlPath: MWURLPaths.movieGenres)
-        self.fetchGenres(urlPath: MWURLPaths.tvGenres)
     }
     
     override func viewDidAppear(_ animated: Bool) {

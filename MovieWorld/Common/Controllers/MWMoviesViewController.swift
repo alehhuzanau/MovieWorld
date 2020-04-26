@@ -234,7 +234,7 @@ class MWMoviesViewController: UIViewController {
             dispatchGroup.enter()
             MWNet.sh.downloadImage(
                 movie.posterPath,
-                successHandler: { image in
+                handler: { image in
                     let newMovie = Movie.getMovie(from: movie)
                     newMovie.image = image
                     self.movies.append(newMovie)

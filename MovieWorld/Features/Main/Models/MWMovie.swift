@@ -15,7 +15,7 @@ struct MWMovie: Decodable {
 
     var id: Int64
     var title: String
-    var posterPath: String
+    var posterPath: String?
     var genres: [Int64]
     var releaseDate: String
             
@@ -23,7 +23,7 @@ struct MWMovie: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int64.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
-        self.posterPath = try container.decode(String.self, forKey: .posterPath)
+        self.posterPath = try container.decode(String?.self, forKey: .posterPath) ?? ""
         self.genres = try container.decode([Int64].self, forKey: .genres)
         self.releaseDate = try container.decode(String.self, forKey: .releaseDate)
     }

@@ -13,13 +13,16 @@ class MWCategoryViewController: UITableViewController {
     // MARK: - Variables
     
     private let sectionUrls: [MWSectionUrl] = [
-        MWSectionUrl(name: "Top 250", url: MWURLPaths.nowPlayingMovies),
+        MWSectionUrl(name: "Top 250", url: MWURLPaths.discoverMovie),
         MWSectionUrl(name: "Paramount Movies",
-                     url: MWURLPaths.popularMovies,
-                     parameters: ["with_companies": "4"]),
-        MWSectionUrl(name: "MyFrenchFilmFestival", url: MWURLPaths.topRatedMovies),
-        MWSectionUrl(name: "Post-apocalyptic movies", url: MWURLPaths.upcomingMovies)]
-    
+                     url: MWURLPaths.discoverMovie,
+                     parameters: ["with_companies" : "4"]),
+        MWSectionUrl(name: "Disaster movies",
+                     url: MWURLPaths.discoverMovie,
+                     parameters: ["with_keywords" : "5096"]),
+        MWSectionUrl(name: "MyFrenchFilmFestival", url: MWURLPaths.discoverMovie),
+        MWSectionUrl(name: "Post-apocalyptic movies", url: MWURLPaths.discoverMovie)]
+        
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {

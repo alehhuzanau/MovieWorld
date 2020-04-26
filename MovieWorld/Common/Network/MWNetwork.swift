@@ -89,12 +89,15 @@ class MWNetwork {
         }
     }
     
-    func downloadImage(_ url: String, successHandler: @escaping (Data) -> Void) {
-        guard let imagebaseUrl = MWSystem.sh.configuration?.images.baseUrl else { return }
+    func downloadImage(_ url: String?, handler: @escaping (Data?) -> Void) {
+        guard let imagebaseUrl = MWSystem.sh.configuration?.images.baseUrl, let url = url else {
+            self.handleClosure(handler, nil)
+            return
+        }
         let imageSize = MWImageSizes.w185
         AF.request("\(imagebaseUrl)\(imageSize)\(url)").responseData { response in
             guard let data = response.data else { return }
-            self.handleClosure(successHandler, data)
+            self.handleClosure(handler, data)
         }
     }
 }
