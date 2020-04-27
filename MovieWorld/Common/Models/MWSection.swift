@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MWSectionUrl {
+struct MWSection {
     var name: String
     var url: String
     var parameters: [String : String]

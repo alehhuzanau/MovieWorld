@@ -12,16 +12,16 @@ class MWCategoryViewController: UITableViewController {
     
     // MARK: - Variables
     
-    private let sectionUrls: [MWSectionUrl] = [
-        MWSectionUrl(name: "Top 250", url: MWURLPaths.discoverMovie),
-        MWSectionUrl(name: "Paramount Movies",
+    private let sectionUrls: [MWSection] = [
+        MWSection(name: "Top 250", url: MWURLPaths.discoverMovie),
+        MWSection(name: "Paramount Movies",
                      url: MWURLPaths.discoverMovie,
                      parameters: ["with_companies" : "4"]),
-        MWSectionUrl(name: "Disaster movies",
+        MWSection(name: "Disaster movies",
                      url: MWURLPaths.discoverMovie,
                      parameters: ["with_keywords" : "5096"]),
-        MWSectionUrl(name: "MyFrenchFilmFestival", url: MWURLPaths.discoverMovie),
-        MWSectionUrl(name: "Post-apocalyptic movies", url: MWURLPaths.discoverMovie)]
+        MWSection(name: "MyFrenchFilmFestival", url: MWURLPaths.discoverMovie),
+        MWSection(name: "Post-apocalyptic movies", url: MWURLPaths.discoverMovie)]
         
     // MARK: - Life Cycle
     

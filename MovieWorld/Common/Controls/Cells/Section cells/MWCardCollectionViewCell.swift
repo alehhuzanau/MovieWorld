@@ -11,11 +11,11 @@ import SnapKit
 
 class MWCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "MWCardCollectionViewCell"
-
+    
     // MARK: - Variables
     
     private let imageViewSize = CGSize(width: 130, height: 185)
-
+    
     // MARK: - GUI variables
     
     private lazy var imageView: UIImageView = {
@@ -25,15 +25,15 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 5
-
+        
         return imageView
     }()
-
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return label
     }()
     
@@ -44,7 +44,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-
+    
     // MARK: - Init methods
     
     override init(frame: CGRect) {

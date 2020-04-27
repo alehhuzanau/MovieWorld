@@ -84,15 +84,15 @@ class MWCategoryTableViewCell: UITableViewCell {
             make.height.equalTo(self.imageSize)
         }
     }
-        
+    
     // MARK: - Set method
-
+    
     func set(titleText: String) {
         self.titleLabel.text = titleText
     }
     
     // MARK: - setSelected method
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         

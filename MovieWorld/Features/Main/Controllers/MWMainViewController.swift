@@ -12,11 +12,11 @@ class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
         
-    private let sectionUrls: [MWSectionUrl] = [
-        MWSectionUrl(name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
-        MWSectionUrl(name: "Popular Movies", url: MWURLPaths.popularMovies),
-        MWSectionUrl(name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
-        MWSectionUrl(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
+    private let sectionUrls: [MWSection] = [
+        MWSection(name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
+        MWSection(name: "Popular Movies", url: MWURLPaths.popularMovies),
+        MWSection(name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
+        MWSection(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
     
     private let dispatchGroup = DispatchGroup()
     
@@ -64,7 +64,7 @@ class MWMainViewController: UITableViewController {
         self.sectionUrls.forEach { self.request(section: $0) }
     }
     
-    private func request(section: MWSectionUrl) {
+    private func request(section: MWSection) {
         self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: section.url,

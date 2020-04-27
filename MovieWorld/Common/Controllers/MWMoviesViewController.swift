@@ -22,6 +22,8 @@ class MWMoviesViewController: UIViewController {
     
     private var isLoading: Bool = false
     
+    private var totalPages: Int?
+    
     private var currentPage: Int = 1
     
     private var movies: [Movie] = [] {
@@ -217,6 +219,7 @@ class MWMoviesViewController: UIViewController {
             urlPath: url,
             parameters: parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
+                self?.totalPages = results.totalPages
                 let dispatchGroup = DispatchGroup()
                 self?.saveToMovies(movies: results.results, dispatchGroup: dispatchGroup)
                 dispatchGroup.notify(queue: .main) {
@@ -310,6 +313,7 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
+        if let totalPages = self.totalPages, self.currentPage == totalPages { return }
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
             self.isLoading = true

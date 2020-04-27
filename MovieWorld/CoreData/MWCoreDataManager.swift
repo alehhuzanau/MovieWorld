@@ -117,7 +117,7 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveSection(sectionUrl: MWSectionUrl, movies: [MWMovie] = []) {
+    func saveSection(sectionUrl: MWSection, movies: [MWMovie] = []) {
         let newSection = Section(context: self.context)
         newSection.name = sectionUrl.name
         newSection.urlPath = sectionUrl.url

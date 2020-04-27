@@ -27,7 +27,7 @@ enum MWNetError {
         case .error4xx(let error):
             return "4xx error \(error.statusCode): \(error.statusMessage)"
         default:
-            return "unknown"
+            return "unknown error"
         }
     }
 }
