@@ -124,19 +124,24 @@ class MWMovieCardTableViewCell: UITableViewCell {
     // MARK: - Data set methods
     
     func set(movie: Movie) {
-        if let image = movie.getImage() {
-            self.movieImageView.image = image
-        } else {
-            self.movieImageView.image = UIImage(named: Constants.ImageName.noPosterIcon)
-            self.movieImageView.contentMode = .center
-            self.movieImageView.backgroundColor = UIColor.withAlphaComponent(.lightGray)(0.5)
-        }
         self.titleLabel.text = movie.title
         self.releaseDateLabel.text = movie.getReleaseDateYear()
         self.genresLabel.text = movie.getGenres()
             .map({ ($0.name ?? "") })
             .joined(separator: ", ")
+        self.setImage(image: movie.getImage())
         
         self.setNeedsUpdateConstraints()
+    }
+    
+    private func setImage(image: UIImage?) {
+        if let image = image {
+            self.movieImageView.image = image
+            self.movieImageView.contentMode = .scaleAspectFill
+        } else {
+            self.movieImageView.image = UIImage(named: Constants.ImageName.noPosterIcon)
+            self.movieImageView.contentMode = .center
+            self.movieImageView.backgroundColor = UIColor.withAlphaComponent(.lightGray)(0.5)
+        }
     }
 }

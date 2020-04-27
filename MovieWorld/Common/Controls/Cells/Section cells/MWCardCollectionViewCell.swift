@@ -95,14 +95,19 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
             self.subtitleLabel.text! += ", \(firstGenre)"
         }
-        if let image = movie.getImage() {
+        self.setImage(image: movie.getImage())
+        
+        self.setNeedsUpdateConstraints()
+    }
+    
+    private func setImage(image: UIImage?) {
+        if let image = image {
             self.imageView.image = image
+            self.imageView.contentMode = .scaleAspectFill
         } else {
             self.imageView.image = UIImage(named: Constants.ImageName.noPosterIcon)
             self.imageView.contentMode = .center
             self.imageView.backgroundColor = UIColor.withAlphaComponent(.lightGray)(0.5)
         }
-        
-        self.setNeedsUpdateConstraints()
     }
 }

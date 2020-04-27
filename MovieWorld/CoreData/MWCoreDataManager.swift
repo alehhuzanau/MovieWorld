@@ -100,10 +100,27 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveMovie(from movie: MWMovie, imageData image: Data?) {
-        if let ids = self.fetchMovies()?.map({ $0.id }), ids.contains(movie.id) { return }
-        let newMovie = Movie.getMovie(from: movie)
-        newMovie.image = image
+    func saveMovie(from movie: MWMovie, to section: Section) {
+        let newMovie = Movie(context: self.context)
+        newMovie.id = movie.id
+        newMovie.title = movie.title
+        newMovie.releaseDate = movie.releaseDate
+        newMovie.posterPath = movie.posterPath
+        if let genres = MWCoreDataManager.sh.fetchGenres() {
+            genres
+                .filter { movie.genres.contains($0.id) }
+                .forEach { newMovie.addToGenres($0) }
+        }
+        newMovie.addToSection(section)
+        self.saveContext()
+    }
+    
+    func saveMovieImage(image: Data?, for movie: MWMovie) {
+        guard let allMovies = self.fetchMovies() else { return }
+        let filteredMovies = allMovies.filter({ $0.id == movie.id && $0.image == nil })
+        filteredMovies.forEach { movie in
+            movie.image = image
+        }
         self.saveContext()
     }
     
@@ -117,21 +134,16 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveSection(sectionUrl: MWSection, movies: [MWMovie] = []) {
+    func saveSection(section: MWSection, movies: [MWMovie] = []) {
+        self.deleteSection(name: section.name)
         let newSection = Section(context: self.context)
-        newSection.name = sectionUrl.name
-        newSection.urlPath = sectionUrl.url
-        sectionUrl.parameters.forEach { parameter in
-            let newParameter = Parameter(context: self.context)
-            newParameter.key = parameter.key
-            newParameter.value = parameter.value
-            newSection.addToParameters(newParameter)
+        newSection.name = section.name
+        newSection.urlPath = section.url
+        section.parameters.forEach {
+            self.saveParameter(key: $0.key, value: $0.value, to: newSection)
         }
-        let movieIds: [Int64] = movies.map { $0.id }
-        if let sectionMovies = self.fetchMovies() {
-            sectionMovies
-                .filter { movieIds.contains($0.id) }
-                .forEach { newSection.addToMovies($0) }
+        movies.forEach { movie in
+            self.saveMovie(from: movie, to: newSection)
         }
         self.saveContext()
     }
@@ -145,6 +157,24 @@ extension MWCoreDataManager {
     }
     
     func fetchSections() -> [Section]? {
+        self.fetchData()
+    }
+}
+
+extension MWCoreDataManager {
+    func saveParameter(key: String, value: String, to section: Section) {
+        let newParameter = Parameter(context: self.context)
+        newParameter.key = key
+        newParameter.value = value
+        section.addToParameters(newParameter)
+        self.saveContext()
+    }
+    
+    func deleteAllParameters() {
+        self.deleteAllData(entity: "Parameter")
+    }
+    
+    func fetchParameters() -> [Section]? {
         self.fetchData()
     }
 }

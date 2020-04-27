@@ -45,8 +45,7 @@ class MWCategoryViewController: UITableViewController {
     
     private func setSections() {
         self.sectionUrls.forEach {
-            MWCoreDataManager.sh.deleteSection(name: $0.name)
-            MWCoreDataManager.sh.saveSection(sectionUrl: $0)
+            MWCoreDataManager.sh.saveSection(section: $0)
         }
     }
     

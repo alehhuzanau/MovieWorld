@@ -11,7 +11,7 @@ import UIKit
 class MWMainViewController: UITableViewController {
     
     // MARK: - Variables
-        
+    
     private let sectionUrls: [MWSection] = [
         MWSection(name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
         MWSection(name: "Popular Movies", url: MWURLPaths.popularMovies),
@@ -28,7 +28,7 @@ class MWMainViewController: UITableViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-
+        
         return refreshControl
     }()
     
@@ -49,12 +49,12 @@ class MWMainViewController: UITableViewController {
         self.tableView.rowHeight = 305
         self.tableView.refreshControl = self._refreshControl
         
-        self.setSections()
+        self.setSectionsAndReload()
         
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
             self.sections.removeAll()
-            self.setSections()
+            self.setSectionsAndReload()
         }
     }
     
@@ -69,14 +69,10 @@ class MWMainViewController: UITableViewController {
         MWNet.sh.request(
             urlPath: section.url,
             successHandler: { [weak self] (results: MWMovieResults) in
-                MWCoreDataManager.sh.deleteSection(name: section.name)
                 let movies = results.results
-                let dispatchGroup = DispatchGroup()
-                self?.saveMoviesToCoreData(movies: movies, dispatchGroup: dispatchGroup)
-                dispatchGroup.notify(queue: .main) {
-                    MWCoreDataManager.sh.saveSection(sectionUrl: section, movies: movies)
-                    self?.dispatchGroup.leave()
-                }
+                MWCoreDataManager.sh.saveSection(section: section, movies: movies)
+                self?.loadImages(movies: movies)
+                self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in
                 print(error.getDescription())
@@ -84,14 +80,13 @@ class MWMainViewController: UITableViewController {
         })
     }
     
-    private func saveMoviesToCoreData(movies: [MWMovie], dispatchGroup: DispatchGroup) {
+    private func loadImages(movies: [MWMovie]) {
         for movie in movies {
-            dispatchGroup.enter()
             MWNet.sh.downloadImage(
                 movie.posterPath,
-                handler: { image in
-                    MWCoreDataManager.sh.saveMovie(from: movie, imageData: image)
-                    dispatchGroup.leave()
+                handler: { [weak self] image in
+                    MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
+                    self?.tableView.reloadData()
             })
         }
     }
@@ -101,15 +96,15 @@ class MWMainViewController: UITableViewController {
     @objc func refresh(refreshControl: UIRefreshControl) {        
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
-            self.sections.removeAll()
-            self.setSections()
             refreshControl.endRefreshing()
+            self.sections.removeAll()
+            self.setSectionsAndReload()
         }
     }
     
     // MARK: - Sections set method
-
-    private func setSections() {
+    
+    private func setSectionsAndReload() {
         guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
         for sectionUrl in self.sectionUrls {
             if let section = sections.first(where: { $0.name == sectionUrl.name }) {

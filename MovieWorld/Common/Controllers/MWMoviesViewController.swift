@@ -196,8 +196,8 @@ class MWMoviesViewController: UIViewController {
         }
         self.request(isFirstPage: true)
         self.dispatchGroup.notify(queue: .main) {
-            self.tableView.reloadData()
             refreshControl.endRefreshing()
+            self.tableView.reloadData()
         }
     }
     
