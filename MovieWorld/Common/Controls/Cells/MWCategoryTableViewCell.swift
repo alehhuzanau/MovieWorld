@@ -10,9 +10,10 @@ import UIKit
 import SnapKit
 
 class MWCategoryTableViewCell: UITableViewCell {
-    static let reuseIdentifier: String = "MWCategoryTableViewCell"
     
     // MARK: - Variables
+    
+    static let reuseIdentifier: String = "MWCategoryTableViewCell"
     
     private let viewEdgeInsets = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
     private let subviewsEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 15)

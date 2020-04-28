@@ -10,9 +10,10 @@ import UIKit
 import SnapKit
 
 class MWMovieCardTableViewCell: UITableViewCell {
-    static let reuseIdentifier: String = "MWMovieCardTableViewCell"
     
     // MARK: - Variables
+    
+    static let reuseIdentifier: String = "MWMovieCardTableViewCell"
     
     private let movieViewEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 3, right: 0)
     private let subviewsEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)

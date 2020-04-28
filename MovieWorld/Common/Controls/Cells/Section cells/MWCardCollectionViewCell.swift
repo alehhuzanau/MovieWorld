@@ -10,9 +10,10 @@ import UIKit
 import SnapKit
 
 class MWCardCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "MWCardCollectionViewCell"
     
     // MARK: - Variables
+    
+    static let reuseIdentifier = "MWCardCollectionViewCell"
     
     private let imageViewSize = CGSize(width: 130, height: 185)
     

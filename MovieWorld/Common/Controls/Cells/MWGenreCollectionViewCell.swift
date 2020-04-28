@@ -10,9 +10,10 @@ import UIKit
 import SnapKit
 
 class MWGenreCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "MWGenreCollectionViewCell"
     
     // MARK: - Variables
+    
+    static let reuseIdentifier = "MWGenreCollectionViewCell"
     
     static let viewInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
     

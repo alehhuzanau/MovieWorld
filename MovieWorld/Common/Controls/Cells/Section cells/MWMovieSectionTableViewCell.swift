@@ -10,9 +10,10 @@ import UIKit
 import SnapKit
 
 class MWMovieSectionTableViewCell: UITableViewCell {
-    static let reuseIdentifier: String = "MWMovieSectionTableViewCell"
     
     // MARK: - Variables
+    
+    static let reuseIdentifier: String = "MWMovieSectionTableViewCell"
     
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
