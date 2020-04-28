@@ -76,12 +76,11 @@ class MWCategoryTableViewCell: UITableViewCell {
         }
         self.titleLabel.snp.makeConstraints { (make) in
             make.top.left.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
-            make.right.lessThanOrEqualTo(self.arrowImageView.snp.left)
-                .inset(-self.subviewsEdgeInsets.right)
+            make.right.equalTo(self.arrowImageView.snp.left).inset(-self.subviewsEdgeInsets.right)
         }
         self.arrowImageView.snp.updateConstraints { (make) in
             make.top.right.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
-            make.height.equalTo(self.imageSize)
+            make.size.equalTo(self.imageSize)
         }
     }
     

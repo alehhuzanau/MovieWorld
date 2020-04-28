@@ -13,16 +13,32 @@ class MWCategoryViewController: UITableViewController {
     // MARK: - Variables
     
     private let sectionUrls: [MWSection] = [
-        MWSection(name: "Top 250", url: MWURLPaths.discoverMovie),
         MWSection(name: "Paramount Movies",
-                     url: MWURLPaths.discoverMovie,
-                     parameters: ["with_companies" : "4"]),
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_companies" : "4"]),
         MWSection(name: "Disaster movies",
-                     url: MWURLPaths.discoverMovie,
-                     parameters: ["with_keywords" : "5096"]),
-        MWSection(name: "MyFrenchFilmFestival", url: MWURLPaths.discoverMovie),
-        MWSection(name: "Post-apocalyptic movies", url: MWURLPaths.discoverMovie)]
-        
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_keywords" : "5096"]),
+        MWSection(name: "Post-apocalyptic movies",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_keywords" : "4458"]),
+        MWSection(name: "Sony movies",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_companies" : "34"]),
+        MWSection(name: "Movies about killers",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_keywords" : "232384"]),
+        MWSection(name: "Movies with Joaquin Phoenix",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_people" : "73421"]),
+        MWSection(name: "Movies about parent-child relationships relationships",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_keywords" : "970"]),
+        MWSection(name: "Cyberpunk movies",
+                  url: MWURLPaths.discoverMovie,
+                  parameters: ["with_keywords" : "12190"])]
+
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
