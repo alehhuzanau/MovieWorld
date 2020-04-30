@@ -12,7 +12,7 @@ class Constants {
     struct StoryboardID {
         static let MWMainViewControllerIdentifier: String = "MWMainViewController"
     }
-    
+
     struct ImageName {
         static let arrowIcon = "arrowIcon"
         static let mainIcon = "iconTabBarMain"
@@ -22,7 +22,7 @@ class Constants {
         static let launchImage = "LaunchImage"
         static let noPosterIcon = "noPosterIcon"
     }
-    
+
     struct ColorName {
         static let accentColor = "accentColor"
     }

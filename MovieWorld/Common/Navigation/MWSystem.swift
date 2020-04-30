@@ -10,8 +10,8 @@ import Foundation
 
 class MWSystem {
     static let sh = MWSystem()
-    
+
     var configuration: MWConfiguration?
-    
+
     private init() {}
 }

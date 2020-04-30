@@ -9,7 +9,7 @@
 import UIKit
 
 class MWButton: UIButton {
-    
+
     public override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         self.setupButton()
@@ -19,7 +19,7 @@ class MWButton: UIButton {
         super.init(coder: aDecoder)!
         self.setupButton()
     }
-    
+
     open func setupButton() {
         self.backgroundColor = UIColor(named: Constants.ColorName.accentColor)
         self.tintColor = .white

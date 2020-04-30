@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 extension Parameter {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Parameter> {

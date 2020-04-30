@@ -25,21 +25,21 @@ public class Movie: NSManagedObject {
                 .filter { movie.genres.contains($0.id) }
                 .forEach { newMovie.addToGenres($0) }
         }
-        
+
         return newMovie
     }
-    
+
     func getImage() -> UIImage? {
         if let data = self.image {
             return UIImage(data: data)
         }
         return nil
     }
-    
+
     func getReleaseDateYear() -> String {
         return String(self.releaseDate?.prefix(4) ?? "")
     }
-    
+
     func getGenres() -> [Genre] {
         return self.genres?.allObjects as? [Genre] ?? []
     }

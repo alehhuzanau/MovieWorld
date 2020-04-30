@@ -10,15 +10,15 @@ import UIKit
 import SnapKit
 
 class MWCardCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: - Variables
-    
+
     static let reuseIdentifier = "MWCardCollectionViewCell"
-    
+
     private let imageViewSize = CGSize(width: 130, height: 185)
-    
+
     // MARK: - GUI variables
-    
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -26,47 +26,47 @@ class MWCardCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 5
-        
+
         return imageView
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return label
     }()
-    
+
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(13)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return label
     }()
-    
+
     // MARK: - Init methods
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("not implemnted")
     }
-    
+
     private func addSubviews() {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.subtitleLabel)
     }
-    
+
     // MARK: - Constraints
-    
+
     override func updateConstraints() {
         self.imageView.snp.updateConstraints { make in
             make.top.centerX.width.equalToSuperview()
@@ -82,25 +82,25 @@ class MWCardCollectionViewCell: UICollectionViewCell {
             make.left.right.bottom.equalToSuperview()
             make.width.lessThanOrEqualTo(self.imageViewSize.width)
         }
-        
+
         super.updateConstraints()
     }
-    
+
     // MARK: - Data set methods
-    
+
     func set(movie: Movie) {
         self.titleLabel.text = movie.title
         self.subtitleLabel.text = movie.getReleaseDateYear()
-        
+
         let movieGenres = movie.getGenres()
         if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
             self.subtitleLabel.text! += ", \(firstGenre)"
         }
         self.setImage(image: movie.getImage())
-        
+
         self.setNeedsUpdateConstraints()
     }
-    
+
     private func setImage(image: UIImage?) {
         if let image = image {
             self.imageView.image = image

@@ -11,9 +11,9 @@ import Foundation
 struct MWSection {
     var name: String
     var url: String
-    var parameters: [String : String]
-    
-    init(name: String, url: String, parameters: [String : String] = [:]) {
+    var parameters: [String: String]
+
+    init(name: String, url: String, parameters: [String: String] = [:]) {
         self.name = name
         self.url = url
         self.parameters = parameters

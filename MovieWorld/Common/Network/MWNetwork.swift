@@ -14,20 +14,20 @@ typealias MWNet = MWNetwork
 class MWNetwork {
     private static let apiKey = "79d5894567be5b76ab7434fc12879584"
     private let baseUrl = "https://api.themoviedb.org/3/"
-    private let baseParameters: [String : String] = ["api_key" : apiKey]
-    
+    private let baseParameters: [String: String] = ["api_key": apiKey]
+
     static let sh = MWNetwork()
-    
+
     private init() {}
-    
+
     func request<T: Decodable>(urlPath: String,
-                               parameters: [String : String] = [:],
+                               parameters: [String: String] = [:],
                                successHandler: @escaping (T) -> Void,
                                errorHandler: @escaping (MWNetError) -> Void) {
         var params = parameters
         params.merge(other: self.baseParameters)
         let url = "\(self.baseUrl)\(urlPath)"
-        
+
         AF.request(
             url,
             parameters: params).responseJSON { response in
@@ -40,9 +40,8 @@ class MWNetwork {
                 }
                 if let error = response.error {
                     switch error {
-                    case .invalidURL(_):
+                    case .invalidURL:
                         self.handleClosure(errorHandler, MWNetError.incorrectUrl(url: url))
-                        break
                     default:
                         self.handleClosure(
                             errorHandler,
@@ -65,7 +64,6 @@ class MWNetwork {
                             errorHandler,
                             .parsingError(message: error.localizedDescription))
                     }
-                    break
                 case 401, 404:
                     do {
                         let err: MWError = try JSONDecoder().decode(MWError.self, from: data)
@@ -75,20 +73,19 @@ class MWNetwork {
                             errorHandler,
                             .parsingError(message: error.localizedDescription))
                     }
-                    break
                 default:
                     self.handleClosure(errorHandler, .unknown)
                     return
                 }
         }
     }
-    
+
     private func handleClosure<T>(_ handler: @escaping (T) -> Void, _ result: T) {
         DispatchQueue.main.async {
             handler(result)
         }
     }
-    
+
     func downloadImage(_ url: String?, handler: @escaping (Data?) -> Void) {
         guard let imagebaseUrl = MWSystem.sh.configuration?.images.baseUrl, let url = url else {
             self.handleClosure(handler, nil)

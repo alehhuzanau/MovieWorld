@@ -11,22 +11,22 @@ import CoreData
 
 class MWCoreDataManager {
     static let sh: MWCoreDataManager = MWCoreDataManager()
-    
+
     private let documentsDirectory: URL
-    
+
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "MovieWorldCoreData")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        
+
         return container
     }()
-    
+
     lazy var context = { self.persistentContainer.viewContext }()
-    
+
     private init() {
         let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         if docUrls.count > 0 {
@@ -35,7 +35,7 @@ class MWCoreDataManager {
             fatalError("not found documentDirectory")
         }
     }
-    
+
     func saveContext() {
         if self.context.hasChanges {
             do {
@@ -56,21 +56,19 @@ extension MWCoreDataManager {
             let predicate = NSPredicate(format: format)
             fetchRequest.predicate = predicate
         }
-        do
-        {
+        do {
             let results = try self.context.fetch(fetchRequest)
-            for managedObject in results
-            {
-                let managedObjectData: NSManagedObject = managedObject as! NSManagedObject
+            for managedObject in results {
+                guard let managedObjectData = managedObject as? NSManagedObject else { return }
                 self.context.delete(managedObjectData)
             }
         } catch let error as NSError {
             print("Delete all data in \(entity) error : \(error) \(error.userInfo)")
         }
     }
-    
+
     private func fetchData<T: NSManagedObject>(sortDescriptors: [NSSortDescriptor]? = nil) -> [T]? {
-        let fetch: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
+        guard let fetch = T.fetchRequest() as? NSFetchRequest<T> else { return nil }
         fetch.sortDescriptors = sortDescriptors
         do {
             let results = try self.context.fetch(fetch)
@@ -89,11 +87,11 @@ extension MWCoreDataManager {
         newGenre.name = name
         self.saveContext()
     }
-    
+
     func deleteAllGenres() {
         self.deleteAllData(entity: "Genre")
     }
-    
+
     func fetchGenres() -> [Genre]? {
         self.fetchData(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     }
@@ -114,7 +112,7 @@ extension MWCoreDataManager {
         newMovie.addToSection(section)
         self.saveContext()
     }
-    
+
     func saveMovieImage(image: Data?, for movie: MWMovie) {
         guard let allMovies = self.fetchMovies() else { return }
         let filteredMovies = allMovies.filter({ $0.id == movie.id && $0.image == nil })
@@ -123,11 +121,11 @@ extension MWCoreDataManager {
         }
         self.saveContext()
     }
-    
+
     func deleteAllMovies() {
         self.deleteAllData(entity: "Movie")
     }
-    
+
     func fetchMovies() -> [Movie]? {
         self.fetchData()
     }
@@ -147,15 +145,15 @@ extension MWCoreDataManager {
         }
         self.saveContext()
     }
-    
+
     func deleteAllSections() {
         self.deleteAllData(entity: "Section")
     }
-    
+
     func deleteSection(name: String) {
         self.deleteAllData(entity: "Section", predicateFormat: "name == '\(name)'")
     }
-    
+
     func fetchSections() -> [Section]? {
         self.fetchData()
     }
@@ -169,11 +167,11 @@ extension MWCoreDataManager {
         section.addToParameters(newParameter)
         self.saveContext()
     }
-    
+
     func deleteAllParameters() {
         self.deleteAllData(entity: "Parameter")
     }
-    
+
     func fetchParameters() -> [Section]? {
         self.fetchData()
     }

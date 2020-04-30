@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 
 class MWGenreCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: - Variables
-    
+
     static let reuseIdentifier = "MWGenreCollectionViewCell"
-    
+
     static let viewInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
-    
+
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
@@ -26,48 +26,48 @@ class MWGenreCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
+
     // MARK: - GUI variables
-    
+
     private lazy var genreView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: Constants.ColorName.accentColor)
         view.alpha = 0.5
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 5
-        
+
         return view
     }()
-    
+
     private lazy var genreLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(13)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return label
     }()
-    
+
     // MARK: - Init methods
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("not implemnted")
     }
-    
+
     private func addSubviews() {
         self.contentView.addSubview(self.genreView)
         self.genreView.addSubview(self.genreLabel)
     }
-    
+
     // MARK: - Constraints
-    
+
     override func updateConstraints() {
         self.genreView.snp.updateConstraints { make in
             make.edges.equalToSuperview()
@@ -75,15 +75,15 @@ class MWGenreCollectionViewCell: UICollectionViewCell {
         self.genreLabel.snp.updateConstraints { make in
             make.edges.equalToSuperview().inset(MWGenreCollectionViewCell.viewInsets)
         }
-        
+
         super.updateConstraints()
     }
-    
+
     // MARK: - Data set methods
-    
+
     func set(genre: Genre) {
         self.genreLabel.text = genre.name ?? ""
-        
+
         self.setNeedsUpdateConstraints()
     }
 }

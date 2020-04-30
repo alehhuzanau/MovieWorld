@@ -12,10 +12,10 @@ struct MWMovieResults: Decodable {
     private enum CodingKeys: String, CodingKey {
         case totalPages = "total_pages", results
     }
-    
+
     var totalPages: Int
     var results: [MWMovie]
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.totalPages = try container.decode(Int.self, forKey: .totalPages)

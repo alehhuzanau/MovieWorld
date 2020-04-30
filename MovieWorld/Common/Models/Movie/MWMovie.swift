@@ -18,7 +18,7 @@ struct MWMovie: Decodable {
     var posterPath: String?
     var genres: [Int64]
     var releaseDate: String
-            
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int64.self, forKey: .id)

@@ -14,5 +14,5 @@ struct MWGenre: Decodable {
 }
 
 extension MWGenre: Hashable {
-    
+
 }

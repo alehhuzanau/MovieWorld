@@ -9,9 +9,9 @@
 import UIKit
 
 class MWSearchViewController: UIViewController {
-    
+
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -13,7 +13,7 @@ enum MWNetError {
     case parsingError(message: String)
     case error4xx(error: MWError)
     case unknown
-    
+
     func getDescription() -> String {
         switch self {
         case .incorrectUrl(let url):

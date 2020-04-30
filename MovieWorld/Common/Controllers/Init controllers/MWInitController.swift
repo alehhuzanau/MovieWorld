@@ -10,32 +10,32 @@ import UIKit
 import SnapKit
 
 class MWInitController: UIViewController {
-    
+
     // MARK: - Variables
-    
+
     private let dispatchGroup = DispatchGroup()
-    
+
     private var genres = [MWGenre]()
-    
+
     // MARK: - GUI Variables
-    
+
     private lazy var contentView: UIView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return view
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Season".localized
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 34)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return label
     }()
-    
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: Constants.ImageName.launchImage)
@@ -43,10 +43,10 @@ class MWInitController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
-        
+
         return imageView
     }()
-    
+
     private lazy var indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -56,30 +56,30 @@ class MWInitController: UIViewController {
         } else {
             indicator.style = .gray
         }
-        
+
         return indicator
     }()
-    
+
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.backgroundColor = .white
-        
+
         self.addSubviews()
         self.makeConstraints()
-        
+
         self.indicator.startAnimating()
-        
+
         self.setConfiguration()
-        
+
         self.fetchGenres(urlPath: MWURLPaths.movieGenres)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         self.dispatchGroup.notify(queue: .main) {
             self.genres = Array(Set(self.genres))
             if self.genres.count != 0 {
@@ -91,22 +91,22 @@ class MWInitController: UIViewController {
             MWI.sh.setRootVC()
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         self.indicator.stopAnimating()
     }
-    
+
     private func addSubviews() {
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.imageView)
         self.view.addSubview(self.indicator)
     }
-    
+
     // MARK: - Constraints
-    
+
     private func makeConstraints() {
         self.contentView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
@@ -126,9 +126,9 @@ class MWInitController: UIViewController {
             make.bottom.equalTo(-76)
         }
     }
-    
+
     // MARK: - Requests
-    
+
     private func setConfiguration() {
         self.dispatchGroup.enter()
         MWNet.sh.request(
@@ -142,7 +142,7 @@ class MWInitController: UIViewController {
                 self?.dispatchGroup.leave()
         })
     }
-    
+
     private func fetchGenres(urlPath: String) {
         self.dispatchGroup.enter()
         MWNet.sh.request(

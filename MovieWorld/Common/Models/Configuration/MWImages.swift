@@ -15,7 +15,7 @@ struct MWImages: Decodable {
 
     var baseUrl: String
     var posterSizes: [String]
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.baseUrl = try container.decode(String.self, forKey: .baseUrl)
