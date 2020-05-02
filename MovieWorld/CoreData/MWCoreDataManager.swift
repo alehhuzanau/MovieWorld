@@ -14,7 +14,7 @@ class MWCoreDataManager {
 
     private let documentsDirectory: URL
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "MovieWorldCoreData")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
@@ -48,6 +48,8 @@ class MWCoreDataManager {
     }
 }
 
+// MARK: - general
+
 extension MWCoreDataManager {
     private func deleteAllData(entity: String, predicateFormat: String? = nil) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
@@ -80,6 +82,8 @@ extension MWCoreDataManager {
     }
 }
 
+// MARK: - genres
+
 extension MWCoreDataManager {
     func saveGenre(id: Int, name: String) {
         let newGenre = Genre(context: self.context)
@@ -96,6 +100,8 @@ extension MWCoreDataManager {
         self.fetchData(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     }
 }
+
+// MARK: - movies
 
 extension MWCoreDataManager {
     func saveMovie(from movie: MWMovie, to section: Section) {
@@ -131,6 +137,8 @@ extension MWCoreDataManager {
     }
 }
 
+// MARK: - sections
+
 extension MWCoreDataManager {
     func saveSection(section: MWSection, movies: [MWMovie] = []) {
         self.deleteSection(name: section.name)
@@ -158,6 +166,8 @@ extension MWCoreDataManager {
         self.fetchData()
     }
 }
+
+// MARK: - parameters
 
 extension MWCoreDataManager {
     func saveParameter(key: String, value: String, to section: Section) {

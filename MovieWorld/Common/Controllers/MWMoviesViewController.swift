@@ -38,15 +38,6 @@ class MWMoviesViewController: UIViewController {
         return MWCoreDataManager.sh.fetchGenres() ?? []
     }()
 
-    private lazy var collectionViewHeight: CGFloat = {
-        guard self.genres.count != 0 else { return 0 }
-        let cellHeight = self.sizeForCollectionViewCell().height
-        let insetsHeight = self.collectionViewInsets.top + self.collectionViewInsets.bottom
-        let rows = CGFloat(self.numberOfRows)
-
-        return cellHeight * rows + self.cellPadding * (rows - 1) + insetsHeight
-    }()
-
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
 
@@ -84,13 +75,22 @@ class MWMoviesViewController: UIViewController {
         return collectionView
     }()
 
-    private lazy var flowLayout: UICollectionViewFlowLayout = {
+    private lazy var flowLayout: MWLeftAlignedViewFlowLayout = {
         let layout = MWLeftAlignedViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.delegate = self
 
         return layout
+    }()
+
+    private lazy var collectionViewHeight: CGFloat = {
+        guard self.genres.count != 0 else { return 0 }
+        let cellHeight = self.sizeForCollectionViewCell().height
+        let insetsHeight = self.collectionViewInsets.top + self.collectionViewInsets.bottom
+        let rows = CGFloat(self.numberOfRows)
+
+        return cellHeight * rows + self.cellPadding * (rows - 1) + insetsHeight
     }()
 
     private lazy var tableView: UITableView = {

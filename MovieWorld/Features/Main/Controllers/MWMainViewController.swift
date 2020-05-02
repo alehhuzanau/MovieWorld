@@ -43,22 +43,29 @@ class MWMainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.separatorStyle = .none
-        self.tableView.rowHeight = 305
-        self.tableView.refreshControl = self._refreshControl
-        self.tableView.register(
-            MWMovieSectionTableViewCell.self,
-            forCellReuseIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
+        self.setTableView()
 
         self.setSectionsAndReload()
 
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
-            self.sections.removeAll()
             self.setSectionsAndReload()
         }
+    }
+
+    private func setTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorStyle = .none
+        self.tableView.rowHeight = 305
+        self.tableView.register(
+            MWMovieSectionTableViewCell.self,
+            forCellReuseIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
+
+        self.tableView.refreshControl = UIRefreshControl()
+        self.tableView.refreshControl?.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        self.tableView.refreshControl?.addTarget(
+            self, action: #selector(refresh), for: .valueChanged)
     }
 
     // MARK: - Request methods
@@ -101,7 +108,6 @@ class MWMainViewController: UITableViewController {
         self.initRequest()
         self.dispatchGroup.notify(queue: .main) {
             refreshControl.endRefreshing()
-            self.sections.removeAll()
             self.setSectionsAndReload()
         }
     }
@@ -110,6 +116,7 @@ class MWMainViewController: UITableViewController {
 
     private func setSectionsAndReload() {
         guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
+        self.sections.removeAll()
         for sectionUrl in self.sectionUrls {
             if let section = sections.first(where: { $0.name == sectionUrl.name }) {
                 self.sections.append(section)
