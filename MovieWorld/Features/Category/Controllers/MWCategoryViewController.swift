@@ -52,6 +52,9 @@ class MWCategoryViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
+        self.tableView.register(
+            MWCategoryTableViewCell.self,
+            forCellReuseIdentifier: MWCategoryTableViewCell.reuseIdentifier)
 
         self.setSections()
     }
@@ -81,9 +84,9 @@ class MWCategoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: MWCategoryTableViewCell.reuseIdentifier)
-            as? MWCategoryTableViewCell ?? MWCategoryTableViewCell()
-        cell.set(titleText: self.sectionUrls[indexPath.row].name)
+            withIdentifier: MWCategoryTableViewCell.reuseIdentifier,
+            for: indexPath)
+        (cell as? MWCategoryTableViewCell)?.set(titleText: self.sectionUrls[indexPath.row].name)
 
         return cell
     }

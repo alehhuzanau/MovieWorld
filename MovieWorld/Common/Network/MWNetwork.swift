@@ -28,9 +28,11 @@ class MWNetwork {
         params.merge(other: self.baseParameters)
         let url = "\(self.baseUrl)\(urlPath)"
 
-        AF.request(
-            url,
-            parameters: params).responseJSON { response in
+        AF
+            .request(
+                url,
+                parameters: params)
+            .responseJSON { response in
                 let isConnectedToInternet: Bool = NetworkReachabilityManager()?.isReachable ?? false
                 if !isConnectedToInternet {
                     self.handleClosure(
@@ -92,9 +94,11 @@ class MWNetwork {
             return
         }
         let imageSize = MWImageSizes.w185
-        AF.request("\(imagebaseUrl)\(imageSize)\(url)").responseData { response in
-            guard let data = response.data else { return }
-            self.handleClosure(handler, data)
+        AF
+            .request("\(imagebaseUrl)\(imageSize)\(url)")
+            .responseData { response in
+                guard let data = response.data else { return }
+                self.handleClosure(handler, data)
         }
     }
 }

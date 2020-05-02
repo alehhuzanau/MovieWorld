@@ -48,6 +48,9 @@ class MWMainViewController: UITableViewController {
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 305
         self.tableView.refreshControl = self._refreshControl
+        self.tableView.register(
+            MWMovieSectionTableViewCell.self,
+            forCellReuseIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
 
         self.setSectionsAndReload()
 
@@ -124,13 +127,15 @@ class MWMainViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
-            as? MWMovieSectionTableViewCell ?? MWMovieSectionTableViewCell()
-        cell.set(section: self.sections[indexPath.row])
-        cell.pushVC = {
-            let vc = MWMoviesViewController()
-            vc.section = self.sections[indexPath.row]
-            MWI.sh.push(vc: vc)
+            withIdentifier: MWMovieSectionTableViewCell.reuseIdentifier,
+            for: indexPath)
+        if let cell = cell as? MWMovieSectionTableViewCell {
+            cell.set(section: self.sections[indexPath.row])
+            cell.pushVC = { [weak self] in
+                let vc = MWMoviesViewController()
+                vc.section = self?.sections[indexPath.row]
+                MWI.sh.push(vc: vc)
+            }
         }
 
         return cell

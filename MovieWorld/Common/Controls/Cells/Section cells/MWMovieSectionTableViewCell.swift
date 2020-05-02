@@ -20,7 +20,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
 
     private var movies: [Movie] = []
 
-    @objc var pushVC: (() -> Void)? = nil
+    var pushVC: (() -> Void)?
 
     // MARK: - GUI variables
 
@@ -129,8 +129,8 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MWCardCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? MWCardCollectionViewCell ?? MWCardCollectionViewCell()
-        cell.set(movie: self.movies[indexPath.item])
+            for: indexPath)
+        (cell as? MWCardCollectionViewCell)?.set(movie: self.movies[indexPath.item])
 
         return cell
     }

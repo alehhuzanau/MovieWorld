@@ -104,6 +104,9 @@ class MWMoviesViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
         tableView.refreshControl = self.refreshControl
+        tableView.register(
+            MWMovieCardTableViewCell.self,
+            forCellReuseIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
 
         return tableView
     }()
@@ -257,8 +260,8 @@ extension MWMoviesViewController: UICollectionViewDelegate, UICollectionViewData
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? MWGenreCollectionViewCell ?? MWGenreCollectionViewCell()
-        cell.set(genre: self.genres[indexPath.item])
+            for: indexPath)
+        (cell as? MWGenreCollectionViewCell)?.set(genre: self.genres[indexPath.item])
 
         return cell
     }
@@ -303,9 +306,9 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
-            as? MWMovieCardTableViewCell ?? MWMovieCardTableViewCell()
-        cell.set(movie: self.filteredMovies[indexPath.row])
+            withIdentifier: MWMovieCardTableViewCell.reuseIdentifier,
+            for: indexPath)
+        (cell as? MWMovieCardTableViewCell)?.set(movie: self.filteredMovies[indexPath.row])
 
         return cell
     }
