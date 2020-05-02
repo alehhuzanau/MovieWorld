@@ -9,10 +9,6 @@
 import Foundation
 
 struct MWGenre: Decodable {
-    var id: Int64
+    var id: Int
     var name: String
-}
-
-extension MWGenre: Hashable {
-
 }

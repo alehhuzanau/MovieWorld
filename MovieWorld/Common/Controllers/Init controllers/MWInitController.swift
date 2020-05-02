@@ -13,6 +13,9 @@ class MWInitController: UIViewController {
 
     // MARK: - Variables
 
+    private let imageSize = CGSize(width: 295, height: 254)
+    private let edgeInsets = UIEdgeInsets(top: 42, left: 40, bottom: 42, right: 40)
+
     private let dispatchGroup = DispatchGroup()
 
     private var genres = [MWGenre]()
@@ -20,7 +23,7 @@ class MWInitController: UIViewController {
     // MARK: - GUI Variables
 
     private lazy var contentView: UIView = {
-        let view = UIStackView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -75,13 +78,8 @@ class MWInitController: UIViewController {
         self.setConfiguration()
 
         self.fetchGenres(urlPath: MWURLPaths.movieGenres)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
         self.dispatchGroup.notify(queue: .main) {
-            self.genres = Array(Set(self.genres))
             if self.genres.count != 0 {
                 MWCoreDataManager.sh.deleteAllGenres()
             }
@@ -109,21 +107,21 @@ class MWInitController: UIViewController {
 
     private func makeConstraints() {
         self.contentView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.center.equalToSuperview()
+            make.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(self.edgeInsets)
+            make.center.equalTo(self.view.safeAreaLayoutGuide)
         }
         self.titleLabel.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
         }
         self.imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(42)
-            make.left.right.equalToSuperview().inset(40)
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(self.edgeInsets.top)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(self.imageSize.height)
             make.bottom.equalToSuperview()
-            make.height.equalTo(254)
         }
         self.indicator.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(-76)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(self.edgeInsets.bottom)
         }
     }
 

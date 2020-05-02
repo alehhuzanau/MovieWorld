@@ -81,9 +81,9 @@ extension MWCoreDataManager {
 }
 
 extension MWCoreDataManager {
-    func saveGenre(id: Int64, name: String) {
+    func saveGenre(id: Int, name: String) {
         let newGenre = Genre(context: self.context)
-        newGenre.id = id
+        newGenre.id = Int64(id)
         newGenre.name = name
         self.saveContext()
     }
