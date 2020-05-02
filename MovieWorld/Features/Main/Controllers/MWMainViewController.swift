@@ -13,10 +13,10 @@ class MWMainViewController: UITableViewController {
     // MARK: - Variables
 
     private let sectionUrls: [MWSection] = [
-        MWSection(name: "Now Playing", url: MWURLPaths.nowPlayingMovies),
-        MWSection(name: "Popular Movies", url: MWURLPaths.popularMovies),
-        MWSection(name: "Top Rated Movies", url: MWURLPaths.topRatedMovies),
-        MWSection(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)]
+        MWSectionsEnum.nowPlaying.getSection(),
+        MWSectionsEnum.popularMovies.getSection(),
+        MWSectionsEnum.topRatedMovies.getSection(),
+        MWSectionsEnum.upcomingMovies.getSection()]
 
     private let dispatchGroup = DispatchGroup()
 
