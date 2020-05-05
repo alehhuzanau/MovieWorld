@@ -19,11 +19,11 @@ enum MWSectionsEnum {
         case .nowPlaying:
             return MWSection(name: "Now Playing", url: MWURLPaths.nowPlayingMovies)
         case .popularMovies:
-            return  MWSection(name: "Popular Movies", url: MWURLPaths.popularMovies)
+            return MWSection(name: "Popular Movies", url: MWURLPaths.popularMovies)
         case .topRatedMovies:
             return MWSection(name: "Top Rated Movies", url: MWURLPaths.topRatedMovies)
         case .upcomingMovies:
-            return  MWSection(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)
+            return MWSection(name: "Upcoming Movies", url: MWURLPaths.upcomingMovies)
         }
     }
 }

@@ -53,12 +53,12 @@ class MWInitController: UIViewController {
     private lazy var indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.color = UIColor(named: Constants.ColorName.accentColor)
         if #available(iOS 13.0, *) {
             indicator.style = .large
         } else {
             indicator.style = .gray
         }
+        indicator.color = UIColor(named: Constants.ColorName.accentColor)
 
         return indicator
     }()
@@ -90,8 +90,8 @@ class MWInitController: UIViewController {
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
 
         self.indicator.stopAnimating()
     }
@@ -115,9 +115,8 @@ class MWInitController: UIViewController {
         }
         self.imageView.snp.makeConstraints { (make) in
             make.top.equalTo(self.titleLabel.snp.bottom).offset(self.edgeInsets.top)
-            make.left.right.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
             make.height.equalTo(self.imageSize.height)
-            make.bottom.equalToSuperview()
         }
         self.indicator.snp.makeConstraints { (make) in
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)

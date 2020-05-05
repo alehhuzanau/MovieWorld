@@ -20,7 +20,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
 
     private var movies: [Movie] = []
 
-    var pushVC: (() -> Void)?
+    var allButtonTapped: (() -> Void)?
 
     // MARK: - GUI variables
 
@@ -61,7 +61,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
 
     private lazy var allButton: UIButton = {
         let button = MWNextButton(type: .system)
-        button.addTarget(self, action: #selector(self.allButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.allButtonTappedAction), for: .touchUpInside)
 
         return button
     }()
@@ -114,8 +114,8 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         self.setNeedsUpdateConstraints()
     }
 
-    @objc func allButtonTapped(_ button: UIButton) {
-        self.pushVC?()
+    @objc func allButtonTappedAction(_ button: UIButton) {
+        self.allButtonTapped?()
     }
 }
 
