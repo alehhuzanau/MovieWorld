@@ -12,6 +12,7 @@ class MWSystem {
     static let sh = MWSystem()
 
     var configuration: MWConfiguration?
+    var genres: [MWGenre]?
 
     private init() {}
 }

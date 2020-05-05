@@ -18,7 +18,7 @@ class MWInitController: UIViewController {
 
     private let dispatchGroup = DispatchGroup()
 
-    private var genres = [MWGenre]()
+    private var genres: [MWGenre] = []
 
     // MARK: - GUI Variables
 
@@ -86,6 +86,7 @@ class MWInitController: UIViewController {
             for genre in self.genres {
                 MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
             }
+            MWSystem.sh.genres = self.genres
             MWI.sh.setRootVC()
         }
     }

@@ -90,14 +90,12 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = ""//movie.getReleaseDateYear()
-
-//        let movieGenres = movie.getGenres()
-//        if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
-//            self.subtitleLabel.text! += ", \(firstGenre)"
-//        }
-        //self.setImage(image: movie.getImage())
-        self.setImage(image: nil)
+        var subtitleText: String = movie.getReleaseDateYear()
+        if let genre = movie.getGenres().first {
+            subtitleText += ", \(genre.name)"
+        }
+        self.subtitleLabel.text = subtitleText
+        self.setImage(image: movie.getImage())
 
         self.setNeedsUpdateConstraints()
     }

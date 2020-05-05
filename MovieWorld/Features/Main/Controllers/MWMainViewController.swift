@@ -41,13 +41,7 @@ class MWMainViewController: UITableViewController {
         super.viewDidLoad()
 
         self.setTableView()
-
-//        self.setSectionsAndReload()
-
         self.initRequest()
-        //self.dispatchGroup.notify(queue: .main) {
-  //          self.setSectionsAndReload()
-        //}
     }
 
     private func setTableView() {
@@ -72,7 +66,6 @@ class MWMainViewController: UITableViewController {
             self.request(section: $0)
         }
         self.dispatchGroup.notify(queue: .main) {
-            //self.setSectionsAndReload()
             self.tableView.reloadData()
         }
     }
@@ -85,7 +78,7 @@ class MWMainViewController: UITableViewController {
                 let movies = results.results
                 section.movies = movies
                 //MWCoreDataManager.sh.saveSection(section: section, movies: movies)
-                //self?.loadImages(movies: movies)
+                self?.loadImages(movies: movies)
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in
@@ -93,17 +86,18 @@ class MWMainViewController: UITableViewController {
                 self?.dispatchGroup.leave()
         })
     }
-//
-//    private func loadImages(movies: [MWMovie]) {
-//        for movie in movies {
-//            MWNet.sh.downloadImage(
-//                movie.posterPath,
-//                handler: { [weak self] image in
-//                    MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
-//                    self?.tableView.reloadData()
-//            })
-//        }
-//    }
+
+    private func loadImages(movies: [MWMovie]) {
+        for movie in movies {
+            MWNet.sh.downloadImage(
+                movie.posterPath,
+                handler: { [weak self] data in
+                    //MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
+                    movie.image = data
+                    //self?.tableView.reloadData()
+            })
+        }
+    }
 
     // MARK: - RefreshControl action
 
