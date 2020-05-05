@@ -107,9 +107,9 @@ class MWMovieSectionTableViewCell: UITableViewCell {
 
     // MARK: - Data set methods
 
-    func set(section: Section) {
-        self.titleLabel.text = section.name?.localized
-        self.movies = section.getMovies()
+    func set(section: MWSection) {
+        self.titleLabel.text = section.name.localized
+        //self.movies = section.getMovies()
 
         self.setNeedsUpdateConstraints()
     }

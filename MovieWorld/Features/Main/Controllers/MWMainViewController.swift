@@ -12,7 +12,7 @@ class MWMainViewController: UITableViewController {
 
     // MARK: - Variables
 
-    private let sectionUrls: [MWSectionsEnum] = [
+    private let baseSections: [MWSectionsEnum] = [
         .nowPlaying,
         .popularMovies,
         .topRatedMovies,
@@ -20,7 +20,14 @@ class MWMainViewController: UITableViewController {
 
     private let dispatchGroup = DispatchGroup()
 
-    private var sections: [Section] = []
+    private lazy var sections: [MWSection] = {
+        var sections: [MWSection] = []
+        self.baseSections.forEach {
+            sections.append($0.getSection())
+        }
+
+        return sections
+    }()
 
     // MARK: - Life cycle
 
@@ -35,12 +42,12 @@ class MWMainViewController: UITableViewController {
 
         self.setTableView()
 
-        self.setSectionsAndReload()
+//        self.setSectionsAndReload()
 
-        self.initRequest()
-        self.dispatchGroup.notify(queue: .main) {
-            self.setSectionsAndReload()
-        }
+        //self.initRequest()
+        //self.dispatchGroup.notify(queue: .main) {
+  //          self.setSectionsAndReload()
+        //}
     }
 
     private func setTableView() {
@@ -55,67 +62,69 @@ class MWMainViewController: UITableViewController {
         self.tableView.refreshControl = UIRefreshControl()
         self.tableView.refreshControl?.tintColor = UIColor(named: Constants.ColorName.accentColor)
         self.tableView.refreshControl?.addTarget(
-            self, action: #selector(refresh), for: .valueChanged)
+            self, action: #selector(self.refresh), for: .valueChanged)
     }
 
     // MARK: - Request methods
 
-    private func initRequest() {
-        self.sectionUrls.forEach {
-            self.request(section: $0.getSection() )
-        }
-    }
-
-    private func request(section: MWSection) {
-        self.dispatchGroup.enter()
-        MWNet.sh.request(
-            urlPath: section.url,
-            successHandler: { [weak self] (results: MWMovieResults) in
-                let movies = results.results
-                MWCoreDataManager.sh.saveSection(section: section, movies: movies)
-                self?.loadImages(movies: movies)
-                self?.dispatchGroup.leave()
-            },
-            errorHandler: { [weak self] error in
-                print(error.getDescription())
-                self?.dispatchGroup.leave()
-        })
-    }
-
-    private func loadImages(movies: [MWMovie]) {
-        for movie in movies {
-            MWNet.sh.downloadImage(
-                movie.posterPath,
-                handler: { [weak self] image in
-                    MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
-                    self?.tableView.reloadData()
-            })
-        }
-    }
+//    private func initRequest() {
+//        self.sectionUrls.forEach {
+//            self.request(section: $0.getSection() )
+//        }
+//    }
+//
+//    private func request(section: MWSection) {
+//        self.dispatchGroup.enter()
+//        MWNet.sh.request(
+//            urlPath: section.url,
+//            successHandler: { [weak self] (results: MWMovieResults) in
+//                let movies = results.results
+//                //MWCoreDataManager.sh.saveSection(section: section, movies: movies)
+//                //self?.loadImages(movies: movies)
+//                self?.dispatchGroup.leave()
+//            },
+//            errorHandler: { [weak self] error in
+//                print(error.getDescription())
+//                self?.dispatchGroup.leave()
+//        })
+//    }
+//
+//    private func loadImages(movies: [MWMovie]) {
+//        for movie in movies {
+//            MWNet.sh.downloadImage(
+//                movie.posterPath,
+//                handler: { [weak self] image in
+//                    MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
+//                    self?.tableView.reloadData()
+//            })
+//        }
+//    }
 
     // MARK: - RefreshControl action
 
     @objc
     func refresh(refreshControl: UIRefreshControl) {
-        self.initRequest()
-        self.dispatchGroup.notify(queue: .main) {
-            refreshControl.endRefreshing()
-            self.setSectionsAndReload()
-        }
+        refreshControl.endRefreshing()
+
+//        self.initRequest()
+//        self.dispatchGroup.notify(queue: .main) {
+//            refreshControl.endRefreshing()
+//            self.setSectionsAndReload()
+//        }
     }
 
     // MARK: - Sections set method
 
-    private func setSectionsAndReload() {
-        guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
-        self.sections.removeAll()
-        for sectionUrl in self.sectionUrls {
-            if let section = sections.first(where: { $0.name == sectionUrl.getSection().name }) {
-                self.sections.append(section)
-                self.tableView.reloadData()
-            }
-        }
-    }
+//    private func setSectionsAndReload() {
+//        guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
+//        self.sections.removeAll()
+//        for sectionUrl in self.sectionUrls {
+//            if let section = sections.first(where: { $0.name == sectionUrl.getSection().name }) {
+//                self.sections.append(section)
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
 
     // MARK: - TableView methods
 
@@ -130,11 +139,11 @@ class MWMainViewController: UITableViewController {
             for: indexPath)
         if let cell = cell as? MWMovieSectionTableViewCell {
             cell.set(section: self.sections[indexPath.row])
-            cell.allButtonTapped = { [weak self] in
-                let vc = MWMoviesViewController()
-                vc.section = self?.sections[indexPath.row]
-                MWI.sh.push(vc: vc)
-            }
+//            cell.allButtonTapped = { [weak self] in
+//                let vc = MWMoviesViewController()
+//                vc.section = self?.sections[indexPath.row]
+//                MWI.sh.push(vc: vc)
+//            }
         }
 
         return cell
