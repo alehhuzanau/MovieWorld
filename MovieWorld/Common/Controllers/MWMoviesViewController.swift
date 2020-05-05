@@ -17,11 +17,14 @@ class MWMoviesViewController: UIViewController {
 
     private let dispatchGroup = DispatchGroup()
 
+    private let requestRow: Int = 5
+
     private var isFiltered: Bool = false
     private var isLoading: Bool = false
 
     private var totalPages: Int?
     private var currentPage: Int = 1
+
     private var pageParameters: [String: String] {
         ["page": String(self.currentPage)]
     }
@@ -315,7 +318,7 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
         if let totalPages = self.totalPages, self.currentPage == totalPages { return }
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
         if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
             self.isLoading = true
             self.tableView.tableFooterView = self.bottomSpinner
