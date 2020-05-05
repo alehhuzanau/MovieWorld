@@ -56,7 +56,7 @@ class MWInitController: UIViewController {
         if #available(iOS 13.0, *) {
             indicator.style = .large
         } else {
-            indicator.style = .gray
+            indicator.style = .whiteLarge
         }
         indicator.color = UIColor(named: Constants.ColorName.accentColor)
 

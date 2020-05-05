@@ -13,18 +13,18 @@ class MWMoviesViewController: UIViewController {
     // MARK: - Variables
 
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-
     private let spinnerInsets = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
 
     private let dispatchGroup = DispatchGroup()
 
     private var isFiltered: Bool = false
-
     private var isLoading: Bool = false
 
     private var totalPages: Int?
-
     private var currentPage: Int = 1
+    private var pageParameters: [String: String] {
+        ["page": String(self.currentPage)]
+    }
 
     private var movies: [Movie] = [] {
         didSet {
@@ -120,7 +120,7 @@ class MWMoviesViewController: UIViewController {
     }()
 
     private lazy var bottomSpinner: UIActivityIndicatorView = {
-        var style: UIActivityIndicatorView.Style = .gray
+        var style: UIActivityIndicatorView.Style = .whiteLarge
         if #available(iOS 13.0, *) {
             style = .large
         }
@@ -128,8 +128,6 @@ class MWMoviesViewController: UIViewController {
         indicator.frame.size.height = indicator.frame.height + self.spinnerInsets.top
             + self.spinnerInsets.bottom
         indicator.color = UIColor(named: Constants.ColorName.accentColor)
-        indicator.hidesWhenStopped = true
-        indicator.startAnimating()
 
         return indicator
     }()
@@ -215,7 +213,7 @@ class MWMoviesViewController: UIViewController {
         } else {
             self.currentPage += 1
         }
-        var parameters = ["page": String(self.currentPage)]
+        var parameters = self.pageParameters
         parameters.merge(other: section.getParameters())
         self.dispatchGroup.enter()
         MWNet.sh.request(
@@ -321,6 +319,7 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
             self.isLoading = true
             self.tableView.tableFooterView = self.bottomSpinner
+            self.bottomSpinner.startAnimating()
             self.request()
             self.dispatchGroup.notify(queue: .main) {
                 self.isLoading = false

@@ -25,7 +25,7 @@ class MWCoreDataManager {
         return container
     }()
 
-    lazy var context = { self.persistentContainer.viewContext }()
+    private(set) lazy var context: NSManagedObjectContext = self.persistentContainer.viewContext
 
     private init() {
         let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
