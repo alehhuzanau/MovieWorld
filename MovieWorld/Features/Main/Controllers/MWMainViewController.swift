@@ -12,25 +12,15 @@ class MWMainViewController: UITableViewController {
 
     // MARK: - Variables
 
-    private let sectionUrls: [MWSection] = [
-        MWSectionsEnum.nowPlaying.getSection(),
-        MWSectionsEnum.popularMovies.getSection(),
-        MWSectionsEnum.topRatedMovies.getSection(),
-        MWSectionsEnum.upcomingMovies.getSection()]
+    private let sectionUrls: [MWSectionsEnum] = [
+        .nowPlaying,
+        .popularMovies,
+        .topRatedMovies,
+        .upcomingMovies]
 
     private let dispatchGroup = DispatchGroup()
 
     private var sections: [Section] = []
-
-    // MARK: - GUI variables
-
-    private lazy var _refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-
-        return refreshControl
-    }()
 
     // MARK: - Life cycle
 
@@ -71,7 +61,9 @@ class MWMainViewController: UITableViewController {
     // MARK: - Request methods
 
     private func initRequest() {
-        self.sectionUrls.forEach { self.request(section: $0) }
+        self.sectionUrls.forEach {
+            self.request(section: $0.getSection() )
+        }
     }
 
     private func request(section: MWSection) {
@@ -118,7 +110,7 @@ class MWMainViewController: UITableViewController {
         guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
         self.sections.removeAll()
         for sectionUrl in self.sectionUrls {
-            if let section = sections.first(where: { $0.name == sectionUrl.name }) {
+            if let section = sections.first(where: { $0.name == sectionUrl.getSection().name }) {
                 self.sections.append(section)
                 self.tableView.reloadData()
             }
