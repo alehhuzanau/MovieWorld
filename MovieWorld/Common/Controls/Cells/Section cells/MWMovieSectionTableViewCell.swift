@@ -18,7 +18,11 @@ class MWMovieSectionTableViewCell: UITableViewCell {
     private let edgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 12, right: 7)
     private let buttonSize = CGSize(width: 52, height: 24)
 
-    private var movies: [Movie] = []
+    private var movies: [MWMovie] = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
 
     var allButtonTapped: (() -> Void)?
 
@@ -109,7 +113,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
 
     func set(section: MWSection) {
         self.titleLabel.text = section.name.localized
-        //self.movies = section.getMovies()
+        self.movies = section.movies
 
         self.setNeedsUpdateConstraints()
     }

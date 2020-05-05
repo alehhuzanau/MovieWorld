@@ -44,7 +44,7 @@ class MWMainViewController: UITableViewController {
 
 //        self.setSectionsAndReload()
 
-        //self.initRequest()
+        self.initRequest()
         //self.dispatchGroup.notify(queue: .main) {
   //          self.setSectionsAndReload()
         //}
@@ -67,27 +67,32 @@ class MWMainViewController: UITableViewController {
 
     // MARK: - Request methods
 
-//    private func initRequest() {
-//        self.sectionUrls.forEach {
-//            self.request(section: $0.getSection() )
-//        }
-//    }
-//
-//    private func request(section: MWSection) {
-//        self.dispatchGroup.enter()
-//        MWNet.sh.request(
-//            urlPath: section.url,
-//            successHandler: { [weak self] (results: MWMovieResults) in
-//                let movies = results.results
-//                //MWCoreDataManager.sh.saveSection(section: section, movies: movies)
-//                //self?.loadImages(movies: movies)
-//                self?.dispatchGroup.leave()
-//            },
-//            errorHandler: { [weak self] error in
-//                print(error.getDescription())
-//                self?.dispatchGroup.leave()
-//        })
-//    }
+    private func initRequest() {
+        self.sections.forEach {
+            self.request(section: $0)
+        }
+        self.dispatchGroup.notify(queue: .main) {
+            //self.setSectionsAndReload()
+            self.tableView.reloadData()
+        }
+    }
+
+    private func request(section: MWSection) {
+        self.dispatchGroup.enter()
+        MWNet.sh.request(
+            urlPath: section.url,
+            successHandler: { [weak self] (results: MWMovieResults) in
+                let movies = results.results
+                section.movies = movies
+                //MWCoreDataManager.sh.saveSection(section: section, movies: movies)
+                //self?.loadImages(movies: movies)
+                self?.dispatchGroup.leave()
+            },
+            errorHandler: { [weak self] error in
+                print(error.getDescription())
+                self?.dispatchGroup.leave()
+        })
+    }
 //
 //    private func loadImages(movies: [MWMovie]) {
 //        for movie in movies {

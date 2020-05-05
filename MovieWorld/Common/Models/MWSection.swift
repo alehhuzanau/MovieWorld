@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct MWSection {
+class MWSection {
     var name: String
     var url: String
     var parameters: [String: String]
+    var movies: [MWMovie] = []
 
     init(name: String, url: String, parameters: [String: String] = [:]) {
         self.name = name

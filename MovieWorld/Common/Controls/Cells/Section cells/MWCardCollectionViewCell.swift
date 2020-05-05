@@ -88,15 +88,16 @@ class MWCardCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Data set methods
 
-    func set(movie: Movie) {
+    func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
-        self.subtitleLabel.text = movie.getReleaseDateYear()
+        self.subtitleLabel.text = ""//movie.getReleaseDateYear()
 
-        let movieGenres = movie.getGenres()
-        if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
-            self.subtitleLabel.text! += ", \(firstGenre)"
-        }
-        self.setImage(image: movie.getImage())
+//        let movieGenres = movie.getGenres()
+//        if movieGenres.count > 0, let firstGenre = movieGenres[0].name {
+//            self.subtitleLabel.text! += ", \(firstGenre)"
+//        }
+        //self.setImage(image: movie.getImage())
+        self.setImage(image: nil)
 
         self.setNeedsUpdateConstraints()
     }
