@@ -42,6 +42,9 @@ class MWMainViewController: UITableViewController {
 
         self.setTableView()
         self.initRequest()
+        self.dispatchGroup.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
     }
 
     private func setTableView() {
@@ -65,9 +68,6 @@ class MWMainViewController: UITableViewController {
         self.sections.forEach {
             self.request(section: $0)
         }
-        self.dispatchGroup.notify(queue: .main) {
-            self.tableView.reloadData()
-        }
     }
 
     private func request(section: MWSection) {
@@ -77,7 +77,7 @@ class MWMainViewController: UITableViewController {
             successHandler: { [weak self] (results: MWMovieResults) in
                 let movies = results.results
                 section.movies = movies
-                //MWCoreDataManager.sh.saveSection(section: section, movies: movies)
+                MWCoreDataManager.sh.saveSection(section: section)
                 self?.loadImages(movies: movies)
                 self?.dispatchGroup.leave()
             },
@@ -92,9 +92,9 @@ class MWMainViewController: UITableViewController {
             MWNet.sh.downloadImage(
                 movie.posterPath,
                 handler: { [weak self] data in
-                    //MWCoreDataManager.sh.saveMovieImage(image: image, for: movie)
+                    MWCoreDataManager.sh.saveMovieImage(image: data, for: movie)
                     movie.image = data
-                    //self?.tableView.reloadData()
+                    self?.tableView.reloadData()
             })
         }
     }
@@ -105,25 +105,14 @@ class MWMainViewController: UITableViewController {
     func refresh(refreshControl: UIRefreshControl) {
         refreshControl.endRefreshing()
 
-//        self.initRequest()
-//        self.dispatchGroup.notify(queue: .main) {
-//            refreshControl.endRefreshing()
-//            self.setSectionsAndReload()
-//        }
+        self.initRequest()
+        self.dispatchGroup.notify(queue: .main) {
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+        }
     }
 
     // MARK: - Sections set method
-
-//    private func setSectionsAndReload() {
-//        guard let sections = MWCoreDataManager.sh.fetchSections() else { return }
-//        self.sections.removeAll()
-//        for sectionUrl in self.sectionUrls {
-//            if let section = sections.first(where: { $0.name == sectionUrl.getSection().name }) {
-//                self.sections.append(section)
-//                self.tableView.reloadData()
-//            }
-//        }
-//    }
 
     // MARK: - TableView methods
 

@@ -140,7 +140,7 @@ extension MWCoreDataManager {
 // MARK: - sections
 
 extension MWCoreDataManager {
-    func saveSection(section: MWSection, movies: [MWMovie] = []) {
+    func saveSection(section: MWSection) {
         self.deleteSection(name: section.name)
         let newSection = Section(context: self.context)
         newSection.name = section.name
@@ -148,7 +148,7 @@ extension MWCoreDataManager {
         section.parameters.forEach {
             self.saveParameter(key: $0.key, value: $0.value, to: newSection)
         }
-        movies.forEach { movie in
+        section.movies.forEach { movie in
             self.saveMovie(from: movie, to: newSection)
         }
         self.saveContext()
