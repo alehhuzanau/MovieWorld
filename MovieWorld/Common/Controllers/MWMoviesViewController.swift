@@ -211,7 +211,6 @@ class MWMoviesViewController: UIViewController {
         guard let section = self.section else { return }
         if isFirstPage {
             self.movies.removeAll()
-            self.tableView.reloadData()
             self.currentPage = 1
         } else {
             self.currentPage += 1
@@ -225,7 +224,7 @@ class MWMoviesViewController: UIViewController {
             successHandler: { [weak self] (results: MWMovieResults) in
                 self?.totalPages = results.totalPages
                 let movies = results.results
-                self?.movies = movies
+                self?.movies.append(contentsOf: movies)
                 self?.tableView.reloadData()
                 self?.loadImages(movies: movies)
                 self?.dispatchGroup.leave()
@@ -311,21 +310,21 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-//    func tableView(_ tableView: UITableView,
-//                   willDisplay cell: UITableViewCell,
-//                   forRowAt indexPath: IndexPath) {
-//        if let totalPages = self.totalPages, self.currentPage == totalPages { return }
-//        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
-//        if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
-//            self.isLoading = true
-//            self.tableView.tableFooterView = self.bottomSpinner
-//            self.bottomSpinner.startAnimating()
-//            self.request()
-//            self.dispatchGroup.notify(queue: .main) {
-//                self.isLoading = false
-//                self.tableView.tableFooterView = nil
-//                self.tableView.reloadData()
-//            }
-//        }
-//    }
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        if let totalPages = self.totalPages, self.currentPage == totalPages { return }
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
+        if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
+            self.isLoading = true
+            self.tableView.tableFooterView = self.bottomSpinner
+            self.bottomSpinner.startAnimating()
+            self.request()
+            self.dispatchGroup.notify(queue: .main) {
+                self.isLoading = false
+                self.tableView.tableFooterView = nil
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
