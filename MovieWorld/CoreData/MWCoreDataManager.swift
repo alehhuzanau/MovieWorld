@@ -115,7 +115,7 @@ extension MWCoreDataManager {
                 .filter { movie.genres.contains(Int($0.id)) }
                 .forEach { newMovie.addToGenres($0) }
         }
-        newMovie.addToSection(section)
+        newMovie.section = section
         self.saveContext()
     }
 

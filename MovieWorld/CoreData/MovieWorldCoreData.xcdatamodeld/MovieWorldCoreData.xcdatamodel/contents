@@ -12,7 +12,7 @@
         <attribute name="releaseDate" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre"/>
-        <relationship name="section" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Section" inverseName="movies" inverseEntity="Section"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="movies" inverseEntity="Section"/>
     </entity>
     <entity name="Parameter" representedClassName="Parameter" syncable="YES">
         <attribute name="key" optional="YES" attributeType="String"/>
