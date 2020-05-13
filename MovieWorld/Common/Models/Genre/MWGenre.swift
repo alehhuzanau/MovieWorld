@@ -12,3 +12,10 @@ struct MWGenre: Decodable {
     var id: Int
     var name: String
 }
+
+extension MWGenre: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+        hasher.combine(self.name)
+    }
+}

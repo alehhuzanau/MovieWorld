@@ -125,11 +125,11 @@ class MWMainViewController: UITableViewController {
             for: indexPath)
         if let cell = cell as? MWMovieSectionTableViewCell {
             cell.set(section: self.sections[indexPath.row])
-//            cell.allButtonTapped = { [weak self] in
-//                let vc = MWMoviesViewController()
-//                vc.section = self?.sections[indexPath.row]
-//                MWI.sh.push(vc: vc)
-//            }
+            cell.allButtonTapped = { [weak self] in
+                let vc = MWMoviesViewController()
+                vc.section = self?.sections[indexPath.row]
+                MWI.sh.push(vc: vc)
+            }
         }
 
         return cell

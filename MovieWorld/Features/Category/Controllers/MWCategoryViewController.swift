@@ -62,7 +62,7 @@ class MWCategoryViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MWMoviesViewController()
-//        vc.section = self.baseSections[indexPath.row].getSection()
+        vc.section = self.baseSections[indexPath.row].getSection()
         MWI.sh.push(vc: vc)
     }
 }

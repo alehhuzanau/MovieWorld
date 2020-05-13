@@ -146,7 +146,7 @@ class MWInitController: UIViewController {
         MWNet.sh.request(
             urlPath: urlPath,
             successHandler: { [weak self] (genres: MWGenreResults) in
-                self?.genres += genres.genres
+                self?.genres = genres.genres
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self]  error in

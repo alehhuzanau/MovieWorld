@@ -91,7 +91,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
         var subtitleText: String = movie.getReleaseDateYear()
-        if let genre = movie.getGenres().first {
+        if let genre = movie.genres.first {
             subtitleText += ", \(genre.name)"
         }
         self.subtitleLabel.text = subtitleText

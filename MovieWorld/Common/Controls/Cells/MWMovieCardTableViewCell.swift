@@ -124,11 +124,11 @@ class MWMovieCardTableViewCell: UITableViewCell {
 
     // MARK: - Data set methods
 
-    func set(movie: Movie) {
+    func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
         self.releaseDateLabel.text = movie.getReleaseDateYear()
-        self.genresLabel.text = movie.getGenres()
-            .map({ ($0.name ?? "") })
+        self.genresLabel.text = movie.genres
+            .map({ $0.name })
             .joined(separator: ", ")
         self.setImage(image: movie.getImage())
 

@@ -29,24 +29,24 @@ class MWMoviesViewController: UIViewController {
         ["page": String(self.currentPage)]
     }
 
-    private var movies: [Movie] = [] {
+    private var movies: [MWMovie] = [] {
         didSet {
             self.filteredMovies = self.movies
         }
     }
 
-    private var filteredMovies: [Movie] = []
+    private var filteredMovies: [MWMovie] = []
 
-    private lazy var genres: [Genre] = {
-        return MWCoreDataManager.sh.fetchGenres() ?? []
+    private lazy var genres: [MWGenre] = {
+        return (MWSystem.sh.genres ?? [])
     }()
 
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
 
-    var section: Section? {
+    var section: MWSection? {
         didSet {
-            if let movies = self.section?.getMovies(), movies.count != 0 {
+            if let movies = self.section?.movies, movies.count != 0 {
                 self.movies = movies
             } else {
                 self.request(isFirstPage: true)
@@ -183,7 +183,7 @@ class MWMoviesViewController: UIViewController {
 
         self.filteredMovies = []
         for movie in self.movies {
-            if filteredGenres.allSatisfy(movie.getGenres().contains) {
+            if filteredGenres.allSatisfy(movie.genres.contains) {
                 self.filteredMovies.append(movie)
             }
         }
@@ -200,15 +200,15 @@ class MWMoviesViewController: UIViewController {
         }
         self.request(isFirstPage: true)
         self.dispatchGroup.notify(queue: .main) {
-            refreshControl.endRefreshing()
             self.tableView.reloadData()
+            refreshControl.endRefreshing()
         }
     }
 
     // MARK: - Request methods
 
     private func request(isFirstPage: Bool = false) {
-        guard let section = self.section, let url = section.urlPath else { return }
+        guard let section = self.section else { return }
         if isFirstPage {
             self.movies.removeAll()
             self.tableView.reloadData()
@@ -217,18 +217,18 @@ class MWMoviesViewController: UIViewController {
             self.currentPage += 1
         }
         var parameters = self.pageParameters
-        parameters.merge(other: section.getParameters())
+        parameters.merge(other: section.parameters)
         self.dispatchGroup.enter()
         MWNet.sh.request(
-            urlPath: url,
+            urlPath: section.url,
             parameters: parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
                 self?.totalPages = results.totalPages
-                let dispatchGroup = DispatchGroup()
-                self?.saveToMovies(movies: results.results, dispatchGroup: dispatchGroup)
-                dispatchGroup.notify(queue: .main) {
-                    self?.dispatchGroup.leave()
-                }
+                let movies = results.results
+                self?.movies = movies
+                self?.tableView.reloadData()
+                self?.loadImages(movies: movies)
+                self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in
                 print(error.getDescription())
@@ -236,16 +236,13 @@ class MWMoviesViewController: UIViewController {
         })
     }
 
-    private func saveToMovies(movies: [MWMovie], dispatchGroup: DispatchGroup) {
+    private func loadImages(movies: [MWMovie]) {
         for movie in movies {
-            dispatchGroup.enter()
             MWNet.sh.downloadImage(
                 movie.posterPath,
-                handler: { image in
-                    let newMovie = Movie.getMovie(from: movie)
-                    newMovie.image = image
-                    self.movies.append(newMovie)
-                    dispatchGroup.leave()
+                handler: { [weak self] data in
+                    movie.image = data
+                    self?.tableView.reloadData()
             })
         }
     }
@@ -314,21 +311,21 @@ extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
-        if let totalPages = self.totalPages, self.currentPage == totalPages { return }
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
-        if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
-            self.isLoading = true
-            self.tableView.tableFooterView = self.bottomSpinner
-            self.bottomSpinner.startAnimating()
-            self.request()
-            self.dispatchGroup.notify(queue: .main) {
-                self.isLoading = false
-                self.tableView.tableFooterView = nil
-                self.tableView.reloadData()
-            }
-        }
-    }
+//    func tableView(_ tableView: UITableView,
+//                   willDisplay cell: UITableViewCell,
+//                   forRowAt indexPath: IndexPath) {
+//        if let totalPages = self.totalPages, self.currentPage == totalPages { return }
+//        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
+//        if indexPath.row == lastRowIndex, !self.isFiltered, !self.isLoading {
+//            self.isLoading = true
+//            self.tableView.tableFooterView = self.bottomSpinner
+//            self.bottomSpinner.startAnimating()
+//            self.request()
+//            self.dispatchGroup.notify(queue: .main) {
+//                self.isLoading = false
+//                self.tableView.tableFooterView = nil
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
 }

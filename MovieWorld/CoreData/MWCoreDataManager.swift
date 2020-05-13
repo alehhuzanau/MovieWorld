@@ -112,7 +112,7 @@ extension MWCoreDataManager {
         newMovie.posterPath = movie.posterPath
         if let genres = MWCoreDataManager.sh.fetchGenres() {
             genres
-                .filter { movie.genres.contains(Int($0.id)) }
+                .filter { movie.genreIds.contains(Int($0.id)) }
                 .forEach { newMovie.addToGenres($0) }
         }
         newMovie.section = section
