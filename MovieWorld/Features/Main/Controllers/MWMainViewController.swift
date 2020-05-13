@@ -112,8 +112,6 @@ class MWMainViewController: UITableViewController {
         }
     }
 
-    // MARK: - Sections set method
-
     // MARK: - TableView methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
