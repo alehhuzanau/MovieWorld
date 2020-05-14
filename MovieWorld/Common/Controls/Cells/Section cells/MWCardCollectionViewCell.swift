@@ -95,7 +95,7 @@ class MWCardCollectionViewCell: UICollectionViewCell {
             subtitleText += ", \(genre.name)"
         }
         self.subtitleLabel.text = subtitleText
-        self.setImage(image: movie.getImage())
+        self.setImage(image: movie.image)
 
         self.setNeedsUpdateConstraints()
     }

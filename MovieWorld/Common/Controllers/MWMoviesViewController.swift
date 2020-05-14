@@ -103,7 +103,6 @@ class MWMoviesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        tableView.isUserInteractionEnabled = true
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
         tableView.refreshControl = self.refreshControl
@@ -240,12 +239,14 @@ class MWMoviesViewController: UIViewController {
             MWNet.sh.downloadImage(
                 movie.posterPath,
                 handler: { [weak self] data in
-                    movie.image = data
+                    movie.imageData = data
                     self?.tableView.reloadData()
             })
         }
     }
 }
+
+// MARK: - genres collectionView methods
 
 extension MWMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
@@ -271,6 +272,8 @@ extension MWMoviesViewController: UICollectionViewDelegate, UICollectionViewData
         self.filterMovies()
     }
 }
+
+// MARK: - movies tableView methods
 
 extension MWMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
     private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {

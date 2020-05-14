@@ -10,7 +10,12 @@ import UIKit
 
 class MWMovie: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case id, title, posterPath = "poster_path", genreIds = "genre_ids", releaseDate = "release_date"
+        case id
+        case title
+        case posterPath = "poster_path"
+        case genreIds = "genre_ids"
+        case releaseDate = "release_date"
+        case imageData = "image"
     }
 
     var id: Int64
@@ -18,7 +23,15 @@ class MWMovie: Decodable {
     var posterPath: String?
     var genreIds: [Int]
     var releaseDate: String
-    var image: Data?
+    var imageData: Data? {
+        didSet {
+            if let data = self.imageData {
+                self.image = UIImage(data: data)
+            }
+        }
+    }
+
+    var image: UIImage?
 
     lazy var genres: [MWGenre] = {
         var genres: [MWGenre] = []
@@ -37,13 +50,6 @@ class MWMovie: Decodable {
         self.posterPath = try container.decode(String?.self, forKey: .posterPath) ?? ""
         self.genreIds = try container.decode([Int].self, forKey: .genreIds)
         self.releaseDate = try container.decode(String.self, forKey: .releaseDate)
-    }
-
-    func getImage() -> UIImage? {
-        if let data = self.image {
-            return UIImage(data: data)
-        }
-        return nil
     }
 
     func getReleaseDateYear() -> String {

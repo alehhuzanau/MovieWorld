@@ -93,7 +93,7 @@ class MWMainViewController: UITableViewController {
                 movie.posterPath,
                 handler: { [weak self] data in
                     MWCoreDataManager.sh.saveMovieImage(image: data, for: movie)
-                    movie.image = data
+                    movie.imageData = data
                     self?.tableView.reloadData()
             })
         }

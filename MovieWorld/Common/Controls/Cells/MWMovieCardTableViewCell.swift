@@ -130,7 +130,7 @@ class MWMovieCardTableViewCell: UITableViewCell {
         self.genresLabel.text = movie.genres
             .map({ $0.name })
             .joined(separator: ", ")
-        self.setImage(image: movie.getImage())
+        self.setImage(image: movie.image)
 
         self.setNeedsUpdateConstraints()
     }
