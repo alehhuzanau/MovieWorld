@@ -21,6 +21,7 @@ class Constants {
         static let nextIcon = "iconNext"
         static let launchImage = "LaunchImage"
         static let noPosterIcon = "noPosterIcon"
+        static let filterIcon = "filterIcon"
     }
 
     struct ColorName {

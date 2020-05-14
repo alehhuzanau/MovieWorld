@@ -44,6 +44,29 @@ class MWSearchViewController: UITableViewController {
         return label
     }()
 
+    private let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.definesPresentationContext = true
+        if #available(iOS 13.0, *) {
+            searchController.searchBar.searchTextField.clearButtonMode = .never
+        } else {
+            searchController.searchBar.textField.clearButtonMode = .never
+        }
+
+        return searchController
+    }()
+
+    private let filterButton: UIBarButtonItem = {
+        return UIBarButtonItem(
+            image: UIImage(named: Constants.ImageName.filterIcon),
+            style: .plain,
+            target: nil,
+            action: nil)
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +79,7 @@ class MWSearchViewController: UITableViewController {
         super.viewDidLoad()
 
         self.setTableView()
-        self.setSearchController()
+        self.setNavigationItem()
         self.addSubviews()
         self.makeConstraints()
     }
@@ -70,20 +93,11 @@ class MWSearchViewController: UITableViewController {
             forCellReuseIdentifier: MWMovieCardTableViewCell.reuseIdentifier)
     }
 
-    private func setSearchController() {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.definesPresentationContext = true
-        if #available(iOS 13.0, *) {
-            searchController.searchBar.searchTextField.clearButtonMode = .never
-        } else {
-            searchController.searchBar.textField.clearButtonMode = .never
-        }
+    private func setNavigationItem() {
+        self.searchController.searchResultsUpdater = self
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.rightBarButtonItem = self.filterButton
     }
 
     private func addSubviews() {
