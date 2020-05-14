@@ -147,11 +147,14 @@ class MWSearchViewController: UITableViewController {
 extension MWSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if !self.isSearchBarEmpty {
+            self.navigationItem.largeTitleDisplayMode = .never
+            self.navigationController?.navigationBar.sizeToFit()
             self.requestLabel.isHidden = true
             let searchBar = self.navigationItem.searchController?.searchBar
             self.section.parameters["query"] = searchBar?.text
             self.request()
         } else {
+            self.navigationItem.largeTitleDisplayMode = .always
             self.requestLabel.isHidden = false
             self.movies = []
         }
