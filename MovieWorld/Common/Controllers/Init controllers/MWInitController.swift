@@ -69,16 +69,12 @@ class MWInitController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = .white
-
         self.addSubviews()
         self.makeConstraints()
 
         self.indicator.startAnimating()
-
         self.setConfiguration()
-
         self.fetchGenres(urlPath: MWURLPaths.movieGenres)
-
         self.dispatchGroup.notify(queue: .main) {
             if self.genres.count != 0 {
                 MWCoreDataManager.sh.deleteAllGenres()
@@ -89,12 +85,6 @@ class MWInitController: UIViewController {
             MWSystem.sh.genres = self.genres
             MWI.sh.setRootVC()
         }
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        self.indicator.stopAnimating()
     }
 
     private func addSubviews() {
