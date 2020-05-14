@@ -12,10 +12,20 @@ class MWSearchViewController: UITableViewController {
 
     // MARK: - Variables
 
+    private let section: MWSection = MWSection(
+        name: "Search",
+        url: MWURLPaths.searchMovies,
+        parameters: ["query": "",
+                     "year": ""])
+
     private var movies: [MWMovie] = [] {
         didSet {
             self.tableView.reloadData()
         }
+    }
+
+    private var isSearchBarEmpty: Bool {
+        return self.navigationItem.searchController?.searchBar.text?.isEmpty ?? true
     }
 
     // MARK: - Life cycle
@@ -31,7 +41,6 @@ class MWSearchViewController: UITableViewController {
 
         self.setTableView()
         self.setSearchController()
-        self.request()
     }
 
     private func setTableView() {
@@ -44,14 +53,18 @@ class MWSearchViewController: UITableViewController {
     }
 
     private func setSearchController() {
-        self.navigationItem.searchController = UISearchController(searchResultsController: nil)
-        self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-        self.navigationItem.largeTitleDisplayMode = .never
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.searchTextField.clearButtonMode = .never
+        self.navigationItem.searchController = searchController
     }
 
     private func request() {
         MWNet.sh.request(
-            urlPath: MWURLPaths.nowPlayingMovies,
+            urlPath: self.section.url,
+            parameters: self.section.parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
                 let movies = results.results
                 self?.movies = movies
@@ -75,5 +88,17 @@ class MWSearchViewController: UITableViewController {
         (cell as? MWMovieCardTableViewCell)?.set(movie: self.movies[indexPath.row])
 
         return cell
+    }
+}
+
+extension MWSearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if !self.isSearchBarEmpty {
+            let searchBar = self.navigationItem.searchController?.searchBar
+            self.section.parameters["query"] = searchBar?.text
+            self.request()
+        } else {
+            self.movies = []
+        }
     }
 }
