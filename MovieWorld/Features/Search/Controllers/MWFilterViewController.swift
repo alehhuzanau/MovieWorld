@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RangeSeekSlider
 
 class MWFilterViewController: UIViewController {
 
@@ -114,8 +115,27 @@ class MWFilterViewController: UIViewController {
         return button
     }()
 
-    private lazy var rangeSlider: 
+    private lazy var rangeSlider: RangeSeekSlider = {
+        let slider = RangeSeekSlider()
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.tintColor = .lightGray
+        slider.colorBetweenHandles = UIColor(named: Constants.ColorName.accentColor)
+        slider.handleColor = .white
+        slider.handleBorderColor = .lightGray
+        slider.handleBorderWidth = 0.2
+        slider.handleDiameter = 28
+        slider.selectedHandleDiameterMultiplier = 1.0
+        slider.minDistance = 1
+        slider.minValue = 0
+        slider.maxValue = 10
+        slider.selectedMinValue = 5
+        slider.step = 1
+        slider.lineHeight = 2
+        slider.hideLabels = true
+        slider.delegate = self
 
+        return slider
+    }()
 
     // MARK: - Life cycle
 
@@ -138,6 +158,7 @@ class MWFilterViewController: UIViewController {
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
+        self.contentView.addSubview(self.rangeSlider)
         self.contentView.addSubview(self.showButton)
         self.navigationItem.rightBarButtonItem = self.resetButton
     }
@@ -159,6 +180,11 @@ class MWFilterViewController: UIViewController {
         self.yearView.snp.makeConstraints { (make) in
             make.top.equalTo(self.countryView.snp.bottom).offset(self.subviewsInsets.top)
             make.left.right.equalToSuperview()
+        }
+        self.rangeSlider.snp.makeConstraints { (make) in
+            make.top.equalTo(self.yearView.snp.bottom).offset(self.subviewsInsets.top)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(72)
         }
         self.showButton.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
@@ -231,5 +257,15 @@ extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
+    }
+}
+
+extension MWFilterViewController: RangeSeekSliderDelegate {
+    func rangeSeekSlider(_ slider: RangeSeekSlider, didChange minValue: CGFloat, maxValue: CGFloat) {
+        let minValue: Int = Int(self.rangeSlider.selectedMinValue)
+        let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
+        let from: String = "from".localized
+        let to: String = "to".localized
+        print("\(from) \(minValue) \(to) \(maxValue)")
     }
 }
