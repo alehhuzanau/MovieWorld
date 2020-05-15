@@ -10,17 +10,19 @@ import UIKit
 
 class MWButton: UIButton {
 
-    public override init(frame: CGRect = .zero) {
+    override init(frame: CGRect = .zero) {
         super.init(frame: frame)
+
         self.setupButton()
     }
 
-    public required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
         self.setupButton()
     }
 
-    open func setupButton() {
+    private func setupButton() {
         self.backgroundColor = UIColor(named: Constants.ColorName.accentColor)
         self.tintColor = .white
         self.layer.cornerRadius = 5

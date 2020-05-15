@@ -46,7 +46,7 @@ class MWMovieCardTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17.0)
+        label.font = .boldSystemFont(ofSize: 17.0)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 

@@ -13,6 +13,8 @@ class MWFilterViewController: UIViewController {
     // MARK: - Variables
 
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    private let subviewsInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    private let buttonHeight: Int = 44
 
     private lazy var genres: [MWGenre] = {
         return (MWSystem.sh.genres ?? [])
@@ -67,6 +69,32 @@ class MWFilterViewController: UIViewController {
         return view
     }()
 
+    private lazy var countryView: MWCategoryView = {
+        let view = MWCategoryView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.set(titleText: "Country".localized)
+
+        return view
+    }()
+
+    private lazy var yearView: MWCategoryView = {
+        let view = MWCategoryView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.set(titleText: "Year".localized)
+
+        return view
+    }()
+
+    private lazy var showButton: MWButton = {
+        let button = MWButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Show".localized, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 17.0)
+        button.alpha = 0.5
+
+        return button
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -86,6 +114,9 @@ class MWFilterViewController: UIViewController {
     private func addSubviews() {
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.contentView)
+        self.contentView.addSubview(self.countryView)
+        self.contentView.addSubview(self.yearView)
+        self.contentView.addSubview(self.showButton)
     }
 
     // MARK: - Constraints
@@ -99,8 +130,18 @@ class MWFilterViewController: UIViewController {
             make.top.equalTo(self.collectionView.snp.bottom)
             make.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+        self.countryView.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+        }
+        self.yearView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.countryView.snp.bottom).offset(self.subviewsInsets.top)
+            make.left.right.equalToSuperview()
+        }
+        self.showButton.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
+            make.height.equalTo(self.buttonHeight)
+        }
     }
-
 }
 
 // MARK: - genres collectionView methods
