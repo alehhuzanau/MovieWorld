@@ -10,6 +10,63 @@ import UIKit
 
 class MWFilterViewController: UIViewController {
 
+    // MARK: - Variables
+
+    private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+
+    private lazy var genres: [MWGenre] = {
+        return (MWSystem.sh.genres ?? [])
+    }()
+
+    var numberOfRows: Int = 2
+    var cellPadding: CGFloat = 8
+
+    // MARK: - GUI variables
+
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero,
+                                              collectionViewLayout: self.flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.contentInset = self.collectionViewInsets
+        collectionView.allowsMultipleSelection = true
+        collectionView.register(
+            MWGenreCollectionViewCell.self,
+            forCellWithReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier)
+
+        return collectionView
+    }()
+
+    private lazy var flowLayout: MWLeftAlignedViewFlowLayout = {
+        let layout = MWLeftAlignedViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.delegate = self
+
+        return layout
+    }()
+
+    private lazy var collectionViewHeight: CGFloat = {
+        guard self.genres.count != 0 else { return 0 }
+        let cellHeight = self.sizeForCollectionViewCell().height
+        let insetsHeight = self.collectionViewInsets.top + self.collectionViewInsets.bottom
+        let rows = CGFloat(self.numberOfRows)
+
+        return cellHeight * rows + self.cellPadding * (rows - 1) + insetsHeight
+    }()
+
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -20,5 +77,77 @@ class MWFilterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.view.backgroundColor = .white
+        self.addSubviews()
+        self.makeConstraints()
+    }
+
+    private func addSubviews() {
+        self.view.addSubview(self.collectionView)
+        self.view.addSubview(self.contentView)
+    }
+
+    // MARK: - Constraints
+
+    private func makeConstraints() {
+        self.collectionView.snp.makeConstraints { (make) in
+            make.top.left.right.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(self.collectionViewHeight)
+        }
+        self.contentView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.collectionView.snp.bottom)
+            make.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+    }
+
+}
+
+// MARK: - genres collectionView methods
+
+extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return self.genres.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MWGenreCollectionViewCell.reuseIdentifier,
+            for: indexPath)
+        (cell as? MWGenreCollectionViewCell)?.set(genre: self.genres[indexPath.item])
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    }
+}
+
+extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
+    private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {
+        let label = UILabel(frame: CGRect(
+            x: 0,
+            y: 0,
+            width: CGFloat.greatestFiniteMagnitude,
+            height: CGFloat.greatestFiniteMagnitude))
+        label.font = label.font.withSize(13)
+        label.text = labelText
+        label.sizeToFit()
+
+        let insets = MWGenreCollectionViewCell.viewInsets
+        let width = insets.left + label.frame.width + insets.right
+        let height = insets.top + label.frame.height + insets.bottom
+
+        return CGSize(width: width, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
     }
 }

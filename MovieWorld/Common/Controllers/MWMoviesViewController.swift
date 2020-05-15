@@ -273,8 +273,6 @@ extension MWMoviesViewController: UICollectionViewDelegate, UICollectionViewData
     }
 }
 
-// MARK: - movies tableView methods
-
 extension MWMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
     private func sizeForCollectionViewCell(labelText: String? = " ") -> CGSize {
         let label = UILabel(frame: CGRect(
@@ -298,6 +296,8 @@ extension MWMoviesViewController: MWLeftAlignedDelegateViewFlowLayout {
         return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
     }
 }
+
+// MARK: - movies tableView methods
 
 extension MWMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
