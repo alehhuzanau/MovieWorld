@@ -40,6 +40,7 @@
 		24F276AE24224EB500A1FBB5 /* MWConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276AD24224EB500A1FBB5 /* MWConfiguration.swift */; };
 		24FFF5F1246D94350063191B /* UISearchBar+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FFF5F0246D94350063191B /* UISearchBar+Ex.swift */; };
 		29A80035490F8BD7570DDCDA /* Pods_MovieWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */; };
+		8400039F246F4019007BD675 /* UICollectionView+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400039E246F4019007BD675 /* UICollectionView+Ex.swift */; };
 		84312D27244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84312D26244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
 		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
@@ -97,6 +98,7 @@
 		24F276AB24224B7900A1FBB5 /* MWImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWImages.swift; sourceTree = "<group>"; };
 		24F276AD24224EB500A1FBB5 /* MWConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWConfiguration.swift; sourceTree = "<group>"; };
 		24FFF5F0246D94350063191B /* UISearchBar+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Ex.swift"; sourceTree = "<group>"; };
+		8400039E246F4019007BD675 /* UICollectionView+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ex.swift"; sourceTree = "<group>"; };
 		84312D26244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLeftAlignedViewFlowLayout.swift; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 				CF7A0455240EA3FB0003AD7B /* String+Ex.swift */,
 				CFB983B8240EAAD700FA9ACF /* Dictionary+Ex.swift */,
 				24FFF5F0246D94350063191B /* UISearchBar+Ex.swift */,
+				8400039E246F4019007BD675 /* UICollectionView+Ex.swift */,
 			);
 			path = ExUtility;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
 				CF31024B24056A4C00AC0E1A /* MWMainTabBarController.swift in Sources */,
+				8400039F246F4019007BD675 /* UICollectionView+Ex.swift in Sources */,
 				24B77C2224535EF100B38121 /* MWCategoryTableViewCell.swift in Sources */,
 				CFF03AD32406ADEC0075A10F /* MWNextButton.swift in Sources */,
 				246F744E2455BF7400449961 /* Parameter+CoreDataProperties.swift in Sources */,

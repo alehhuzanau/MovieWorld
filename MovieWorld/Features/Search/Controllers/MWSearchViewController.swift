@@ -175,6 +175,7 @@ extension MWSearchViewController: UISearchResultsUpdating {
             self.request()
         } else {
             self.navigationItem.largeTitleDisplayMode = .always
+            self.navigationController?.navigationBar.sizeToFit()
             self.requestLabel.isHidden = false
             self.movies = []
         }

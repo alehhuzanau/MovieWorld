@@ -99,7 +99,7 @@ class MWFilterViewController: UIViewController {
         button.titleLabel?.font = .boldSystemFont(ofSize: 17.0)
         button.alpha = 0.5
         button.isEnabled = false
-        button.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.showButtonTapped), for: .touchUpInside)
 
         return button
     }()
@@ -108,8 +108,8 @@ class MWFilterViewController: UIViewController {
         let button = UIBarButtonItem(
             title: "Reset".localized,
             style: .plain,
-            target: nil,
-            action: nil)
+            target: self,
+            action: #selector(self.resetButtonTapped))
         button.tintColor = .lightGray
 
         return button
@@ -225,6 +225,10 @@ class MWFilterViewController: UIViewController {
         })
     }
 
+    @objc private func resetButtonTapped(_ button: UIBarButtonItem) {
+        self.collectionView.deselectAllItems(animated: true)
+    }
+    
     private func getFromToLabelText() -> String {
         let minValue: Int = Int(self.rangeSlider.selectedMinValue)
         let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
@@ -234,6 +238,7 @@ class MWFilterViewController: UIViewController {
         return "\(from) \(minValue) \(to) \(maxValue)"
     }
 }
+
 // MARK: - genres collectionView methods
 
 extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
