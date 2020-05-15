@@ -108,8 +108,7 @@ class MWMainViewController: UITableViewController {
 
     // MARK: - RefreshControl action
 
-    @objc
-    func refresh(refreshControl: UIRefreshControl) {
+    @objc private func refresh(refreshControl: UIRefreshControl) {
         refreshControl.endRefreshing()
 
         self.initRequest()

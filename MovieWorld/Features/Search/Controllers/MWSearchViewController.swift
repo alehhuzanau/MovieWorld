@@ -32,7 +32,7 @@ class MWSearchViewController: UITableViewController {
 
     // MARK: - GUI variables
 
-    private let requestLabel: UILabel = {
+    private lazy var requestLabel: UILabel = {
         let label = UILabel()
         label.text = "Enter a request or\nconfigure a filter"
         label.textAlignment = .center
@@ -44,7 +44,7 @@ class MWSearchViewController: UITableViewController {
         return label
     }()
 
-    private let searchController: UISearchController = {
+    private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
         searchController.hidesNavigationBarDuringPresentation = false
@@ -59,12 +59,12 @@ class MWSearchViewController: UITableViewController {
         return searchController
     }()
 
-    private let filterButton: UIBarButtonItem = {
+    private lazy var filterButton: UIBarButtonItem = {
         return UIBarButtonItem(
             image: UIImage(named: Constants.ImageName.filterIcon),
             style: .plain,
-            target: nil,
-            action: nil)
+            target: self,
+            action: #selector(filterButtonTapped))
     }()
 
     // MARK: - Life cycle
@@ -155,6 +155,12 @@ class MWSearchViewController: UITableViewController {
         (cell as? MWMovieCardTableViewCell)?.set(movie: self.movies[indexPath.row])
 
         return cell
+    }
+
+    // MARK: - filterButton tap action
+
+    @objc func filterButtonTapped(_ button: UIBarButtonItem) {
+        MWI.sh.push(vc: MWFilterViewController())
     }
 }
 

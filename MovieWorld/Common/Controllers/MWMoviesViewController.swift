@@ -192,7 +192,7 @@ class MWMoviesViewController: UIViewController {
 
     // MARK: - RefreshControl action
 
-    @objc func refresh(refreshControl: UIRefreshControl) {
+    @objc private func refresh(refreshControl: UIRefreshControl) {
         guard !self.isFiltered, !self.isLoading else {
             refreshControl.endRefreshing()
             return

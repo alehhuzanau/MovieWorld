@@ -118,7 +118,7 @@ class MWMovieSectionTableViewCell: UITableViewCell {
         self.setNeedsUpdateConstraints()
     }
 
-    @objc func allButtonTappedAction(_ button: UIButton) {
+    @objc private func allButtonTappedAction(_ button: UIButton) {
         self.allButtonTapped?()
     }
 }

@@ -31,6 +31,7 @@
 		24A837092445CC7700A2F3A0 /* MWMovieCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A837082445CC7700A2F3A0 /* MWMovieCardTableViewCell.swift */; };
 		24B77C1D245354DB00B38121 /* MWSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B77C1C245354DB00B38121 /* MWSection.swift */; };
 		24B77C2224535EF100B38121 /* MWCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B77C2124535EF100B38121 /* MWCategoryTableViewCell.swift */; };
+		24E19D6C246EBAA700B3E150 /* MWFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E19D6B246EBAA700B3E150 /* MWFilterViewController.swift */; };
 		24E94FC524434155001F0504 /* MWMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E94FC424434155001F0504 /* MWMoviesViewController.swift */; };
 		24F276A82422457800A1FBB5 /* MWImageSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276A72422457800A1FBB5 /* MWImageSizes.swift */; };
 		24F276AA2422465200A1FBB5 /* MWSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F276A92422465200A1FBB5 /* MWSystem.swift */; };
@@ -87,6 +88,7 @@
 		24A837082445CC7700A2F3A0 /* MWMovieCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieCardTableViewCell.swift; sourceTree = "<group>"; };
 		24B77C1C245354DB00B38121 /* MWSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSection.swift; sourceTree = "<group>"; };
 		24B77C2124535EF100B38121 /* MWCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		24E19D6B246EBAA700B3E150 /* MWFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWFilterViewController.swift; sourceTree = "<group>"; };
 		24E94FC424434155001F0504 /* MWMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMoviesViewController.swift; sourceTree = "<group>"; };
 		24F276A72422457800A1FBB5 /* MWImageSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWImageSizes.swift; sourceTree = "<group>"; };
 		24F276A92422465200A1FBB5 /* MWSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSystem.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */,
+				24E19D6B246EBAA700B3E150 /* MWFilterViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24250ED7243CC926007D02AB /* Section+CoreDataClass.swift in Sources */,
+				24E19D6C246EBAA700B3E150 /* MWFilterViewController.swift in Sources */,
 				CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */,
 				CF31025224056ACA00AC0E1A /* MWSearchViewController.swift in Sources */,
 				CFF03AD52406BA220075A10F /* MWButton.swift in Sources */,
