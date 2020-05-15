@@ -106,7 +106,7 @@ extension MWCoreDataManager {
 extension MWCoreDataManager {
     func saveMovie(from movie: MWMovie, to section: Section) {
         let newMovie = Movie(context: self.context)
-        newMovie.id = movie.id
+        newMovie.id = Int64(movie.id)
         newMovie.title = movie.title
         newMovie.releaseDate = movie.releaseDate
         newMovie.posterPath = movie.posterPath

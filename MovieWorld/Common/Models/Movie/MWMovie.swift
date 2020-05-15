@@ -18,7 +18,7 @@ class MWMovie: Decodable {
         case imageData = "image"
     }
 
-    var id: Int64
+    var id: Int
     var title: String
     var posterPath: String?
     var genreIds: [Int]
@@ -45,11 +45,20 @@ class MWMovie: Decodable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int64.self, forKey: .id)
+        self.id = try container.decode(Int.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.posterPath = try container.decode(String?.self, forKey: .posterPath) ?? ""
         self.genreIds = try container.decode([Int].self, forKey: .genreIds)
         self.releaseDate = try container.decode(String.self, forKey: .releaseDate)
+    }
+
+    init(id: Int, title: String, posterPath: String? = nil, genreIds: [Int], releaseDate: String, imageData: Data? = nil) {
+        self.id = id
+        self.title = title
+        self.posterPath = posterPath
+        self.genreIds = genreIds
+        self.releaseDate = releaseDate
+        self.imageData = imageData
     }
 
     func getReleaseDateYear() -> String {

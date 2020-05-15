@@ -83,6 +83,7 @@ class MWInitController: UIViewController {
                 MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
             }
             MWSystem.sh.genres = self.genres
+            self.indicator.stopAnimating()
             MWI.sh.setRootVC()
         }
     }

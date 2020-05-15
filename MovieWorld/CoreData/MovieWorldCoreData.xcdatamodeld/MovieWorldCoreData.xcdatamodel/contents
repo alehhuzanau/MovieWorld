@@ -26,9 +26,9 @@
         <relationship name="parameters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Parameter" inverseName="section" inverseEntity="Parameter"/>
     </entity>
     <elements>
-        <element name="Genre" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Movie" positionX="-54" positionY="9" width="128" height="148"/>
-        <element name="Parameter" positionX="-54" positionY="63" width="128" height="88"/>
-        <element name="Section" positionX="-63" positionY="36" width="128" height="103"/>
+        <element name="Genre" positionX="606.734375" positionY="26.90234375" width="128" height="88"/>
+        <element name="Movie" positionX="-295.578125" positionY="87.44140625" width="128" height="148"/>
+        <element name="Parameter" positionX="436.1875" positionY="314.328125" width="128" height="88"/>
+        <element name="Section" positionX="214.21484375" positionY="343.1328125" width="128" height="103"/>
     </elements>
 </model>
