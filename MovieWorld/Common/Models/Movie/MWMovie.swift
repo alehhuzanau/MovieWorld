@@ -25,9 +25,7 @@ class MWMovie: Decodable {
     var releaseDate: String
     var imageData: Data? {
         didSet {
-            if let data = self.imageData {
-                self.image = UIImage(data: data)
-            }
+            self.setImage()
         }
     }
 
@@ -59,6 +57,13 @@ class MWMovie: Decodable {
         self.genreIds = genreIds
         self.releaseDate = releaseDate
         self.imageData = imageData
+        self.setImage()
+    }
+
+    private func setImage() {
+        if let data = self.imageData {
+            self.image = UIImage(data: data)
+        }
     }
 
     func getReleaseDateYear() -> String {

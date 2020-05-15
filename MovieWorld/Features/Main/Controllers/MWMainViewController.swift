@@ -83,6 +83,7 @@ class MWMainViewController: UITableViewController {
             },
             errorHandler: { [weak self] error in
                 print(error.getDescription())
+                self?.setMoviesFromCoreData(section: section)
                 self?.dispatchGroup.leave()
         })
     }
@@ -97,6 +98,12 @@ class MWMainViewController: UITableViewController {
                     self?.tableView.reloadData()
             })
         }
+    }
+
+    private func setMoviesFromCoreData(section: MWSection) {
+        guard let coreSections = MWCoreDataManager.sh.fetchSections(),
+            let coreSection = coreSections.first(where: { $0.name == section.name }) else { return }
+        section.movies = coreSection.getMovies().map { $0.getMovie() }
     }
 
     // MARK: - RefreshControl action

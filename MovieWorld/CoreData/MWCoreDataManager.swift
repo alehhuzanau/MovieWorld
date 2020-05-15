@@ -12,10 +12,12 @@ import CoreData
 class MWCoreDataManager {
     static let sh: MWCoreDataManager = MWCoreDataManager()
 
-    private let documentsDirectory: URL
-
     private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "MovieWorldCoreData")
+        container.persistentStoreDescriptions.forEach { (desc) in
+            desc.shouldMigrateStoreAutomatically = true
+            desc.shouldInferMappingModelAutomatically = true
+        }
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -27,14 +29,7 @@ class MWCoreDataManager {
 
     private(set) lazy var context: NSManagedObjectContext = self.persistentContainer.viewContext
 
-    private init() {
-        let docUrls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        if docUrls.count > 0 {
-            self.documentsDirectory = docUrls[0]
-        } else {
-            fatalError("not found documentDirectory")
-        }
-    }
+    private init() { }
 
     func saveContext() {
         if self.context.hasChanges {
@@ -70,7 +65,7 @@ extension MWCoreDataManager {
     }
 
     private func fetchData<T: NSManagedObject>(sortDescriptors: [NSSortDescriptor]? = nil) -> [T]? {
-        guard let fetch = T.fetchRequest() as? NSFetchRequest<T> else { return nil }
+        let fetch = NSFetchRequest<T>(entityName: String(describing: T.self))
         fetch.sortDescriptors = sortDescriptors
         do {
             let results = try self.context.fetch(fetch)
