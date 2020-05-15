@@ -73,6 +73,9 @@ class MWFilterViewController: UIViewController {
         let view = MWCategoryView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.set(titleText: "Country".localized)
+        let gesture = UITapGestureRecognizer(
+            target: self, action: #selector(self.countryViewTapped))
+        view.addGestureRecognizer(gesture)
 
         return view
     }()
@@ -81,6 +84,9 @@ class MWFilterViewController: UIViewController {
         let view = MWCategoryView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.set(titleText: "Year".localized)
+        let gesture = UITapGestureRecognizer(
+            target: self, action: #selector(self.yearViewTapped))
+        view.addGestureRecognizer(gesture)
 
         return view
     }()
@@ -91,6 +97,8 @@ class MWFilterViewController: UIViewController {
         button.setTitle("Show".localized, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 17.0)
         button.alpha = 0.5
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
 
         return button
     }()
@@ -142,8 +150,26 @@ class MWFilterViewController: UIViewController {
             make.height.equalTo(self.buttonHeight)
         }
     }
-}
 
+    // MARK: - Tap action methods
+
+    @objc private func countryViewTapped(_ sender: UITapGestureRecognizer) {
+        self.countryView.animateTap()
+    }
+
+    @objc private func yearViewTapped(_ sender: UITapGestureRecognizer) {
+        self.yearView.animateTap()
+    }
+
+    @objc private func showButtonTapped(_ button: UIButton) {
+        self.showButton.alpha = 1
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.showButton.alpha = 0.5
+        })
+    }
+}
 // MARK: - genres collectionView methods
 
 extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewDataSource {

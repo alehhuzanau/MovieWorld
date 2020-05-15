@@ -21,7 +21,7 @@ class MWCategoryView: UIView {
         let image = UIImage(named: Constants.ImageName.arrowIcon)
         let imageView = UIImageView(image: image)
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .right
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
 
@@ -72,7 +72,8 @@ class MWCategoryView: UIView {
             make.right.equalTo(self.arrowImageView.snp.left).inset(-self.subviewsEdgeInsets.right)
         }
         self.arrowImageView.snp.updateConstraints { (make) in
-            make.top.right.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
+            make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
+            make.centerY.equalToSuperview()
             make.size.equalTo(self.imageSize)
         }
     }
@@ -81,5 +82,16 @@ class MWCategoryView: UIView {
 
     func set(titleText: String) {
         self.titleLabel.text = titleText
+    }
+
+    // MARK: - Tap animation action
+
+    func animateTap() {
+        self.backgroundColor = .lightGray
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.backgroundColor = .white
+        })
     }
 }

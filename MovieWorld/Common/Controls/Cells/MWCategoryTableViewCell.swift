@@ -33,7 +33,7 @@ class MWCategoryTableViewCell: UITableViewCell {
         let image = UIImage(named: Constants.ImageName.arrowIcon)
         let imageView = UIImageView(image: image)
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .right
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = true
 
