@@ -137,6 +137,15 @@ class MWFilterViewController: UIViewController {
         return slider
     }()
 
+    private lazy var fromToLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = self.getFromToLabelText()
+        label.alpha = 0.5
+
+        return label
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -159,6 +168,7 @@ class MWFilterViewController: UIViewController {
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
         self.contentView.addSubview(self.rangeSlider)
+        self.rangeSlider.addSubview(self.fromToLabel)
         self.contentView.addSubview(self.showButton)
         self.navigationItem.rightBarButtonItem = self.resetButton
     }
@@ -184,7 +194,11 @@ class MWFilterViewController: UIViewController {
         self.rangeSlider.snp.makeConstraints { (make) in
             make.top.equalTo(self.yearView.snp.bottom).offset(self.subviewsInsets.top)
             make.left.right.equalToSuperview()
-            make.height.equalTo(72)
+            make.height.equalTo(100)
+        }
+        self.fromToLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().inset(6)
+            make.right.equalToSuperview().inset(16)
         }
         self.showButton.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
@@ -209,6 +223,15 @@ class MWFilterViewController: UIViewController {
             animations: {
                 self.showButton.alpha = 0.5
         })
+    }
+
+    private func getFromToLabelText() -> String {
+        let minValue: Int = Int(self.rangeSlider.selectedMinValue)
+        let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
+        let from: String = "from".localized
+        let to: String = "to".localized
+
+        return "\(from) \(minValue) \(to) \(maxValue)"
     }
 }
 // MARK: - genres collectionView methods
@@ -262,10 +285,6 @@ extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
 
 extension MWFilterViewController: RangeSeekSliderDelegate {
     func rangeSeekSlider(_ slider: RangeSeekSlider, didChange minValue: CGFloat, maxValue: CGFloat) {
-        let minValue: Int = Int(self.rangeSlider.selectedMinValue)
-        let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
-        let from: String = "from".localized
-        let to: String = "to".localized
-        print("\(from) \(minValue) \(to) \(maxValue)")
+        self.fromToLabel.text = self.getFromToLabelText()
     }
 }
