@@ -103,6 +103,20 @@ class MWFilterViewController: UIViewController {
         return button
     }()
 
+    private lazy var resetButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "Reset".localized,
+            style: .plain,
+            target: nil,
+            action: nil)
+        button.tintColor = .lightGray
+
+        return button
+    }()
+
+    private lazy var rangeSlider: 
+
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -125,6 +139,7 @@ class MWFilterViewController: UIViewController {
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
         self.contentView.addSubview(self.showButton)
+        self.navigationItem.rightBarButtonItem = self.resetButton
     }
 
     // MARK: - Constraints
