@@ -133,7 +133,7 @@ class MWSearchViewController: UITableViewController {
         for movie in movies {
             MWNet.sh.downloadImage(
                 movie.posterPath,
-                handler: { [weak self] data in
+                completionHandler: { [weak self] data in
                     MWCoreDataManager.sh.saveMovieImage(image: data, for: movie)
                     movie.imageData = data
                     self?.tableView.reloadData()

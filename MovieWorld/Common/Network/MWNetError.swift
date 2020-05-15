@@ -9,6 +9,7 @@
 enum MWNetError {
     case incorrectUrl(url: String)
     case networkError(message: String)
+    case connectionIsOffline
     case serverError(statusCode: Int)
     case parsingError(message: String)
     case error4xx(error: MWError)
@@ -20,6 +21,8 @@ enum MWNetError {
             return "incorrect url: \(url)"
         case .networkError(let message):
             return "network error: \(message)"
+        case .connectionIsOffline:
+            return "internet connection is offline"
         case .parsingError(let message):
             return "parsing error: \(message)"
         case .serverError(let statusCode):
