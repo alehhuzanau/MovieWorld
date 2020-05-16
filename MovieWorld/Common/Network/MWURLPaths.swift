@@ -8,9 +8,8 @@
 
 struct MWURLPaths {
     static let configuration: String = "configuration"
-
+    static let countries: String = "configuration/countries"
     static let movieGenres: String = "genre/movie/list"
-    static let tvGenres: String = "genre/tv/list"
 
     static let nowPlayingMovies: String = "movie/now_playing"
     static let popularMovies: String = "movie/popular"

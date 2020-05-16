@@ -13,4 +13,7 @@ import CoreData
 @objc(Genre)
 public class Genre: NSManagedObject {
 
+    func getGenre() -> MWGenre {
+        return MWGenre(id: Int(self.id), name: self.name ?? "")
+    }
 }

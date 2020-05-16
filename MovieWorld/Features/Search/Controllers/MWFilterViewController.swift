@@ -283,11 +283,11 @@ class MWFilterViewController: UIViewController {
     }
 
     @objc private func showButtonTapped(_ button: UIButton) {
-        self.showButton.alpha = 1
+        self.showButton.alpha = 0.5
         UIView.animate(
             withDuration: 0.5,
             animations: {
-                self.showButton.alpha = 0.5
+                self.showButton.alpha = 1
         })
     }
 

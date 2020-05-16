@@ -75,7 +75,7 @@ class MWMainViewController: UITableViewController {
         MWNet.sh.request(
             urlPath: section.url,
             successHandler: { [weak self] (results: MWMovieResults) in
-                let movies = results.results
+                let movies = results.movies
                 section.movies = movies
                 MWCoreDataManager.sh.saveSection(section: section)
                 self?.loadImages(movies: movies)

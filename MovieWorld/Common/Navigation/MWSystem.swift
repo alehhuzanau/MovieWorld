@@ -13,6 +13,7 @@ class MWSystem {
 
     var configuration: MWConfiguration?
     var genres: [MWGenre]?
+    var countries: [MWCountry]?
 
     private init() {}
 }

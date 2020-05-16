@@ -222,7 +222,7 @@ class MWMoviesViewController: UIViewController {
             parameters: parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
                 self?.totalPages = results.totalPages
-                let movies = results.results
+                let movies = results.movies
                 self?.movies.append(contentsOf: movies)
                 self?.tableView.reloadData()
                 self?.loadImages(movies: movies)

@@ -120,7 +120,7 @@ class MWSearchViewController: UITableViewController {
             urlPath: self.section.url,
             parameters: self.section.parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
-                let movies = results.results
+                let movies = results.movies
                 self?.movies = movies
                 self?.loadImages(movies: movies)
             },

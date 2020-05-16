@@ -18,8 +18,6 @@ class MWInitController: UIViewController {
 
     private let dispatchGroup = DispatchGroup()
 
-    private var genres: [MWGenre] = []
-
     // MARK: - GUI Variables
 
     private lazy var contentView: UIView = {
@@ -72,20 +70,7 @@ class MWInitController: UIViewController {
         self.addSubviews()
         self.makeConstraints()
 
-        self.indicator.startAnimating()
-        self.setConfiguration()
-        self.fetchGenres(urlPath: MWURLPaths.movieGenres)
-        self.dispatchGroup.notify(queue: .main) {
-            if self.genres.count != 0 {
-                MWCoreDataManager.sh.deleteAllGenres()
-            }
-            for genre in self.genres {
-                MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
-            }
-            MWSystem.sh.genres = self.genres
-            self.indicator.stopAnimating()
-            MWI.sh.setRootVC()
-        }
+        self.sendRequests()
     }
 
     private func addSubviews() {
@@ -93,6 +78,17 @@ class MWInitController: UIViewController {
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.imageView)
         self.view.addSubview(self.indicator)
+    }
+
+    private func sendRequests() {
+        self.indicator.startAnimating()
+        self.setConfiguration()
+        self.setGenres()
+        self.setCountries()
+        self.dispatchGroup.notify(queue: .main) {
+            self.indicator.stopAnimating()
+            MWI.sh.setRootVC()
+        }
     }
 
     // MARK: - Constraints
@@ -132,17 +128,47 @@ class MWInitController: UIViewController {
         })
     }
 
-    private func fetchGenres(urlPath: String) {
+    private func setGenres() {
         self.dispatchGroup.enter()
         MWNet.sh.request(
-            urlPath: urlPath,
-            successHandler: { [weak self] (genres: MWGenreResults) in
-                self?.genres = genres.genres
+            urlPath: MWURLPaths.movieGenres,
+            successHandler: { [weak self] (result: MWGenreResults) in
+                MWSystem.sh.genres = result.genres
+                MWCoreDataManager.sh.deleteAllGenres()
+                result.genres.forEach { genre in
+                    MWCoreDataManager.sh.saveGenre(id: genre.id, name: genre.name)
+                }
+                self?.dispatchGroup.leave()
+            },
+            errorHandler: { [weak self]  error in
+                print(error.getDescription())
+                self?.setGenresFromCoreData()
+                self?.dispatchGroup.leave()
+        })
+    }
+
+    private func setCountries() {
+        self.dispatchGroup.enter()
+        MWNet.sh.request(
+            urlPath: MWURLPaths.countries,
+            successHandler: { [weak self] (countries: [MWCountry]) in
+                MWSystem.sh.countries = countries.sorted { $0.name < $1.name }
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self]  error in
                 print(error.getDescription())
                 self?.dispatchGroup.leave()
         })
+    }
+
+    // MARK: - Others
+
+    private func setGenresFromCoreData() {
+        guard let coreGenres = MWCoreDataManager.sh.fetchGenres() else { return }
+        var genres: [MWGenre] = []
+        coreGenres.forEach { coreGenre in
+            genres.append(coreGenre.getGenre())
+        }
+        MWSystem.sh.genres = genres
     }
 }
