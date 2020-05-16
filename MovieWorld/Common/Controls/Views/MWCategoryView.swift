@@ -14,6 +14,7 @@ class MWCategoryView: UIView {
 
     private let subviewsEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 15)
     private let imageSize = CGSize(width: 22, height: 22)
+    private let distanceBetweenLabels: Int = 38
 
     // MARK: - GUI variables
 
@@ -31,6 +32,17 @@ class MWCategoryView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.alpha = 0.5
+        label.textAlignment = .right
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -61,6 +73,7 @@ class MWCategoryView: UIView {
 
     private func addSubviews() {
         self.addSubview(self.titleLabel)
+        self.addSubview(self.descriptionLabel)
         self.addSubview(self.arrowImageView)
     }
 
@@ -69,11 +82,14 @@ class MWCategoryView: UIView {
     private func makeConstraints() {
         self.titleLabel.snp.makeConstraints { (make) in
             make.top.left.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
-            make.right.equalTo(self.arrowImageView.snp.left).inset(-self.subviewsEdgeInsets.right)
+        }
+        self.descriptionLabel.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
+            make.left.equalTo(self.titleLabel.snp.right).offset(self.distanceBetweenLabels)
+            make.right.equalTo(self.arrowImageView.snp.left)
         }
         self.arrowImageView.snp.updateConstraints { (make) in
-            make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
-            make.centerY.equalToSuperview()
+            make.top.right.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
             make.size.equalTo(self.imageSize)
         }
     }
@@ -82,6 +98,10 @@ class MWCategoryView: UIView {
 
     func set(titleText: String) {
         self.titleLabel.text = titleText
+    }
+
+    func set(descriptionText: String) {
+        self.descriptionLabel.text = descriptionText
     }
 
     // MARK: - Tap animation action

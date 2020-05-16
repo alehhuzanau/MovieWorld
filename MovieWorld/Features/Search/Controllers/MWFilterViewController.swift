@@ -160,6 +160,7 @@ class MWFilterViewController: UIViewController {
         picker.backgroundColor = .white
         picker.delegate = self
         picker.dataSource = self
+        picker.selectRow(0, inComponent: 0, animated: true)
 
         return picker
     }()
@@ -285,15 +286,8 @@ class MWFilterViewController: UIViewController {
     
     @objc private func yearSelected(_ sender: UIBarButtonItem) {
         self.showHidePickerView()
-    }
-
-    private func getFromToLabelText() -> String {
-        let minValue: Int = Int(self.rangeSlider.selectedMinValue)
-        let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
-        let from: String = "from".localized
-        let to: String = "to".localized
-
-        return "\(from) \(minValue) \(to) \(maxValue)"
+        let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
+        self.yearView.set(descriptionText: String(self.years[selectedRow]))
     }
 
     private func showHidePickerView() {
