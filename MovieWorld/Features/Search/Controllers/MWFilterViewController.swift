@@ -21,6 +21,16 @@ class MWFilterViewController: UIViewController {
         return (MWSystem.sh.genres ?? [])
     }()
 
+    private var years: [Int] = {
+        var years: [Int] = []
+        let currentYear = Calendar.current.component(.year, from: Date())
+        for year in (1900...currentYear).reversed() {
+            years.append(year)
+        }
+
+        return years
+    }()
+
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
 
@@ -126,10 +136,9 @@ class MWFilterViewController: UIViewController {
         slider.handleDiameter = 28
         slider.selectedHandleDiameterMultiplier = 1.0
         slider.minDistance = 1
-        slider.minValue = 0
-        slider.maxValue = 10
+        slider.minValue = 0.5
+        slider.maxValue = 10.5
         slider.selectedMinValue = 5
-        slider.step = 1
         slider.lineHeight = 2
         slider.hideLabels = true
         slider.delegate = self
@@ -146,6 +155,33 @@ class MWFilterViewController: UIViewController {
         return label
     }()
 
+    private lazy var toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        toolbar.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(
+            title: "Done".localized,
+            style: .done,
+            target: self,
+            action: #selector(self.yearSelected))
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+
+        return toolbar
+    }()
+
+    private lazy var yearPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.backgroundColor = .white
+        picker.delegate = self
+        picker.dataSource = self
+
+        return picker
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -160,32 +196,45 @@ class MWFilterViewController: UIViewController {
         self.view.backgroundColor = .white
         self.addSubviews()
         self.makeConstraints()
+
+        self.yearPickerView.isHidden = true
+        self.toolbar.isHidden = true
     }
 
     private func addSubviews() {
-        self.view.addSubview(self.collectionView)
+        self.navigationItem.rightBarButtonItem = self.resetButton
         self.view.addSubview(self.contentView)
+        self.view.addSubview(self.yearPickerView)
+        self.view.addSubview(self.toolbar)
+        self.contentView.addSubview(self.collectionView)
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
         self.contentView.addSubview(self.rangeSlider)
         self.rangeSlider.addSubview(self.fromToLabel)
         self.contentView.addSubview(self.showButton)
-        self.navigationItem.rightBarButtonItem = self.resetButton
     }
 
     // MARK: - Constraints
 
     private func makeConstraints() {
-        self.collectionView.snp.makeConstraints { (make) in
-            make.top.left.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(self.collectionViewHeight)
+        self.toolbar.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.yearPickerView.snp.top)
+        }
+        self.yearPickerView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(250)
         }
         self.contentView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.collectionView.snp.bottom)
-            make.left.right.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        self.collectionView.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(self.collectionViewHeight)
         }
         self.countryView.snp.makeConstraints { (make) in
-            make.top.left.right.equalToSuperview()
+            make.top.equalTo(self.collectionView.snp.bottom)
+            make.left.right.equalToSuperview()
         }
         self.yearView.snp.makeConstraints { (make) in
             make.top.equalTo(self.countryView.snp.bottom).offset(self.subviewsInsets.top)
@@ -214,6 +263,7 @@ class MWFilterViewController: UIViewController {
 
     @objc private func yearViewTapped(_ sender: UITapGestureRecognizer) {
         self.yearView.animateTap()
+        self.showHidePickerView()
     }
 
     @objc private func showButtonTapped(_ button: UIButton) {
@@ -229,6 +279,10 @@ class MWFilterViewController: UIViewController {
         self.collectionView.deselectAllItems(animated: true)
     }
     
+    @objc private func yearSelected(_ sender: UIBarButtonItem) {
+        self.showHidePickerView()
+    }
+
     private func getFromToLabelText() -> String {
         let minValue: Int = Int(self.rangeSlider.selectedMinValue)
         let maxValue: Int = Int(self.rangeSlider.selectedMaxValue)
@@ -236,6 +290,13 @@ class MWFilterViewController: UIViewController {
         let to: String = "to".localized
 
         return "\(from) \(minValue) \(to) \(maxValue)"
+    }
+
+    private func showHidePickerView() {
+        guard let tabBarController = self.tabBarController else { return }
+        tabBarController.tabBar.isHidden = !tabBarController.tabBar.isHidden
+        self.yearPickerView.isHidden = !self.yearPickerView.isHidden
+        self.toolbar.isHidden = !self.toolbar.isHidden
     }
 }
 
@@ -291,5 +352,21 @@ extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
 extension MWFilterViewController: RangeSeekSliderDelegate {
     func rangeSeekSlider(_ slider: RangeSeekSlider, didChange minValue: CGFloat, maxValue: CGFloat) {
         self.fromToLabel.text = self.getFromToLabelText()
+    }
+}
+
+extension MWFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        self.years.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView,
+                    titleForRow row: Int,
+                    forComponent component: Int) -> String? {
+        String(self.years[row])
     }
 }
