@@ -16,6 +16,16 @@ class MWCategoryView: UIView {
     private let imageSize = CGSize(width: 22, height: 22)
     private let distanceBetweenLabels: Int = 38
 
+    var descriptionText: String? {
+        get {
+            return self.descriptionLabel.text
+        }
+        set {
+            self.descriptionLabel.text = newValue
+        }
+
+    }
+
     // MARK: - GUI variables
 
     private lazy var arrowImageView: UIImageView = {
@@ -98,10 +108,6 @@ class MWCategoryView: UIView {
 
     func set(titleText: String) {
         self.titleLabel.text = titleText
-    }
-
-    func set(descriptionText: String) {
-        self.descriptionLabel.text = descriptionText
     }
 
     // MARK: - Tap animation action

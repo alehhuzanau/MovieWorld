@@ -281,13 +281,16 @@ class MWFilterViewController: UIViewController {
     }
 
     @objc private func resetButtonTapped(_ button: UIBarButtonItem) {
+        self.yearView.descriptionText = nil
         self.collectionView.deselectAllItems(animated: true)
+        self.resetButton.tintColor = .lightGray
     }
     
     @objc private func yearSelected(_ sender: UIBarButtonItem) {
         self.showHidePickerView()
         let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
-        self.yearView.set(descriptionText: String(self.years[selectedRow]))
+        self.yearView.descriptionText = String(self.years[selectedRow])
+        self.resetButton.tintColor = UIColor(named: Constants.ColorName.accentColor)
     }
 
     private func showHidePickerView() {
@@ -317,6 +320,7 @@ extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.resetButton.tintColor = UIColor(named: Constants.ColorName.accentColor)
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
