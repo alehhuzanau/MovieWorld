@@ -34,6 +34,17 @@ class MWFilterViewController: UIViewController {
     var numberOfRows: Int = 2
     var cellPadding: CGFloat = 8
 
+    private var isFilterEnabled: Bool {
+        get {
+            self.showButton.isEnabled
+        }
+        set {
+            self.showButton.isEnabled = newValue
+            self.showButton.alpha = newValue ? 1 : 0.5
+            self.resetButton.tintColor = newValue ? .accent : .lightGray
+        }
+    }
+
     // MARK: - GUI variables
 
     private lazy var collectionView: UICollectionView = {
@@ -281,16 +292,17 @@ class MWFilterViewController: UIViewController {
     }
 
     @objc private func resetButtonTapped(_ button: UIBarButtonItem) {
+        self.countryView.descriptionText = nil
         self.yearView.descriptionText = nil
         self.collectionView.deselectAllItems(animated: true)
-        self.resetButton.tintColor = .lightGray
+        self.isFilterEnabled = false
     }
     
     @objc private func yearSelected(_ sender: UIBarButtonItem) {
         self.showHidePickerView()
         let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
         self.yearView.descriptionText = String(self.years[selectedRow])
-        self.resetButton.tintColor = .accent
+        self.isFilterEnabled = true
     }
 
     private func showHidePickerView() {
@@ -320,10 +332,14 @@ extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.resetButton.tintColor = .accent
+        self.isFilterEnabled = true
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if self.yearView.descriptionText == nil, self.countryView.descriptionText == nil,
+            let indexPaths = self.collectionView.indexPathsForSelectedItems, indexPaths.count == 0 {
+            self.isFilterEnabled = false
+        }
     }
 }
 
@@ -350,6 +366,8 @@ extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
         return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
     }
 }
+
+// MARK: - pickerView methods
 
 extension MWFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
