@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RangeSeekSlider
 
 class MWFilterViewController: UIViewController {
 
@@ -15,6 +14,7 @@ class MWFilterViewController: UIViewController {
 
     private let collectionViewInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
     private let subviewsInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    private let yearPickerViewHeight: Int = 250
     private let buttonHeight: Int = 44
 
     private lazy var genres: [MWGenre] = {
@@ -125,34 +125,11 @@ class MWFilterViewController: UIViewController {
         return button
     }()
 
-    private lazy var rangeSlider: RangeSeekSlider = {
-        let slider = RangeSeekSlider()
+    private lazy var rangeSlider: MWYearRangeSlider = {
+        let slider = MWYearRangeSlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.tintColor = .lightGray
-        slider.colorBetweenHandles = UIColor(named: Constants.ColorName.accentColor)
-        slider.handleColor = .white
-        slider.handleBorderColor = .lightGray
-        slider.handleBorderWidth = 0.2
-        slider.handleDiameter = 28
-        slider.selectedHandleDiameterMultiplier = 1.0
-        slider.minDistance = 1
-        slider.minValue = 0.5
-        slider.maxValue = 10.5
-        slider.selectedMinValue = 5
-        slider.lineHeight = 2
-        slider.hideLabels = true
-        slider.delegate = self
 
         return slider
-    }()
-
-    private lazy var fromToLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = self.getFromToLabelText()
-        label.alpha = 0.5
-
-        return label
     }()
 
     private lazy var toolbar: UIToolbar = {
@@ -228,7 +205,6 @@ class MWFilterViewController: UIViewController {
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
         self.contentView.addSubview(self.rangeSlider)
-        self.rangeSlider.addSubview(self.fromToLabel)
         self.contentView.addSubview(self.showButton)
         self.navigationController?.view.addSubview(self.navigationOverlayView)
         self.navigationController?.view.addSubview(self.pickerContainerView)
@@ -252,7 +228,7 @@ class MWFilterViewController: UIViewController {
         }
         self.yearPickerView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(self.yearPickerViewHeight)
         }
         self.toolbar.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
@@ -276,11 +252,6 @@ class MWFilterViewController: UIViewController {
         self.rangeSlider.snp.makeConstraints { (make) in
             make.top.equalTo(self.yearView.snp.bottom).offset(self.subviewsInsets.top)
             make.left.right.equalToSuperview()
-            make.height.equalTo(100)
-        }
-        self.fromToLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().inset(6)
-            make.right.equalToSuperview().inset(16)
         }
         self.showButton.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
@@ -379,12 +350,6 @@ extension MWFilterViewController: MWLeftAlignedDelegateViewFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.sizeForCollectionViewCell(labelText: self.genres[indexPath.item].name)
-    }
-}
-
-extension MWFilterViewController: RangeSeekSliderDelegate {
-    func rangeSeekSlider(_ slider: RangeSeekSlider, didChange minValue: CGFloat, maxValue: CGFloat) {
-        self.fromToLabel.text = self.getFromToLabelText()
     }
 }
 
