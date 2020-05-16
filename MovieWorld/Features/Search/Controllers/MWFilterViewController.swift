@@ -140,7 +140,7 @@ class MWFilterViewController: UIViewController {
                     width: self.view.bounds.width,
                     height: 44)))
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        toolbar.tintColor = .accent
         toolbar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -290,7 +290,7 @@ class MWFilterViewController: UIViewController {
         self.showHidePickerView()
         let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
         self.yearView.descriptionText = String(self.years[selectedRow])
-        self.resetButton.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        self.resetButton.tintColor = .accent
     }
 
     private func showHidePickerView() {
@@ -320,7 +320,7 @@ extension MWFilterViewController: UICollectionViewDelegate, UICollectionViewData
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.resetButton.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        self.resetButton.tintColor = .accent
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

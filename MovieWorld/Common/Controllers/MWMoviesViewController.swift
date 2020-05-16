@@ -115,7 +115,7 @@ class MWMoviesViewController: UIViewController {
 
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        refreshControl.tintColor = .accent
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
 
         return refreshControl
@@ -129,7 +129,7 @@ class MWMoviesViewController: UIViewController {
         let indicator = UIActivityIndicatorView(style: style)
         indicator.frame.size.height = indicator.frame.height + self.spinnerInsets.top
             + self.spinnerInsets.bottom
-        indicator.color = UIColor(named: Constants.ColorName.accentColor)
+        indicator.color = .accent
 
         return indicator
     }()

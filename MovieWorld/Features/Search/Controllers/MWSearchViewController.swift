@@ -46,7 +46,7 @@ class MWSearchViewController: UITableViewController {
 
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        searchController.searchBar.tintColor = .accent
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true

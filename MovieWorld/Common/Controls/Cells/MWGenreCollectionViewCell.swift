@@ -31,7 +31,7 @@ class MWGenreCollectionViewCell: UICollectionViewCell {
 
     private lazy var genreView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: Constants.ColorName.accentColor)
+        view.backgroundColor = .accent
         view.alpha = 0.5
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 5

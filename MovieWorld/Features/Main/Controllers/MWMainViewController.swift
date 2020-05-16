@@ -57,7 +57,7 @@ class MWMainViewController: UITableViewController {
             forCellReuseIdentifier: MWMovieSectionTableViewCell.reuseIdentifier)
 
         self.tableView.refreshControl = UIRefreshControl()
-        self.tableView.refreshControl?.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        self.tableView.refreshControl?.tintColor = .accent
         self.tableView.refreshControl?.addTarget(
             self, action: #selector(self.refresh), for: .valueChanged)
     }

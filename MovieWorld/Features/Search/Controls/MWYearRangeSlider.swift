@@ -41,7 +41,7 @@ class MWYearRangeSlider: RangeSeekSlider {
 
     override func setupStyle() {
         self.tintColor = .lightGray
-        self.colorBetweenHandles = UIColor(named: Constants.ColorName.accentColor)
+        self.colorBetweenHandles = .accent
         self.handleColor = .white
         self.handleBorderColor = .lightGray
         self.handleBorderWidth = 0.2

@@ -58,7 +58,7 @@ class MWInitController: UIViewController {
         } else {
             indicator.style = .whiteLarge
         }
-        indicator.color = UIColor(named: Constants.ColorName.accentColor)
+        indicator.color = .accent
 
         return indicator
     }()

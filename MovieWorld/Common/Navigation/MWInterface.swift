@@ -32,7 +32,7 @@ class MWInterface {
     private func setUpNavigationBarStyle() {
         let standardNavBar = UINavigationBar.appearance()
         standardNavBar.backgroundColor = .white
-        standardNavBar.tintColor = UIColor(named: Constants.ColorName.accentColor)
+        standardNavBar.tintColor = .accent
         standardNavBar.prefersLargeTitles = true
 
         if #available(iOS 13.0, *) {
