@@ -156,7 +156,12 @@ class MWFilterViewController: UIViewController {
     }()
 
     private lazy var toolbar: UIToolbar = {
-        let toolbar = UIToolbar()
+        let toolbar = UIToolbar(
+            frame: CGRect(
+                origin: .zero,
+                size: CGSize(
+                    width: self.view.bounds.width,
+                    height: 44)))
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         toolbar.tintColor = UIColor(named: Constants.ColorName.accentColor)
         toolbar.sizeToFit()
@@ -182,6 +187,23 @@ class MWFilterViewController: UIViewController {
         return picker
     }()
 
+    private lazy var pickerContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+
+        return view
+    }()
+
+    private lazy var navigationOverlayView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.alpha = 0.5
+
+        return view
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -196,34 +218,45 @@ class MWFilterViewController: UIViewController {
         self.view.backgroundColor = .white
         self.addSubviews()
         self.makeConstraints()
-
-        self.yearPickerView.isHidden = true
-        self.toolbar.isHidden = true
+        self.hideSubviews()
     }
 
     private func addSubviews() {
         self.navigationItem.rightBarButtonItem = self.resetButton
         self.view.addSubview(self.contentView)
-        self.view.addSubview(self.yearPickerView)
-        self.view.addSubview(self.toolbar)
         self.contentView.addSubview(self.collectionView)
         self.contentView.addSubview(self.countryView)
         self.contentView.addSubview(self.yearView)
         self.contentView.addSubview(self.rangeSlider)
         self.rangeSlider.addSubview(self.fromToLabel)
         self.contentView.addSubview(self.showButton)
+        self.navigationController?.view.addSubview(self.navigationOverlayView)
+        self.navigationController?.view.addSubview(self.pickerContainerView)
+        self.pickerContainerView.addSubview(self.yearPickerView)
+        self.pickerContainerView.addSubview(self.toolbar)
+    }
+
+    private func hideSubviews() {
+        self.navigationOverlayView.isHidden = true
+        self.pickerContainerView.isHidden = true
     }
 
     // MARK: - Constraints
 
     private func makeConstraints() {
-        self.toolbar.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.yearPickerView.snp.top)
+        self.navigationOverlayView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        self.pickerContainerView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
         }
         self.yearPickerView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(250)
+        }
+        self.toolbar.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(self.yearPickerView.snp.top)
         }
         self.contentView.snp.makeConstraints { (make) in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
@@ -295,8 +328,8 @@ class MWFilterViewController: UIViewController {
     private func showHidePickerView() {
         guard let tabBarController = self.tabBarController else { return }
         tabBarController.tabBar.isHidden = !tabBarController.tabBar.isHidden
-        self.yearPickerView.isHidden = !self.yearPickerView.isHidden
-        self.toolbar.isHidden = !self.toolbar.isHidden
+        self.navigationOverlayView.isHidden = !self.navigationOverlayView.isHidden
+        self.pickerContainerView.isHidden = !self.pickerContainerView.isHidden
     }
 }
 
