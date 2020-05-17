@@ -13,6 +13,10 @@ class MWSearchViewController: UITableViewController {
     // MARK: - Variables
 
     private let edgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    private let spinnerInsets = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+    private let requestRow: Int = 5
+
+    private let dispatchGroup = DispatchGroup()
 
     private let searchSection: MWSection = MWSection(
         name: "Search",
@@ -28,6 +32,9 @@ class MWSearchViewController: UITableViewController {
                      "vote_average.gte": "",
                      "vote_average.lte": ""])
 
+    private var pageParameters: [String: String] {
+        ["page": String(self.currentPage)]
+    }
 
     private var movies: [MWMovie] = [] {
         didSet {
@@ -38,6 +45,11 @@ class MWSearchViewController: UITableViewController {
     private var isSearchBarEmpty: Bool {
         return self.navigationItem.searchController?.searchBar.text?.isEmpty ?? true
     }
+
+    private var isLoading: Bool = false
+
+    private var totalPages: Int?
+    private var currentPage: Int = 1
 
     // MARK: - GUI variables
 
@@ -58,6 +70,7 @@ class MWSearchViewController: UITableViewController {
         searchController.searchBar.tintColor = .accent
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
         searchController.searchBar.textField.clearButtonMode = .never
 
@@ -70,6 +83,19 @@ class MWSearchViewController: UITableViewController {
             style: .plain,
             target: self,
             action: #selector(self.filterButtonTapped))
+    }()
+
+    private lazy var bottomSpinner: UIActivityIndicatorView = {
+        var style: UIActivityIndicatorView.Style = .whiteLarge
+        if #available(iOS 13.0, *) {
+            style = .large
+        }
+        let indicator = UIActivityIndicatorView(style: style)
+        indicator.frame.size.height = indicator.frame.height + self.spinnerInsets.top
+            + self.spinnerInsets.bottom
+        indicator.color = .accent
+
+        return indicator
     }()
 
     // MARK: - Life cycle
@@ -121,17 +147,31 @@ class MWSearchViewController: UITableViewController {
     // MARK: - Request methods
 
     private func request(section: MWSection) {
+        var parameters = self.pageParameters
+        parameters.merge(other: section.parameters)
+        self.isLoading = true
+        self.tableView.tableFooterView = self.bottomSpinner
+        self.bottomSpinner.startAnimating()
+        self.dispatchGroup.enter()
         MWNet.sh.request(
             urlPath: section.url,
-            parameters: section.parameters,
+            parameters: parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
+                self?.totalPages = results.totalPages
                 let movies = results.movies
-                self?.movies = movies
+                self?.movies.append(contentsOf: movies)
                 self?.loadImages(movies: movies)
+                self?.loadDetails(movies: movies)
+                self?.dispatchGroup.leave()
             },
-            errorHandler: { error in
+            errorHandler: { [weak self] error in
                 print(error.getDescription())
+                self?.dispatchGroup.leave()
         })
+        self.dispatchGroup.notify(queue: .main) {
+            self.isLoading = false
+            self.tableView.tableFooterView = nil
+        }
     }
 
     private func loadImages(movies: [MWMovie]) {
@@ -143,6 +183,50 @@ class MWSearchViewController: UITableViewController {
                     movie.imageData = data
                     self?.tableView.reloadData()
             })
+        }
+    }
+
+    private func loadDetails(movies: [MWMovie]) {
+        for movie in movies {
+            let url = "\(MWURLPaths.movieDetails)\(movie.id)"
+            MWNet.sh.request(
+                urlPath: url,
+                successHandler: { (detail: MWMovieDetail) in
+                    movie.countries = detail.countries
+            },
+                errorHandler: { error in
+                    print(error.getDescription())
+            })
+        }
+    }
+
+    // MARK: - filterButton tap action
+
+    @objc func filterButtonTapped(_ button: UIBarButtonItem) {
+        let vc = MWFilterViewController()
+        vc.filterSelected = { [weak self] (filter: MWFilter) in
+            guard let self = self else { return }
+            self.setFilterSectionParams(filter: filter)
+            self.requestLabel.isHidden = true
+            self.request(section: self.filterSection)
+        }
+        MWI.sh.push(vc: vc)
+        self.searchController.isActive = false
+    }
+
+    private func setFilterSectionParams(filter: MWFilter) {
+        if let genres = filter.genres {
+            self.filterSection.parameters["with_genres"] =
+                genres
+                    .map { String($0.id) }
+                    .joined(separator: ", ")
+        }
+        if let year = filter.year {
+            self.filterSection.parameters["primary_release_year"] = String(year)
+        }
+        if let minVote = filter.minVote, let maxVote = filter.maxVote {
+            self.filterSection.parameters["vote_average.gte"] = String(minVote)
+            self.filterSection.parameters["vote_average.lte"] = String(maxVote)
         }
     }
 
@@ -162,46 +246,30 @@ class MWSearchViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - filterButton tap action
-
-    @objc func filterButtonTapped(_ button: UIBarButtonItem) {
-        let vc = MWFilterViewController()
-        vc.filterSelected = { [weak self] (filter: MWFilter) in
-            guard let self = self else { return }
-            if let genres = filter.genres {
-                self.filterSection.parameters["with_genres"] =
-                    genres
-                        .map { String($0.id) }
-                        .joined(separator: ", ")
-            }
-            if let year = filter.year {
-                self.filterSection.parameters["primary_release_year"] = String(year)
-            }
-            if let minVote = filter.minVote, let maxVote = filter.maxVote {
-                self.filterSection.parameters["vote_average.gte"] = String(minVote)
-                self.filterSection.parameters["vote_average.lte"] = String(maxVote)
-            }
-            self.requestLabel.isHidden = true
-            self.request(section: self.filterSection)
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
+        if let totalPages = self.totalPages, self.currentPage >= totalPages { return }
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - self.requestRow
+        if indexPath.row == lastRowIndex, !self.isLoading {
+            self.currentPage += 1
+            let section = self.isSearchBarEmpty ? self.filterSection : self.searchSection
+            self.request(section: section)
         }
-        MWI.sh.push(vc: vc)
     }
 }
 
 extension MWSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        if !self.isSearchBarEmpty {
-            self.navigationItem.largeTitleDisplayMode = .never
-            self.navigationController?.navigationBar.sizeToFit()
+        self.currentPage = 1
+        self.movies.removeAll()
+        if !self.isSearchBarEmpty, !self.isLoading {
             self.requestLabel.isHidden = true
             let searchBar = self.navigationItem.searchController?.searchBar
             self.searchSection.parameters["query"] = searchBar?.text
             self.request(section: self.searchSection)
-        } else {
-            self.navigationItem.largeTitleDisplayMode = .always
-            self.navigationController?.navigationBar.sizeToFit()
+        } else if self.isSearchBarEmpty {
             self.requestLabel.isHidden = false
-            self.movies = []
         }
     }
 }

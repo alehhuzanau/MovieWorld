@@ -330,7 +330,7 @@ class MWFilterViewController: UIViewController {
         self.collectionView.deselectAllItems(animated: true)
         self.isFilterEnabled = false
     }
-    
+
     @objc private func yearSelected(_ sender: UIBarButtonItem) {
         self.showHidePickerView()
         let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
@@ -410,7 +410,7 @@ extension MWFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         self.years.count
     }
-    
+
     func pickerView(_ pickerView: UIPickerView,
                     titleForRow row: Int,
                     forComponent component: Int) -> String? {
