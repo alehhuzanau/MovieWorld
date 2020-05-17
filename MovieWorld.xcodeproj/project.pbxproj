@@ -43,6 +43,8 @@
 		8400039F246F4019007BD675 /* UICollectionView+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8400039E246F4019007BD675 /* UICollectionView+Ex.swift */; };
 		840003A224704F75007BD675 /* MWYearRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840003A124704F75007BD675 /* MWYearRangeSlider.swift */; };
 		842BF7AF2470867C0075C4D5 /* MWCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842BF7AE2470867C0075C4D5 /* MWCountry.swift */; };
+		842BF7B4247092AD0075C4D5 /* MWCountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842BF7B3247092AD0075C4D5 /* MWCountriesViewController.swift */; };
+		842BF7B6247099AE0075C4D5 /* MWCountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842BF7B5247099AE0075C4D5 /* MWCountryTableViewCell.swift */; };
 		84312D27244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84312D26244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift */; };
 		8499DD642470695C006DAFD4 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499DD632470695C006DAFD4 /* UIColor+Ex.swift */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
@@ -104,6 +106,8 @@
 		8400039E246F4019007BD675 /* UICollectionView+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ex.swift"; sourceTree = "<group>"; };
 		840003A124704F75007BD675 /* MWYearRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWYearRangeSlider.swift; sourceTree = "<group>"; };
 		842BF7AE2470867C0075C4D5 /* MWCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCountry.swift; sourceTree = "<group>"; };
+		842BF7B3247092AD0075C4D5 /* MWCountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCountriesViewController.swift; sourceTree = "<group>"; };
+		842BF7B5247099AE0075C4D5 /* MWCountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWCountryTableViewCell.swift; sourceTree = "<group>"; };
 		84312D26244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLeftAlignedViewFlowLayout.swift; sourceTree = "<group>"; };
 		8499DD632470695C006DAFD4 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				840003A124704F75007BD675 /* MWYearRangeSlider.swift */,
+				842BF7B5247099AE0075C4D5 /* MWCountryTableViewCell.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 			children = (
 				CF31025124056ACA00AC0E1A /* MWSearchViewController.swift */,
 				24E19D6B246EBAA700B3E150 /* MWFilterViewController.swift */,
+				842BF7B3247092AD0075C4D5 /* MWCountriesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -609,6 +615,7 @@
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
 				24F276AC24224B7900A1FBB5 /* MWImages.swift in Sources */,
 				24250ED8243CC926007D02AB /* Section+CoreDataProperties.swift in Sources */,
+				842BF7B6247099AE0075C4D5 /* MWCountryTableViewCell.swift in Sources */,
 				2452F06524210E9100A950EC /* MWCoreDataManager.swift in Sources */,
 				CF31025624057E2E00AC0E1A /* MWMovieSectionTableViewCell.swift in Sources */,
 				CF31024B24056A4C00AC0E1A /* MWMainTabBarController.swift in Sources */,
@@ -625,6 +632,7 @@
 				24261BC223F6A3E0009DF49A /* AppDelegate.swift in Sources */,
 				24E94FC524434155001F0504 /* MWMoviesViewController.swift in Sources */,
 				246F744D2455BF7400449961 /* Parameter+CoreDataClass.swift in Sources */,
+				842BF7B4247092AD0075C4D5 /* MWCountriesViewController.swift in Sources */,
 				842BF7AF2470867C0075C4D5 /* MWCountry.swift in Sources */,
 				24146D9E23F6BB91004CFA45 /* Constants.swift in Sources */,
 				2452F060242102DD00A950EC /* Genre+CoreDataClass.swift in Sources */,

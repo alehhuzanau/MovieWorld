@@ -16,6 +16,15 @@ class MWCategoryView: UIView {
     private let imageSize = CGSize(width: 22, height: 22)
     private let distanceBetweenLabels: Int = 38
 
+    var titleText: String? {
+        get {
+            return self.titleLabel.text
+        }
+        set {
+            self.titleLabel.text = newValue
+        }
+    }
+
     var descriptionText: String? {
         get {
             return self.descriptionLabel.text
@@ -23,12 +32,29 @@ class MWCategoryView: UIView {
         set {
             self.descriptionLabel.text = newValue
         }
+    }
 
+    var image: UIImage? {
+        get {
+            return self.imageView.image
+        }
+        set {
+            self.imageView.image = newValue
+        }
+    }
+
+    var isImageViewHidden: Bool {
+        get {
+            return self.imageView.isHidden
+        }
+        set {
+            self.imageView.isHidden = newValue
+        }
     }
 
     // MARK: - GUI variables
 
-    private lazy var arrowImageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let image = UIImage(named: Constants.ImageName.arrowIcon)
         let imageView = UIImageView(image: image)
         imageView.clipsToBounds = true
@@ -84,7 +110,7 @@ class MWCategoryView: UIView {
     private func addSubviews() {
         self.addSubview(self.titleLabel)
         self.addSubview(self.descriptionLabel)
-        self.addSubview(self.arrowImageView)
+        self.addSubview(self.imageView)
     }
 
     // MARK: - Constraints
@@ -96,18 +122,12 @@ class MWCategoryView: UIView {
         self.descriptionLabel.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
             make.left.equalTo(self.titleLabel.snp.right).offset(self.distanceBetweenLabels)
-            make.right.equalTo(self.arrowImageView.snp.left)
+            make.right.equalTo(self.imageView.snp.left)
         }
-        self.arrowImageView.snp.updateConstraints { (make) in
+        self.imageView.snp.updateConstraints { (make) in
             make.top.right.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
             make.size.equalTo(self.imageSize)
         }
-    }
-
-    // MARK: - Set method
-
-    func set(titleText: String) {
-        self.titleLabel.text = titleText
     }
 
     // MARK: - Tap animation action

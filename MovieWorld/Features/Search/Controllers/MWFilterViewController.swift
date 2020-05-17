@@ -94,7 +94,7 @@ class MWFilterViewController: UIViewController {
     private lazy var countryView: MWCategoryView = {
         let view = MWCategoryView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.set(titleText: "Country".localized)
+        view.titleText = "Country".localized
         let gesture = UITapGestureRecognizer(
             target: self, action: #selector(self.countryViewTapped))
         view.addGestureRecognizer(gesture)
@@ -105,7 +105,7 @@ class MWFilterViewController: UIViewController {
     private lazy var yearView: MWCategoryView = {
         let view = MWCategoryView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.set(titleText: "Year".localized)
+        view.titleText = "Year".localized
         let gesture = UITapGestureRecognizer(
             target: self, action: #selector(self.yearViewTapped))
         view.addGestureRecognizer(gesture)
@@ -275,6 +275,15 @@ class MWFilterViewController: UIViewController {
 
     @objc private func countryViewTapped(_ sender: UITapGestureRecognizer) {
         self.countryView.animateTap()
+        let vc = MWCountriesViewController()
+        vc.countriesSelected = { [weak self] (countries: [MWCountry]) in
+            self?.countryView.descriptionText =
+                countries
+                    .map { String($0.name) }
+                    .joined(separator: ", ")
+            self?.isFilterEnabled = true
+        }
+        MWI.sh.push(vc: vc)
     }
 
     @objc private func yearViewTapped(_ sender: UITapGestureRecognizer) {

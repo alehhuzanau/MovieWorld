@@ -55,12 +55,13 @@ class MWCategoryViewController: UITableViewController {
             withIdentifier: MWCategoryTableViewCell.reuseIdentifier,
             for: indexPath)
         let titleText = self.baseSections[indexPath.row].getSection().name
-        (cell as? MWCategoryTableViewCell)?.set(titleText: titleText)
+        (cell as? MWCategoryTableViewCell)?.categoryView.titleText = titleText
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        (tableView.cellForRow(at: indexPath) as? MWCategoryTableViewCell)?.categoryView.animateTap()
         let vc = MWMoviesViewController()
         vc.section = self.baseSections[indexPath.row].getSection()
         MWI.sh.push(vc: vc)
