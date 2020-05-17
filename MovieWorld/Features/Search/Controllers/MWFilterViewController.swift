@@ -289,10 +289,9 @@ class MWFilterViewController: UIViewController {
         self.countryView.animateTap()
         let vc = MWCountriesViewController()
         vc.countriesSelected = { [weak self] (countries: [MWCountry]) in
-            self?.countryView.descriptionText =
-                countries
-                    .map { String($0.name) }
-                    .joined(separator: ", ")
+            self?.countryView.descriptionText = countries
+                .map { $0.name }
+                .joined(separator: ", ")
             self?.isFilterEnabled = true
         }
         MWI.sh.push(vc: vc)

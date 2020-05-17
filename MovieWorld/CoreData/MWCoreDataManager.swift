@@ -105,6 +105,7 @@ extension MWCoreDataManager {
         newMovie.title = movie.title
         newMovie.releaseDate = movie.releaseDate
         newMovie.posterPath = movie.posterPath
+        newMovie.vote = movie.vote
         if let genres = MWCoreDataManager.sh.fetchGenres() {
             genres
                 .filter { movie.genreIds.contains(Int($0.id)) }

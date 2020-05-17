@@ -24,6 +24,7 @@ public class Movie: NSManagedObject {
             posterPath: self.posterPath,
             genreIds: self.getGenres().map { Int($0.id) },
             releaseDate: self.releaseDate ?? "",
+            vote: self.vote,
             imageData: self.image)
     }
 }

@@ -16,6 +16,7 @@ struct MWURLPaths {
     static let topRatedMovies: String = "movie/top_rated"
     static let upcomingMovies: String = "movie/upcoming"
 
+    static let movieDetails: String = "movie/"
     static let discoverMovie: String = "discover/movie"
     static let searchMovies: String = "search/movie"
 }

@@ -32,20 +32,19 @@ class MWNetwork {
             .responseJSON { response in
                 switch response.result {
                 case .failure(let error):
-                    var mwError: MWNetError = .networkError(message: error.localizedDescription)
+                    let mwError: MWNetError = .networkError(message: error.localizedDescription)
                     switch error {
                     case .sessionTaskFailed(let error):
                         if (error as? URLError)?.code == URLError.Code.notConnectedToInternet {
-                            mwError = .connectionIsOffline
+                            errorHandler(.connectionIsOffline)
+                        } else {
                             errorHandler(mwError)
-                            return
                         }
                     case .invalidURL:
                         errorHandler(MWNetError.incorrectUrl(url: url))
                     default:
                         errorHandler(mwError)
                     }
-                    return
                 case .success:
                     guard let statusCode = response.response?.statusCode,
                         let data = response.data else {

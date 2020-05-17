@@ -15,6 +15,7 @@ class MWMovie: Decodable {
         case posterPath = "poster_path"
         case genreIds = "genre_ids"
         case releaseDate = "release_date"
+        case vote = "vote_average"
         case imageData = "image"
     }
 
@@ -23,6 +24,8 @@ class MWMovie: Decodable {
     var posterPath: String?
     var genreIds: [Int]
     var releaseDate: String
+    var vote: Double
+
     var imageData: Data? {
         didSet {
             self.setImage()
@@ -48,15 +51,17 @@ class MWMovie: Decodable {
         self.posterPath = try container.decode(String?.self, forKey: .posterPath) ?? ""
         self.genreIds = try container.decode([Int].self, forKey: .genreIds)
         self.releaseDate = try container.decode(String.self, forKey: .releaseDate)
+        self.vote = try container.decode(Double.self, forKey: .vote)
     }
 
-    init(id: Int, title: String, posterPath: String? = nil, genreIds: [Int], releaseDate: String, imageData: Data? = nil) {
+    init(id: Int, title: String, posterPath: String? = nil, genreIds: [Int], releaseDate: String, vote: Double, imageData: Data? = nil) {
         self.id = id
         self.title = title
         self.posterPath = posterPath
         self.genreIds = genreIds
         self.releaseDate = releaseDate
         self.imageData = imageData
+        self.vote = vote
         self.setImage()
     }
 

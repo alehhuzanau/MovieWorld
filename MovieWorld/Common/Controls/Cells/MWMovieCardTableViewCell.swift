@@ -15,9 +15,9 @@ class MWMovieCardTableViewCell: UITableViewCell {
 
     static let reuseIdentifier: String = "MWMovieCardTableViewCell"
 
-    private let movieViewEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 3, right: 0)
     private let subviewsEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     private let imageViewSize = CGSize(width: 70, height: 100)
+    private let cellPadding: Int = 3
 
     // MARK: - GUI variables
 
@@ -71,6 +71,15 @@ class MWMovieCardTableViewCell: UITableViewCell {
         return label
     }()
 
+    private lazy var voteLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(13)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     // MARK: - Init methods
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -90,13 +99,14 @@ class MWMovieCardTableViewCell: UITableViewCell {
         self.movieView.addSubview(self.titleLabel)
         self.movieView.addSubview(self.releaseDateLabel)
         self.movieView.addSubview(self.genresLabel)
+        self.movieView.addSubview(self.voteLabel)
     }
 
     // MARK: - Constraints
 
     override func updateConstraints() {
         self.movieView.snp.updateConstraints { (make) in
-            make.edges.equalToSuperview().inset(self.movieViewEdgeInsets)
+            make.edges.equalToSuperview().inset(self.cellPadding)
         }
         self.movieImageView.snp.updateConstraints { (make) in
             make.top.left.equalToSuperview().inset(self.subviewsEdgeInsets)
@@ -116,7 +126,13 @@ class MWMovieCardTableViewCell: UITableViewCell {
             make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.top.equalTo(self.releaseDateLabel.snp.bottom).offset(self.subviewsEdgeInsets.top)
             make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
-            make.bottom.lessThanOrEqualToSuperview().inset(self.subviewsEdgeInsets)
+        }
+        self.voteLabel.snp.updateConstraints { (make) in
+            make.top.greaterThanOrEqualTo(self.genresLabel.snp.bottom)
+                .offset(self.subviewsEdgeInsets.top)
+            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
+            make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
+            make.bottom.equalToSuperview().inset(self.subviewsEdgeInsets)
         }
 
         super.updateConstraints()
@@ -130,6 +146,7 @@ class MWMovieCardTableViewCell: UITableViewCell {
         self.genresLabel.text = movie.genres
             .map({ $0.name })
             .joined(separator: ", ")
+        self.voteLabel.text = "\("User score".localized): \(movie.vote)"
         self.setImage(image: movie.image)
 
         self.setNeedsUpdateConstraints()
