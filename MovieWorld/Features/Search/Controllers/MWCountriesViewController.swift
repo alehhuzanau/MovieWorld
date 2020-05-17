@@ -129,7 +129,6 @@ class MWCountriesViewController: UIViewController {
             withDuration: 0.5,
             animations: {
                 self.selectButton.alpha = 1
-
         })
         if let indexPaths = self.tableView.indexPathsForSelectedRows {
             var selectedCountries: [MWCountry] = []

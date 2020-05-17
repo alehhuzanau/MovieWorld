@@ -21,6 +21,16 @@ class MWFilterViewController: UIViewController {
         return (MWSystem.sh.genres ?? [])
     }()
 
+    private var selectedYear: Int? {
+        willSet {
+            if let year = newValue {
+                self.yearView.descriptionText = String(year)
+            } else {
+                self.yearView.descriptionText = nil
+            }
+        }
+    }
+
     private var years: [Int] = {
         var years: [Int] = []
         let currentYear = Calendar.current.component(.year, from: Date())
@@ -30,9 +40,6 @@ class MWFilterViewController: UIViewController {
 
         return years
     }()
-
-    var numberOfRows: Int = 2
-    var cellPadding: CGFloat = 8
 
     private var isFilterEnabled: Bool {
         get {
@@ -44,6 +51,11 @@ class MWFilterViewController: UIViewController {
             self.resetButton.tintColor = newValue ? .accent : .lightGray
         }
     }
+
+    var numberOfRows: Int = 2
+    var cellPadding: CGFloat = 8
+
+    var filterSelected: ((_ filter: MWFilter) -> Void)?
 
     // MARK: - GUI variables
 
@@ -298,11 +310,24 @@ class MWFilterViewController: UIViewController {
             animations: {
                 self.showButton.alpha = 1
         })
+        var filter = MWFilter()
+        var selectedGenres: [MWGenre] = []
+        if let indexPaths = self.collectionView.indexPathsForSelectedItems {
+            indexPaths.forEach { indexPath in
+                selectedGenres.append(self.genres[indexPath.row])
+            }
+        }
+        filter.genres = selectedGenres
+        filter.year = self.selectedYear
+        filter.minVote = Int(self.rangeSlider.selectedMinValue)
+        filter.maxVote = Int(self.rangeSlider.selectedMaxValue)
+        self.filterSelected?(filter)
+        MWI.sh.popVC()
     }
 
     @objc private func resetButtonTapped(_ button: UIBarButtonItem) {
         self.countryView.descriptionText = nil
-        self.yearView.descriptionText = nil
+        self.selectedYear = nil
         self.collectionView.deselectAllItems(animated: true)
         self.isFilterEnabled = false
     }
@@ -310,7 +335,7 @@ class MWFilterViewController: UIViewController {
     @objc private func yearSelected(_ sender: UIBarButtonItem) {
         self.showHidePickerView()
         let selectedRow = self.yearPickerView.selectedRow(inComponent: 0)
-        self.yearView.descriptionText = String(self.years[selectedRow])
+        self.selectedYear = self.years[selectedRow]
         self.isFilterEnabled = true
     }
 

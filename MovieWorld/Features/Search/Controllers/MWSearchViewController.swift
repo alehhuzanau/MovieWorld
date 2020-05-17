@@ -14,11 +14,20 @@ class MWSearchViewController: UITableViewController {
 
     private let edgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
 
-    private let section: MWSection = MWSection(
+    private let searchSection: MWSection = MWSection(
         name: "Search",
         url: MWURLPaths.searchMovies,
         parameters: ["query": "",
                      "year": ""])
+
+    private let filterSection: MWSection = MWSection(
+        name: "Filter",
+        url: MWURLPaths.discoverMovie,
+        parameters: ["with_genres": "",
+                     "primary_release_year": "",
+                     "vote_average.gte": "",
+                     "vote_average.lte": ""])
+
 
     private var movies: [MWMovie] = [] {
         didSet {
@@ -50,11 +59,7 @@ class MWSearchViewController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.definesPresentationContext = true
-        if #available(iOS 13.0, *) {
-            searchController.searchBar.searchTextField.clearButtonMode = .never
-        } else {
-            searchController.searchBar.textField.clearButtonMode = .never
-        }
+        searchController.searchBar.textField.clearButtonMode = .never
 
         return searchController
     }()
@@ -64,7 +69,7 @@ class MWSearchViewController: UITableViewController {
             image: UIImage(named: Constants.ImageName.filterIcon),
             style: .plain,
             target: self,
-            action: #selector(filterButtonTapped))
+            action: #selector(self.filterButtonTapped))
     }()
 
     // MARK: - Life cycle
@@ -115,10 +120,10 @@ class MWSearchViewController: UITableViewController {
 
     // MARK: - Request methods
 
-    private func request() {
+    private func request(section: MWSection) {
         MWNet.sh.request(
-            urlPath: self.section.url,
-            parameters: self.section.parameters,
+            urlPath: section.url,
+            parameters: section.parameters,
             successHandler: { [weak self] (results: MWMovieResults) in
                 let movies = results.movies
                 self?.movies = movies
@@ -160,7 +165,26 @@ class MWSearchViewController: UITableViewController {
     // MARK: - filterButton tap action
 
     @objc func filterButtonTapped(_ button: UIBarButtonItem) {
-        MWI.sh.push(vc: MWFilterViewController())
+        let vc = MWFilterViewController()
+        vc.filterSelected = { [weak self] (filter: MWFilter) in
+            guard let self = self else { return }
+            if let genres = filter.genres {
+                self.filterSection.parameters["with_genres"] =
+                    genres
+                        .map { String($0.id) }
+                        .joined(separator: ", ")
+            }
+            if let year = filter.year {
+                self.filterSection.parameters["primary_release_year"] = String(year)
+            }
+            if let minVote = filter.minVote, let maxVote = filter.maxVote {
+                self.filterSection.parameters["vote_average.gte"] = String(minVote)
+                self.filterSection.parameters["vote_average.lte"] = String(maxVote)
+            }
+            self.requestLabel.isHidden = true
+            self.request(section: self.filterSection)
+        }
+        MWI.sh.push(vc: vc)
     }
 }
 
@@ -171,8 +195,8 @@ extension MWSearchViewController: UISearchResultsUpdating {
             self.navigationController?.navigationBar.sizeToFit()
             self.requestLabel.isHidden = true
             let searchBar = self.navigationItem.searchController?.searchBar
-            self.section.parameters["query"] = searchBar?.text
-            self.request()
+            self.searchSection.parameters["query"] = searchBar?.text
+            self.request(section: self.searchSection)
         } else {
             self.navigationItem.largeTitleDisplayMode = .always
             self.navigationController?.navigationBar.sizeToFit()
