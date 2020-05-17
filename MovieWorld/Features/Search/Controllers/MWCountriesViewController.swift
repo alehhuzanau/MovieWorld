@@ -31,6 +31,17 @@ class MWCountriesViewController: UIViewController {
         return [popularCountries, allCountries]
     }()
 
+    private var isFilterEnabled: Bool {
+        get {
+            self.selectButton.isEnabled
+        }
+        set {
+            self.selectButton.isEnabled = newValue
+            self.selectButton.alpha = newValue ? 1 : 0.5
+            self.resetButton.tintColor = newValue ? .accent : .lightGray
+        }
+    }
+
     var countriesSelected: (([MWCountry]) -> Void)?
 
     // MARK: - GUI variables
@@ -64,6 +75,17 @@ class MWCountriesViewController: UIViewController {
         return button
     }()
 
+    private lazy var resetButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "Reset".localized,
+            style: .plain,
+            target: self,
+            action: #selector(self.resetButtonTapped))
+        button.tintColor = .lightGray
+
+        return button
+    }()
+
     // MARK: - Life cycle
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +103,7 @@ class MWCountriesViewController: UIViewController {
     }
 
     private func addSubviews() {
+        self.navigationItem.rightBarButtonItem = self.resetButton
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.selectButton)
     }
@@ -120,16 +143,22 @@ class MWCountriesViewController: UIViewController {
         }
     }
 
+    @objc private func resetButtonTapped(_ button: UIBarButtonItem) {
+        guard let indexPaths = self.tableView.indexPathsForSelectedRows else { return }
+        indexPaths.forEach { indexPath in
+            self.tableView.deselectRow(at: indexPath, animated: false)
+        }
+        self.isFilterEnabled = false
+    }
+
     // MARK: - check selected rows methods
 
     private func checkSelection() {
         guard self.tableView.indexPathsForSelectedRows != nil else {
-            self.selectButton.isEnabled = false
-            self.selectButton.alpha = 0.5
+            self.isFilterEnabled = false
             return
         }
-        self.selectButton.isEnabled = true
-        self.selectButton.alpha = 1
+        self.isFilterEnabled = true
     }
 
     private func getIndexPathOfSameCellInAnotherSection(indexPath: IndexPath) -> IndexPath? {
