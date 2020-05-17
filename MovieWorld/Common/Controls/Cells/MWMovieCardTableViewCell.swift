@@ -56,6 +56,7 @@ class MWMovieCardTableViewCell: UITableViewCell {
     private lazy var releaseDateLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(13)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -114,17 +115,17 @@ class MWMovieCardTableViewCell: UITableViewCell {
             make.size.equalTo(self.imageViewSize)
         }
         self.titleLabel.snp.updateConstraints { (make) in
-            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.top.right.equalToSuperview().inset(self.subviewsEdgeInsets)
+            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
         }
         self.releaseDateLabel.snp.updateConstraints { (make) in
-            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.top.equalTo(self.titleLabel.snp.bottom).offset(self.subviewsEdgeInsets.top)
+            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
         }
         self.genresLabel.snp.updateConstraints { (make) in
-            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.top.equalTo(self.releaseDateLabel.snp.bottom).offset(self.subviewsEdgeInsets.top)
+            make.left.equalTo(self.movieImageView.snp.right).offset(self.subviewsEdgeInsets.left)
             make.right.equalToSuperview().inset(self.subviewsEdgeInsets)
         }
         self.voteLabel.snp.updateConstraints { (make) in
@@ -142,7 +143,13 @@ class MWMovieCardTableViewCell: UITableViewCell {
 
     func set(movie: MWMovie) {
         self.titleLabel.text = movie.title
-        self.releaseDateLabel.text = movie.getReleaseDateYear()
+        var subtitleText: String = movie.getReleaseDateYear()
+        if let countries = movie.countries, countries.count > 0 {
+            countries.forEach { country in
+                subtitleText += ", \(country.name)"
+            }
+        }
+        self.releaseDateLabel.text = subtitleText
         self.genresLabel.text = movie.genres
             .map({ $0.name })
             .joined(separator: ", ")

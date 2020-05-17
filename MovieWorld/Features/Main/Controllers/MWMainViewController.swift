@@ -79,6 +79,7 @@ class MWMainViewController: UITableViewController {
                 section.movies = movies
                 MWCoreDataManager.sh.saveSection(section: section)
                 self?.loadImages(movies: movies)
+                self?.loadDetails(movies: movies)
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in
@@ -96,6 +97,20 @@ class MWMainViewController: UITableViewController {
                     MWCoreDataManager.sh.saveMovieImage(image: data, for: movie)
                     movie.imageData = data
                     self?.tableView.reloadData()
+            })
+        }
+    }
+
+    private func loadDetails(movies: [MWMovie]) {
+        for movie in movies {
+            let url = "\(MWURLPaths.movieDetails)\(movie.id)"
+            MWNet.sh.request(
+                urlPath: url,
+                successHandler: { (detail: MWMovieDetail) in
+                    movie.countries = detail.countries
+                },
+                errorHandler: { error in
+                    print(error.getDescription())
             })
         }
     }

@@ -34,6 +34,8 @@ class MWMovie: Decodable {
 
     var image: UIImage?
 
+    var countries: [MWProductionCountry]?
+
     lazy var genres: [MWGenre] = {
         var genres: [MWGenre] = []
         if let allGenres = MWSystem.sh.genres {
@@ -54,7 +56,14 @@ class MWMovie: Decodable {
         self.vote = try container.decode(Double.self, forKey: .vote)
     }
 
-    init(id: Int, title: String, posterPath: String? = nil, genreIds: [Int], releaseDate: String, vote: Double, imageData: Data? = nil) {
+    init(id: Int,
+         title: String,
+         posterPath: String? = nil,
+         genreIds: [Int],
+         releaseDate: String,
+         vote: Double,
+         imageData: Data? = nil,
+         countries: [MWProductionCountry]? = nil) {
         self.id = id
         self.title = title
         self.posterPath = posterPath
@@ -62,6 +71,7 @@ class MWMovie: Decodable {
         self.releaseDate = releaseDate
         self.imageData = imageData
         self.vote = vote
+        self.countries = countries
         self.setImage()
     }
 

@@ -226,6 +226,7 @@ class MWMoviesViewController: UIViewController {
                 self?.movies.append(contentsOf: movies)
                 self?.tableView.reloadData()
                 self?.loadImages(movies: movies)
+                self?.loadDetails(movies: movies)
                 self?.dispatchGroup.leave()
             },
             errorHandler: { [weak self] error in
@@ -241,6 +242,20 @@ class MWMoviesViewController: UIViewController {
                 completionHandler: { [weak self] data in
                     movie.imageData = data
                     self?.tableView.reloadData()
+            })
+        }
+    }
+
+    private func loadDetails(movies: [MWMovie]) {
+        for movie in movies {
+            let url = "\(MWURLPaths.movieDetails)\(movie.id)"
+            MWNet.sh.request(
+                urlPath: url,
+                successHandler: { (detail: MWMovieDetail) in
+                    movie.countries = detail.countries
+                },
+                errorHandler: { error in
+                    print(error.getDescription())
             })
         }
     }
