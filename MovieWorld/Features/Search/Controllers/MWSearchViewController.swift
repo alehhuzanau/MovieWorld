@@ -257,6 +257,12 @@ class MWSearchViewController: UITableViewController {
             self.request(section: section)
         }
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = MWMovieInfoViewController()
+        vc.movie = self.movies[indexPath.row]
+        MWI.sh.push(vc: vc)
+    }
 }
 
 extension MWSearchViewController: UISearchResultsUpdating {

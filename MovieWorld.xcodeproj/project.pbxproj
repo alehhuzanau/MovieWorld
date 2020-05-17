@@ -50,6 +50,8 @@
 		845CBCC72470EDF5008228B1 /* MWFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CBCC62470EDF5008228B1 /* MWFilter.swift */; };
 		845CBCCC24710993008228B1 /* MWMovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CBCCB24710993008228B1 /* MWMovieDetail.swift */; };
 		845CBCCF24710BD7008228B1 /* MWProductionCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CBCCE24710BD7008228B1 /* MWProductionCountry.swift */; };
+		8479F7332471F7AA000BB5FF /* MWMovieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F7322471F7AA000BB5FF /* MWMovieInfoViewController.swift */; };
+		8479F7352471FC1C000BB5FF /* MWMovieInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F7342471FC1C000BB5FF /* MWMovieInfoView.swift */; };
 		8499DD642470695C006DAFD4 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499DD632470695C006DAFD4 /* UIColor+Ex.swift */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
 		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
@@ -117,6 +119,8 @@
 		845CBCC62470EDF5008228B1 /* MWFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWFilter.swift; sourceTree = "<group>"; };
 		845CBCCB24710993008228B1 /* MWMovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieDetail.swift; sourceTree = "<group>"; };
 		845CBCCE24710BD7008228B1 /* MWProductionCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWProductionCountry.swift; sourceTree = "<group>"; };
+		8479F7322471F7AA000BB5FF /* MWMovieInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieInfoViewController.swift; sourceTree = "<group>"; };
+		8479F7342471FC1C000BB5FF /* MWMovieInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieInfoView.swift; sourceTree = "<group>"; };
 		8499DD632470695C006DAFD4 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				24E19D6E246EC83000B3E150 /* MWCategoryView.swift */,
+				8479F7342471FC1C000BB5FF /* MWMovieInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 			children = (
 				240AFCB02454A1AB00371F6B /* Init controllers */,
 				24E94FC424434155001F0504 /* MWMoviesViewController.swift */,
+				8479F7322471F7AA000BB5FF /* MWMovieInfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8479F7332471F7AA000BB5FF /* MWMovieInfoViewController.swift in Sources */,
 				24250ED7243CC926007D02AB /* Section+CoreDataClass.swift in Sources */,
 				24E19D6C246EBAA700B3E150 /* MWFilterViewController.swift in Sources */,
 				CFB983B9240EAAD700FA9ACF /* Dictionary+Ex.swift in Sources */,
@@ -633,6 +640,7 @@
 				2414BE8F244207E10011A5A2 /* Movie+CoreDataProperties.swift in Sources */,
 				CF7A0451240EA3230003AD7B /* MWURLPaths.swift in Sources */,
 				CF7A0456240EA3FB0003AD7B /* String+Ex.swift in Sources */,
+				8479F7352471FC1C000BB5FF /* MWMovieInfoView.swift in Sources */,
 				845CBCCC24710993008228B1 /* MWMovieDetail.swift in Sources */,
 				24A0FFC3245DC7E2004216B6 /* MWSectionsEnum.swift in Sources */,
 				24F276AA2422465200A1FBB5 /* MWSystem.swift in Sources */,

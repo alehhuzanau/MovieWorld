@@ -138,4 +138,10 @@ extension MWMovieSectionTableViewCell: UICollectionViewDelegate, UICollectionVie
 
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = MWMovieInfoViewController()
+        vc.movie = self.movies[indexPath.row]
+        MWI.sh.push(vc: vc)
+    }
 }
