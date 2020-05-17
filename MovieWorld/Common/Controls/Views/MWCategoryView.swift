@@ -101,7 +101,6 @@ class MWCategoryView: UIView {
 
     private func initialize() {
         self.backgroundColor = .white
-        self.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubviews()
         self.makeConstraints()

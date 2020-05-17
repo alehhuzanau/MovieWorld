@@ -14,20 +14,37 @@ class MWCountriesViewController: UIViewController {
 
     private let buttonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 10, right: 16)
     private let buttonHeight: Int = 44
-    private let countries: [MWCountry] = MWSystem.sh.countries ?? []
+
+    private let headerTitles = ["Popular", "In alphabet order"]
+    private let popularSection: Int = 0
+    private let baseSection: Int = 1
+
+    private let countries: [[MWCountry]] = {
+        let allCountries = MWSystem.sh.countries ?? []
+        var popularCountries: [MWCountry] = []
+        let popularTags: [String] = ["US", "RU", "SU"]
+        popularTags.forEach { tag in
+            if let country = allCountries.first(where: { $0.tag == tag }) {
+                popularCountries.append(country)
+            }
+        }
+        return [popularCountries, allCountries]
+    }()
 
     var countriesSelected: (([MWCountry]) -> Void)?
 
     // MARK: - GUI variables
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
+        tableView.sectionFooterHeight = .leastNormalMagnitude
+        tableView.sectionHeaderHeight = 49
         tableView.register(
             MWCountryTableViewCell.self,
             forCellReuseIdentifier: MWCountryTableViewCell.reuseIdentifier)
@@ -94,14 +111,16 @@ class MWCountriesViewController: UIViewController {
         if let indexPaths = self.tableView.indexPathsForSelectedRows {
             var selectedCountries: [MWCountry] = []
             indexPaths.forEach { indexPath in
-                selectedCountries.append(self.countries[indexPath.row])
+                if indexPath.section == self.baseSection {
+                    selectedCountries.append(self.countries[self.baseSection][indexPath.row])
+                }
             }
             self.countriesSelected?(selectedCountries)
             MWI.sh.popVC()
         }
     }
 
-    // MARK: - check selected rows method
+    // MARK: - check selected rows methods
 
     private func checkSelection() {
         guard self.tableView.indexPathsForSelectedRows != nil else {
@@ -112,11 +131,36 @@ class MWCountriesViewController: UIViewController {
         self.selectButton.isEnabled = true
         self.selectButton.alpha = 1
     }
+
+    private func getIndexPathOfSameCellInAnotherSection(indexPath: IndexPath) -> IndexPath? {
+        let alternativeSection =
+            indexPath.section == self.popularSection ? self.baseSection : self.popularSection
+        let tag = self.countries[indexPath.section][indexPath.row].tag
+        if let row: Int = self.countries[alternativeSection].firstIndex(where: { $0.tag == tag}) {
+            return IndexPath(row: row, section: alternativeSection)
+        }
+        return nil
+    }
 }
 
 extension MWCountriesViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        self.countries.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        self.headerTitles[section]
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = MWCountrySectionView()
+        view.titleText = self.headerTitles[section]
+
+        return view
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countries.count
+        self.countries[section].count
     }
 
     func tableView(_ tableView: UITableView,
@@ -124,17 +168,23 @@ extension MWCountriesViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MWCountryTableViewCell.reuseIdentifier,
             for: indexPath)
-        let titleText = self.countries[indexPath.row].name
+        let titleText = self.countries[indexPath.section][indexPath.row].name
         (cell as? MWCountryTableViewCell)?.categoryView.titleText = titleText
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPath = self.getIndexPathOfSameCellInAnotherSection(indexPath: indexPath) {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
         self.checkSelection()
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let indexPath = self.getIndexPathOfSameCellInAnotherSection(indexPath: indexPath) {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
         self.checkSelection()
     }
 }
