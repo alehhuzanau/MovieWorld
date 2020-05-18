@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  MovieWorld
+
+  Created by Aleh Huzanau on 3/12/20.
+  Copyright © 2020 Clevertec. All rights reserved.
+*/
+
+"Season" = "Season";
+"Main" = "Main";
+"Movies" = "Movies";
+"Category" = "Category";
+"Search" = "Search";
+"All" = "All";
+"Now Playing" = "Now Playing";
+"Popular Movies" = "Popular Movies";
+"Top Rated Movies" = "Top Rated Movies";
+"Upcoming Movies" = "Upcoming Movies";
