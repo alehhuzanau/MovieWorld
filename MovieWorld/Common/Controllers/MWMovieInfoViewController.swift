@@ -13,11 +13,14 @@ class MWMovieInfoViewController: UIViewController {
     // MARK: - Variables
 
     private let movieViewInsets = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+    private let subviewsInsets = UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 16)
 
     var movie: MWMovie? {
         willSet {
             if let movie = newValue {
+                self.movie = movie
                 self.movieView.set(movie: movie)
+                self.loadDetails()
             }
         }
     }
@@ -43,6 +46,33 @@ class MWMovieInfoViewController: UIViewController {
         return view
     }()
 
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 17)
+        label.text = "Description".localized
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    private lazy var runtimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(15)
+        label.alpha = 0.5
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    private lazy var overviewLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(17)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -57,6 +87,9 @@ class MWMovieInfoViewController: UIViewController {
     private func addSubviews() {
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.movieView)
+        self.scrollView.addSubview(self.descriptionLabel)
+        self.scrollView.addSubview(self.runtimeLabel)
+        self.scrollView.addSubview(self.overviewLabel)
     }
 
     // MARK: - Constraints
@@ -69,5 +102,33 @@ class MWMovieInfoViewController: UIViewController {
             make.top.left.right.equalToSuperview().inset(self.movieViewInsets)
             make.width.equalToSuperview()
         }
+        self.descriptionLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.movieView.snp.bottom).offset(self.subviewsInsets.top)
+            make.left.right.equalToSuperview().inset(self.subviewsInsets)
+        }
+        self.runtimeLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.descriptionLabel.snp.bottom).offset(self.subviewsInsets.top)
+            make.left.right.equalToSuperview().inset(self.subviewsInsets)
+        }
+        self.overviewLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.runtimeLabel.snp.bottom).offset(self.subviewsInsets.top)
+            make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
+        }
+    }
+
+    // MARK: - Request method
+
+    private func loadDetails() {
+        guard let movie = self.movie else { return }
+        let url = "\(MWURLPaths.movieDetails)\(movie.id)"
+        MWNet.sh.request(
+            urlPath: url,
+            successHandler: { [weak self] (detail: MWMovieDetail) in
+                self?.runtimeLabel.text = "\(detail.runtime ?? 0) \("minutes".localized)"
+                self?.overviewLabel.text = detail.overview ?? ""
+        },
+            errorHandler: { error in
+                print(error.getDescription())
+        })
     }
 }
