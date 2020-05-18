@@ -52,6 +52,8 @@
 		845CBCCF24710BD7008228B1 /* MWProductionCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CBCCE24710BD7008228B1 /* MWProductionCountry.swift */; };
 		8479F7332471F7AA000BB5FF /* MWMovieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F7322471F7AA000BB5FF /* MWMovieInfoViewController.swift */; };
 		8479F7352471FC1C000BB5FF /* MWMovieInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F7342471FC1C000BB5FF /* MWMovieInfoView.swift */; };
+		8479F73724721880000BB5FF /* MWMovieVideoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F73624721880000BB5FF /* MWMovieVideoResults.swift */; };
+		8479F739247218E3000BB5FF /* MWMovieVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479F738247218E3000BB5FF /* MWMovieVideo.swift */; };
 		8499DD642470695C006DAFD4 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499DD632470695C006DAFD4 /* UIColor+Ex.swift */; };
 		CF3102472405636300AC0E1A /* MWInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3102462405636300AC0E1A /* MWInterface.swift */; };
 		CF310249240565B900AC0E1A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF310248240565B900AC0E1A /* Colors.xcassets */; };
@@ -121,6 +123,8 @@
 		845CBCCE24710BD7008228B1 /* MWProductionCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWProductionCountry.swift; sourceTree = "<group>"; };
 		8479F7322471F7AA000BB5FF /* MWMovieInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieInfoViewController.swift; sourceTree = "<group>"; };
 		8479F7342471FC1C000BB5FF /* MWMovieInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieInfoView.swift; sourceTree = "<group>"; };
+		8479F73624721880000BB5FF /* MWMovieVideoResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieVideoResults.swift; sourceTree = "<group>"; };
+		8479F738247218E3000BB5FF /* MWMovieVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMovieVideo.swift; sourceTree = "<group>"; };
 		8499DD632470695C006DAFD4 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 		CCC646B84CB2D1D9F5669D89 /* Pods_MovieWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3102462405636300AC0E1A /* MWInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWInterface.swift; sourceTree = "<group>"; };
@@ -272,6 +276,8 @@
 				CF31025324057D4F00AC0E1A /* MWMovie.swift */,
 				24241F722410149800E09450 /* MWMovieResults.swift */,
 				845CBCCB24710993008228B1 /* MWMovieDetail.swift */,
+				8479F73624721880000BB5FF /* MWMovieVideoResults.swift */,
+				8479F738247218E3000BB5FF /* MWMovieVideo.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -650,6 +656,7 @@
 				84312D27244D4B7D0082BCF8 /* MWLeftAlignedViewFlowLayout.swift in Sources */,
 				24241F71241009F700E09450 /* MWError.swift in Sources */,
 				CF878D92240EB743008CCB3A /* MWGenre.swift in Sources */,
+				8479F73724721880000BB5FF /* MWMovieVideoResults.swift in Sources */,
 				845CBCC42470C580008228B1 /* MWCountrySectionView.swift in Sources */,
 				24F276AC24224B7900A1FBB5 /* MWImages.swift in Sources */,
 				24250ED8243CC926007D02AB /* Section+CoreDataProperties.swift in Sources */,
@@ -682,6 +689,7 @@
 				24E19D6F246EC83000B3E150 /* MWCategoryView.swift in Sources */,
 				CF31025424057D4F00AC0E1A /* MWMovie.swift in Sources */,
 				2414BE8E244207E10011A5A2 /* Movie+CoreDataClass.swift in Sources */,
+				8479F739247218E3000BB5FF /* MWMovieVideo.swift in Sources */,
 				2452F061242102DD00A950EC /* Genre+CoreDataProperties.swift in Sources */,
 				24241F732410149800E09450 /* MWMovieResults.swift in Sources */,
 				CF7A044F240EA3020003AD7B /* MWNetError.swift in Sources */,

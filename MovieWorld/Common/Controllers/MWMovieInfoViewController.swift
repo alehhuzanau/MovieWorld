@@ -13,7 +13,10 @@ class MWMovieInfoViewController: UIViewController {
     // MARK: - Variables
 
     private let movieViewInsets = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
-    private let subviewsInsets = UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 16)
+    private let webViewInsets = UIEdgeInsets(top: 18, left: 16, bottom: 24, right: 16)
+    private let subviewsInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    private let webViewHeight: Int = 166
+    private let siteName = "YouTube"
 
     var movie: MWMovie? {
         willSet {
@@ -21,6 +24,7 @@ class MWMovieInfoViewController: UIViewController {
                 self.movie = movie
                 self.movieView.set(movie: movie)
                 self.loadDetails()
+                self.loadVideos()
             }
         }
     }
@@ -73,6 +77,18 @@ class MWMovieInfoViewController: UIViewController {
         return label
     }()
 
+    private lazy var webView: UIWebView = {
+        let view = UIWebView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 5
+        if #available(iOS 13.0, *) {
+            view.largeContentImage = UIImage(named: Constants.ImageName.noPosterIcon)
+        }
+
+        return view
+    }()
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -87,6 +103,7 @@ class MWMovieInfoViewController: UIViewController {
     private func addSubviews() {
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.movieView)
+        self.scrollView.addSubview(self.webView)
         self.scrollView.addSubview(self.descriptionLabel)
         self.scrollView.addSubview(self.runtimeLabel)
         self.scrollView.addSubview(self.overviewLabel)
@@ -102,8 +119,13 @@ class MWMovieInfoViewController: UIViewController {
             make.top.left.right.equalToSuperview().inset(self.movieViewInsets)
             make.width.equalToSuperview()
         }
+        self.webView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.movieView.snp.bottom)
+            make.left.right.equalToSuperview().inset(self.webViewInsets)
+            make.height.equalTo(0)
+        }
         self.descriptionLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.movieView.snp.bottom).offset(self.subviewsInsets.top)
+            make.top.equalTo(self.webView.snp.bottom).offset(self.webViewInsets.bottom)
             make.left.right.equalToSuperview().inset(self.subviewsInsets)
         }
         self.runtimeLabel.snp.makeConstraints { (make) in
@@ -113,6 +135,13 @@ class MWMovieInfoViewController: UIViewController {
         self.overviewLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.runtimeLabel.snp.bottom).offset(self.subviewsInsets.top)
             make.left.right.bottom.equalToSuperview().inset(self.subviewsInsets)
+        }
+    }
+
+    private func remakeConstraints() {
+        self.webView.snp.updateConstraints { (make) in
+            make.top.equalTo(self.movieView.snp.bottom).offset(self.webViewInsets.top)
+            make.height.equalTo(self.webViewHeight)
         }
     }
 
@@ -126,9 +155,31 @@ class MWMovieInfoViewController: UIViewController {
             successHandler: { [weak self] (detail: MWMovieDetail) in
                 self?.runtimeLabel.text = "\(detail.runtime ?? 0) \("minutes".localized)"
                 self?.overviewLabel.text = detail.overview ?? ""
-        },
+            },
             errorHandler: { error in
                 print(error.getDescription())
         })
+    }
+
+    private func loadVideos() {
+        guard let movie = self.movie else { return }
+        let url = "\(MWURLPaths.movieDetails)\(movie.id)\(MWURLPaths.videos)"
+        MWNet.sh.request(
+            urlPath: url,
+            successHandler: { [weak self] (result: MWMovieVideoResults) in
+                let videos = result.videos
+                if let firstVideo = videos.first, firstVideo.site == self?.siteName {
+                    self?.remakeConstraints()
+                    self?.loadYoutube(videoID: firstVideo.key)
+                }
+            },
+            errorHandler: { error in
+                print(error.getDescription())
+        })
+    }
+
+    private func loadYoutube(videoID: String) {
+        guard let url = URL(string: "\(MWURLPaths.youtube)\(videoID)") else { return }
+        self.webView.loadRequest(URLRequest(url: url))
     }
 }

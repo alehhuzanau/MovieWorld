@@ -17,6 +17,10 @@ struct MWURLPaths {
     static let upcomingMovies: String = "movie/upcoming"
 
     static let movieDetails: String = "movie/"
+    static let videos: String = "/videos"
+
     static let discoverMovie: String = "discover/movie"
     static let searchMovies: String = "search/movie"
+
+    static let youtube: String = "https://www.youtube.com/embed/"
 }

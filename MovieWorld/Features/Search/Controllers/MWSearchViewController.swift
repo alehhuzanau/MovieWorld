@@ -37,7 +37,7 @@ class MWSearchViewController: UITableViewController {
     }
 
     private var movies: [MWMovie] = []
-    
+
     private var isSearchBarEmpty: Bool {
         return self.navigationItem.searchController?.searchBar.text?.isEmpty ?? true
     }
