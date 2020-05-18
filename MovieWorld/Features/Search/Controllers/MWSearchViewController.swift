@@ -36,12 +36,8 @@ class MWSearchViewController: UITableViewController {
         ["page": String(self.currentPage)]
     }
 
-    private var movies: [MWMovie] = [] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-
+    private var movies: [MWMovie] = []
+    
     private var isSearchBarEmpty: Bool {
         return self.navigationItem.searchController?.searchBar.text?.isEmpty ?? true
     }
@@ -160,6 +156,7 @@ class MWSearchViewController: UITableViewController {
                 self?.totalPages = results.totalPages
                 let movies = results.movies
                 self?.movies.append(contentsOf: movies)
+                self?.tableView.reloadData()
                 self?.loadImages(movies: movies)
                 self?.loadDetails(movies: movies)
                 self?.dispatchGroup.leave()
@@ -191,8 +188,9 @@ class MWSearchViewController: UITableViewController {
             let url = "\(MWURLPaths.movieDetails)\(movie.id)"
             MWNet.sh.request(
                 urlPath: url,
-                successHandler: { (detail: MWMovieDetail) in
+                successHandler: { [weak self] (detail: MWMovieDetail) in
                     movie.countries = detail.countries
+                    self?.tableView.reloadData()
             },
                 errorHandler: { error in
                     print(error.getDescription())
@@ -269,6 +267,7 @@ extension MWSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         self.currentPage = 1
         self.movies.removeAll()
+        self.tableView.reloadData()
         if !self.isSearchBarEmpty, !self.isLoading {
             self.requestLabel.isHidden = true
             let searchBar = self.navigationItem.searchController?.searchBar
